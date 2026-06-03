@@ -34,6 +34,28 @@
     z-index: 2;
 }
 
+/* ===== Ken Burns 緩慢 zoom in ===== */
+/* 動畫套在 slide 容器上（非 img），避免與 img 的手動縮放/拖曳 transform 衝突 */
+@keyframes ext3d-kenburns {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.12);
+    }
+}
+
+.ext3d-slide.active {
+    transform-origin: center center;
+    animation: ext3d-kenburns 20s ease-out forwards;
+}
+
+/* 使用者進行縮放/拖曳時暫停 Ken Burns，避免兩層縮放疊加 */
+.ext3d-slide.interacting {
+    animation-play-state: paused;
+}
+
 /* 圖片 */
 .ext3d-slide img {
     width: 100%;

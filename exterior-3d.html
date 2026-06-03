@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/variables.css?v=1.0.2">
     <link rel="stylesheet" href="css/global.css?v=1.0.2">
     <link rel="stylesheet" href="css/topbar.css?v=1.0.2">
-    <link rel="stylesheet" href="css/exterior-3d.css?v=1.0.2">
+    <link rel="stylesheet" href="css/exterior-3d.css?v=1.0.3">
     <!-- PWA Update Loading Screen -->
     <style id="pwa-loading-style">
       #pwa-loading-overlay {
@@ -161,7 +161,11 @@
 
                 currentIndex = (index + totalSlides) % totalSlides;
 
-                slides[currentIndex].classList.add('active');
+                // 重新觸發 Ken Burns 動畫（移除 interacting 並重啟 active 動畫）
+                const nextSlide = slides[currentIndex];
+                nextSlide.classList.remove('interacting', 'active');
+                void nextSlide.offsetWidth; // 強制 reflow 讓動畫重頭播放
+                nextSlide.classList.add('active');
                 dotsContainer.children[currentIndex].classList.add('active');
                 counter.textContent = `${currentIndex + 1} / ${totalSlides}`;
 
@@ -223,6 +227,7 @@
                 isDragging = true;
                 startX = e.clientX;
                 startY = e.clientY;
+                slides[currentIndex].classList.add('interacting'); // 暫停 Ken Burns
             });
 
             window.addEventListener('mousemove', (e) => {
@@ -240,6 +245,7 @@
             // --- 滾輪縮放 ---
             viewer.addEventListener('wheel', (e) => {
                 e.preventDefault();
+                slides[currentIndex].classList.add('interacting'); // 暫停 Ken Burns
                 const s = slideStates[currentIndex];
                 const zoomIntensity = 0.1;
                 const direction = e.deltaY < 0 ? 1 : -1;
@@ -262,6 +268,11 @@
             viewer.addEventListener('dblclick', (e) => {
                 if (e.target.closest('.ext3d-arrow') || e.target.closest('.ext3d-dot')) return;
                 resetSlideTransform(currentIndex);
+                // 還原後重新播放 Ken Burns
+                const slide = slides[currentIndex];
+                slide.classList.remove('interacting', 'active');
+                void slide.offsetWidth;
+                slide.classList.add('active');
             });
 
         })();
