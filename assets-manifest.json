@@ -1,12 +1,12 @@
 {
-  "version": "1.0.93",
-  "timestamp": 1780724581060,
-  "generatedAt": "2026-06-06T05:43:01.060Z",
+  "version": "1.0.94",
+  "timestamp": 1780812565017,
+  "generatedAt": "2026-06-07T06:09:25.017Z",
   "assets": {
     "assets/images/360pano.webp": {
-      "hash": "e2be2b0eff05",
-      "size": 23588816,
-      "mtime": 1774516760651.5183
+      "hash": "c6c3785fd4e1",
+      "size": 23399190,
+      "mtime": 1780811798288.3872
     },
     "assets/images/3D-01.webp": {
       "hash": "51e5c54337b1",
@@ -533,6 +533,11 @@
       "size": 461934,
       "mtime": 1774585340922.8955
     },
+    "assets/images/Lake-Placid.webp": {
+      "hash": "cb930418f1c1",
+      "size": 755096,
+      "mtime": 1780810598374.345
+    },
     "assets/images/layout/1F.webp": {
       "hash": "d79d4f1032bd",
       "size": 587180,
@@ -629,9 +634,14 @@
       "mtime": 1780219611810.0027
     },
     "assets/images/location.webp": {
-      "hash": "d58772ab3d78",
-      "size": 3012750,
-      "mtime": 1774519278386.4092
+      "hash": "c5d4deb44551",
+      "size": 3029596,
+      "mtime": 1780807544326.363
+    },
+    "assets/images/NEHS.webp": {
+      "hash": "7e1f55d0308b",
+      "size": 498690,
+      "mtime": 1780804549278.4668
     },
     "assets/images/NYIO.webp": {
       "hash": "f3160fc9a337",

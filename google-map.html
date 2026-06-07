@@ -125,6 +125,40 @@
                 </div>
 
                 <div class="gmap-info-section">
+                    <h3 class="gmap-section-title">🎓 學區</h3>
+                    <div class="gmap-facility-list">
+                        <div class="gmap-facility-item" data-location="紐約國際幼兒園" data-lat="24.788271125928155" data-lng="121.01368104022522">
+                            <div class="gmap-facility-icon">🏫</div>
+                            <div class="gmap-facility-info">
+                                <div class="gmap-facility-name">紐約國際幼兒園</div>
+                                <div class="gmap-facility-detail">徒步4分鐘 | 約300m</div>
+                            </div>
+                        </div>
+                        <div class="gmap-facility-item" data-location="關埔國小" data-lat="24.788679836099256" data-lng="121.01340208024266">
+                            <div class="gmap-facility-icon">🏫</div>
+                            <div class="gmap-facility-info">
+                                <div class="gmap-facility-name">關埔國小</div>
+                                <div class="gmap-facility-detail">徒步5分鐘 | 約350m</div>
+                            </div>
+                        </div>
+                        <div class="gmap-facility-item" data-location="光武國中" data-lat="24.78682952127125" data-lng="121.01302339577504">
+                            <div class="gmap-facility-icon">🏫</div>
+                            <div class="gmap-facility-info">
+                                <div class="gmap-facility-name">光武國中</div>
+                                <div class="gmap-facility-detail">徒步6分鐘 | 約450m</div>
+                            </div>
+                        </div>
+                        <div class="gmap-facility-item" data-location="竹科實中" data-lat="24.776878041631864" data-lng="121.01705285556345">
+                            <div class="gmap-facility-icon">🏫</div>
+                            <div class="gmap-facility-info">
+                                <div class="gmap-facility-name">竹科實中</div>
+                                <div class="gmap-facility-detail">開車5分鐘</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gmap-info-section">
                     <h3 class="gmap-section-title">🌳 周邊設施</h3>
                     <div class="gmap-facility-list">
                         <div class="gmap-facility-item" data-location="長春公園" data-lat="24.787034596901606" data-lng="121.01463069948683">
@@ -146,27 +180,6 @@
                             <div class="gmap-facility-info">
                                 <div class="gmap-facility-name">靜心湖</div>
                                 <div class="gmap-facility-detail">徒步10分鐘 | 約900m</div>
-                            </div>
-                        </div>
-                        <div class="gmap-facility-item" data-location="紐約國際幼兒園" data-lat="24.788271125928155" data-lng="121.01368104022522">
-                            <div class="gmap-facility-icon">🏫</div>
-                            <div class="gmap-facility-info">
-                                <div class="gmap-facility-name">紐約國際幼兒園</div>
-                                <div class="gmap-facility-detail">徒步4分鐘 | 約300m</div>
-                            </div>
-                        </div>
-                        <div class="gmap-facility-item" data-location="關埔國小" data-lat="24.788679836099256" data-lng="121.01340208024266">
-                            <div class="gmap-facility-icon">🏫</div>
-                            <div class="gmap-facility-info">
-                                <div class="gmap-facility-name">關埔國小</div>
-                                <div class="gmap-facility-detail">徒步5分鐘 | 約350m</div>
-                            </div>
-                        </div>
-                        <div class="gmap-facility-item" data-location="光武國中" data-lat="24.78682952127125" data-lng="121.01302339577504">
-                            <div class="gmap-facility-icon">🏫</div>
-                            <div class="gmap-facility-info">
-                                <div class="gmap-facility-name">光武國中</div>
-                                <div class="gmap-facility-detail">徒步6分鐘 | 約450m</div>
                             </div>
                         </div>
                         <div class="gmap-facility-item" data-location="迪卡儂" data-lat="24.792120382167557" data-lng="121.01332025858709">
@@ -900,7 +913,7 @@
                                 window.currentPolyline = new google.maps.Polyline({
                                     path: routePath,
                                     geodesic: false,
-                                    strokeColor: '#003D7A', // 深藍色邊框
+                                    strokeColor: '#0066AA', // 藍色底線
                                     strokeOpacity: 1,
                                     strokeWeight: 8,
                                     map: map
@@ -910,19 +923,19 @@
                                 window.flowingPolyline = new google.maps.Polyline({
                                     path: routePath,
                                     geodesic: false,
-                                    strokeColor: '#1E90FF', // 淺藍色
-                                    strokeOpacity: 1,
+                                    strokeOpacity: 0, // 隱藏底線，只顯示流動虛線
                                     strokeWeight: 6,
                                     map: map,
                                     icons: [
                                         {
                                             icon: {
-                                                path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-                                                strokeColor: '#FFFFFF',
-                                                scale: 2.5
+                                                path: 'M 0,-1 0,1', // 線段（非箭頭符號）
+                                                strokeColor: '#00E5B0', // 藍綠流動色
+                                                strokeOpacity: 1,
+                                                scale: 4
                                             },
                                             offset: '0%',
-                                            repeat: '40px'
+                                            repeat: '20px'
                                         }
                                     ]
                                 });
@@ -940,12 +953,13 @@
                                         icons: [
                                             {
                                                 icon: {
-                                                    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-                                                    strokeColor: '#FFFFFF',
-                                                    scale: 2.5
+                                                    path: 'M 0,-1 0,1',
+                                                    strokeColor: '#00E5B0',
+                                                    strokeOpacity: 1,
+                                                    scale: 4
                                                 },
                                                 offset: flowOffset + '%',
-                                                repeat: '40px'
+                                                repeat: '20px'
                                             }
                                         ]
                                     });
@@ -1090,7 +1104,7 @@
                         window.currentPolyline = new google.maps.Polyline({
                             path: routePath,
                             geodesic: true,
-                            strokeColor: '#003D7A', // 深藍色邊框
+                            strokeColor: '#0066AA', // 藍色底線
                             strokeOpacity: 1,
                             strokeWeight: 8,
                             map: map
@@ -1100,19 +1114,19 @@
                         window.flowingPolyline = new google.maps.Polyline({
                             path: routePath,
                             geodesic: true,
-                            strokeColor: '#1E90FF', // 淺藍色
-                            strokeOpacity: 1,
+                            strokeOpacity: 0, // 隱藏底線，只顯示流動虛線
                             strokeWeight: 6,
                             map: map,
                             icons: [
                                 {
                                     icon: {
-                                        path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-                                        strokeColor: '#FFFFFF',
-                                        scale: 2.5
+                                        path: 'M 0,-1 0,1', // 線段（非箭頭符號）
+                                        strokeColor: '#00E5B0', // 藍綠流動色
+                                        strokeOpacity: 1,
+                                        scale: 4
                                     },
                                     offset: '0%',
-                                    repeat: '40px'
+                                    repeat: '20px'
                                 }
                             ]
                         });
@@ -1129,12 +1143,13 @@
                                 icons: [
                                     {
                                         icon: {
-                                            path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-                                            strokeColor: '#FFFFFF',
-                                            scale: 2.5
+                                            path: 'M 0,-1 0,1',
+                                            strokeColor: '#00E5B0',
+                                            strokeOpacity: 1,
+                                            scale: 4
                                         },
                                         offset: flowOffset + '%',
-                                        repeat: '40px'
+                                        repeat: '20px'
                                     }
                                 ]
                             });

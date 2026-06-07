@@ -199,7 +199,7 @@
                 },
                 {
                     id: 'HSP',
-                    yaw: 20.344371156638374,
+                    yaw: 21.344371156638374,
                     pitch: -6.038966652929766,
                     label: '竹科園區',
                     icon: '🏫',
@@ -251,9 +251,34 @@
                     subtitle: 'Sun Yat-sen Freeway',
                     image: 'assets/images/Sun Yat-sen Freeway.webp',
                     desc: '開車5分鐘，約1.5公里。'
+                },
+                {
+                    id: 'NEHS',
+                    yaw: 2.2705,
+                    pitch: -9.1451,
+                    label: '竹科實中',
+                    icon: '🏫',
+                    title: '竹科實中',
+                    subtitle: 'National Experimental High School',
+                    image: 'assets/images/NEHS.webp',
+                    desc: '開車5分鐘，約2公里。'
+                },
+                {
+                    id: 'LakePlacid',
+                    yaw: 16.3914,
+                    pitch: -10.1512,
+                    label: '靜心湖',
+                    icon: '💧',
+                    title: '靜心湖',
+                    subtitle: 'Lake Placid',
+                    image: 'assets/images/Lake-Placid.webp',
+                    desc: '開車5分鐘，約2.60公里。'
                 }
 
             ];
+
+            // 是否開啟 debug 模式（true: 點擊畫面在前端浮層顯示 yaw/pitch 座標）
+            const hotSpotDebug = false;
 
             // 初始化 Pannellum
             const viewer = pannellum.viewer('panorama', {
@@ -271,7 +296,7 @@
                 friction: 0.15,
                 yaw: 2.6775067496532836,
                 pitch: -32.9360348197727,
-                hotSpotDebug: false,
+                hotSpotDebug: hotSpotDebug,
                 hotSpots: hotspots.map(hs => ({
                     id: hs.id,
                     pitch: hs.pitch,
@@ -281,6 +306,53 @@
                     clickHandlerFunc: () => openPoiModal(hs)
                 }))
             });
+
+            // ===== Debug 座標浮層（點擊畫面即時顯示 yaw / pitch） =====
+            if (hotSpotDebug) {
+                const dbg = document.createElement('div');
+                dbg.id = 'pnrmDebugPanel';
+                dbg.style.cssText = [
+                    'position:absolute', 'bottom:24px', 'left:12px', 'z-index:9999',
+                    'background:rgba(0,0,0,0.8)', 'color:#ffe600', 'font:13px/1.6 monospace',
+                    'padding:10px 14px', 'border:1px solid #ffe600', 'border-radius:8px',
+                    'max-width:90vw', 'pointer-events:auto', 'user-select:text'
+                ].join(';');
+                dbg.innerHTML = '<div style="color:#fff;margin-bottom:4px">🐛 Debug：點擊畫面取得座標</div>'
+                    + '<div id="pnrmDebugCoords">尚未取得</div>'
+                    + '<button id="pnrmDebugCopy" style="margin-top:8px;padding:4px 10px;'
+                    + 'background:#ffe600;color:#000;border:none;border-radius:4px;'
+                    + 'cursor:pointer;font:12px monospace">複製座標</button>';
+                document.getElementById('panorama').appendChild(dbg);
+
+                const coordsEl = dbg.querySelector('#pnrmDebugCoords');
+                const copyBtn = dbg.querySelector('#pnrmDebugCopy');
+                let lastSnippet = '';
+
+                const renderCoords = (e) => {
+                    // 點在 debug 面板上（含複製按鈕）時忽略，避免覆蓋已取得的座標
+                    if (e.target && dbg.contains(e.target)) return;
+                    const c = viewer.mouseEventToCoords(e); // [pitch, yaw]
+                    const pitch = c[0].toFixed(4);
+                    const yaw = c[1].toFixed(4);
+                    lastSnippet = `yaw: ${yaw},\npitch: ${pitch},`;
+                    coordsEl.innerHTML = `yaw: <b>${yaw}</b><br>pitch: <b>${pitch}</b>`;
+                    console.log(`[HotSpot Debug] yaw: ${yaw}, pitch: ${pitch}`);
+                };
+
+                // 用 mouseup 避免和拖曳衝突
+                document.getElementById('panorama').addEventListener('mouseup', renderCoords);
+                document.getElementById('panorama').addEventListener('touchend', (e) => {
+                    if (e.changedTouches && e.changedTouches.length) renderCoords(e.changedTouches[0]);
+                });
+
+                copyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (!lastSnippet) return;
+                    navigator.clipboard?.writeText(lastSnippet);
+                    copyBtn.textContent = '已複製 ✓';
+                    setTimeout(() => { copyBtn.textContent = '複製座標'; }, 1200);
+                });
+            }
 
             // ===== Modal 控制 =====
             const modal = document.getElementById('poiModal');
