@@ -143,7 +143,8 @@
 
     <!-- 免責聲明 -->
     <div class="con-disclaimer">
-        ※ 以上工法圖片為3D示意，僅供參考，。
+        <span class="con-disclaimer-icon">※</span>
+        <span class="con-disclaimer-text">以上工法圖片為 <strong>3D 示意</strong>，僅供參考，實際依施工圖面為準。</span>
     </div>
 
     <!-- JS -->
@@ -273,6 +274,16 @@
                     isStepList: false
                 },
                 {
+                    id: 'beam-sleeve',
+                    title: '預留穿樑套管',
+                    subtitle: 'PRE-RESERVED BEAM SLEEVES',
+                    category: 'structure',
+                    categoryLabel: '結構工法',
+                    image: 'assets/images/construction method/預留穿樑套管.webp',
+                    description: '針對冷氣冷媒管以及全熱交換機進排風管，於結構施作時即預先規劃並埋設穿樑套管，避免日後施工敲打破壞樑體結構，確保管線走向順暢並維持結構安全與完整性。',
+                    isStepList: false
+                },
+                {
                     id: 'etag-access',
                     title: 'E-TAG 感應門禁',
                     subtitle: 'E-TAG ACCESS CONTROL',
@@ -339,19 +350,23 @@
             function buildNavList() {
                 let lastCategory = '';
                 const categoryNames = {
-                    waterproof: 'WATERPROOF',
-                    structure: 'STRUCTURE',
-                    smart: 'SMART SYSTEM'
+                    waterproof: { zh: '防水工法', en: 'WATERPROOF' },
+                    structure: { zh: '結構工法', en: 'STRUCTURE' },
+                    smart: { zh: '智慧設備', en: 'SMART SYSTEM' }
                 };
 
                 methods.forEach((m, i) => {
                     // 分類分隔線
                     if (m.category !== lastCategory) {
+                        const cat = categoryNames[m.category];
                         const divider = document.createElement('li');
                         divider.className = 'con-nav-divider';
                         divider.innerHTML = `
                             <span class="con-nav-divider-line"></span>
-                            <span class="con-nav-divider-text">${categoryNames[m.category]}</span>
+                            <span class="con-nav-divider-text">
+                                <span class="con-nav-divider-zh">${cat.zh}</span>
+                                <span class="con-nav-divider-en">${cat.en}</span>
+                            </span>
                             <span class="con-nav-divider-line"></span>
                         `;
                         navList.appendChild(divider);

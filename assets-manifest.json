@@ -1,7 +1,7 @@
 {
-  "version": "1.0.95",
-  "timestamp": 1780813122045,
-  "generatedAt": "2026-06-07T06:18:42.045Z",
+  "version": "1.0.96",
+  "timestamp": 1781415305537,
+  "generatedAt": "2026-06-14T05:35:05.537Z",
   "assets": {
     "assets/images/360pano.webp": {
       "hash": "c6c3785fd4e1",
@@ -172,6 +172,11 @@
       "hash": "279c4c3a8b35",
       "size": 431798,
       "mtime": 1774702031877.083
+    },
+    "assets/images/construction method/預留穿樑套管.webp": {
+      "hash": "3d981f0c604c",
+      "size": 390114,
+      "mtime": 1781414738225.0962
     },
     "assets/images/COSTCO.webp": {
       "hash": "1baade8a7c32",
@@ -699,9 +704,9 @@
       "mtime": 1774585644211.4097
     },
     "css/construction.css": {
-      "hash": "9620212c9c7d",
-      "size": 21099,
-      "mtime": 1774701982371.9846
+      "hash": "472125021d22",
+      "size": 21938,
+      "mtime": 1781415221986.9395
     },
     "css/exterior-3d.css": {
       "hash": "f8d5b289ad18",
