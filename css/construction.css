@@ -83,21 +83,27 @@
 
 /* 導航列表 */
 .con-nav-list {
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0; /* 關鍵：允許 flex 子層收縮以啟用內部捲動，避免縮放/小視窗時底部標題被裁切 */
     overflow-y: auto;
     overflow-x: hidden;
     padding: 8px 0;
+    overscroll-behavior: contain;
     scrollbar-width: thin;
-    scrollbar-color: rgba(91, 168, 200, 0.3) transparent;
+    scrollbar-color: rgba(91, 168, 200, 0.4) transparent;
 }
 
 .con-nav-list::-webkit-scrollbar {
-    width: 3px;
+    width: 4px;
 }
 
 .con-nav-list::-webkit-scrollbar-thumb {
-    background: rgba(91, 168, 200, 0.3);
-    border-radius: 3px;
+    background: rgba(91, 168, 200, 0.4);
+    border-radius: 4px;
+}
+
+.con-sidebar:hover .con-nav-list::-webkit-scrollbar {
+    width: 6px;
 }
 
 /* 分類分隔線 */
@@ -731,8 +737,9 @@
 }
 
 /* ===== 免責聲明 ===== */
+/* 置於 .con-display 內，僅覆蓋圖文展示區，側欄為其兄弟層且 z-index 較高，故展開時不會被遮擋 */
 .con-disclaimer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;

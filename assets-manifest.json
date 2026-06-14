@@ -1,7 +1,7 @@
 {
-  "version": "1.0.97",
-  "timestamp": 1781415333182,
-  "generatedAt": "2026-06-14T05:35:33.182Z",
+  "version": "1.0.98",
+  "timestamp": 1781415799166,
+  "generatedAt": "2026-06-14T05:43:19.166Z",
   "assets": {
     "assets/images/360pano.webp": {
       "hash": "c6c3785fd4e1",
@@ -704,9 +704,9 @@
       "mtime": 1774585644211.4097
     },
     "css/construction.css": {
-      "hash": "472125021d22",
-      "size": 21938,
-      "mtime": 1781415221986.9395
+      "hash": "f8e10c54038d",
+      "size": 22313,
+      "mtime": 1781415735790.454
     },
     "css/exterior-3d.css": {
       "hash": "f8d5b289ad18",
