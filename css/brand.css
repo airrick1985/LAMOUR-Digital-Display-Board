@@ -14,7 +14,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10, 31, 10, 0.85);
+    background: rgba(53, 63, 65, 0.85);
     /* Darken the background */
     z-index: 0;
 }
@@ -152,6 +152,70 @@
     font-size: 20px;
     color: var(--color-text-secondary);
     line-height: 1.8;
+}
+
+/* ===== 團隊主持人名銜列 ===== */
+.team-leads {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 16px;
+    margin-bottom: 24px;
+}
+
+.lead-name {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    color: var(--color-text-primary);
+    letter-spacing: 3px;
+}
+
+.lead-title {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    letter-spacing: 1.5px;
+    margin-left: 10px;
+}
+
+.lead-divider {
+    font-family: var(--font-english-serif);
+    font-size: 18px;
+    color: var(--color-accent);
+}
+
+/* ===== 品牌語錄：粉色引線 + 襯線大字 ===== */
+.team-motto {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-family: var(--font-serif);
+    font-size: 26px;
+    letter-spacing: 6px;
+    color: var(--color-accent-soft);
+    margin-bottom: 28px;
+}
+
+.team-motto::before {
+    content: "";
+    width: 48px;
+    height: 1px;
+    flex-shrink: 0;
+    background: linear-gradient(to right, var(--color-accent), transparent);
+}
+
+/* ===== 敘事段落 ===== */
+.team-story p {
+    margin: 0 0 20px;
+}
+
+.team-story p:last-child {
+    margin-bottom: 0;
+}
+
+.team-story .story-closing {
+    font-family: var(--font-serif);
+    color: var(--color-text-primary);
+    letter-spacing: 2px;
 }
 
 .team-member.tba {

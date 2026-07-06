@@ -1,13 +1,13 @@
 {
-  "name": "富宇學森 The Academic Forest",
-  "short_name": "富宇學森",
-  "description": "富宇學森建案銷售資訊平台",
+  "name": "富宇樂慕 LAMOUR",
+  "short_name": "富宇樂慕",
+  "description": "富宇樂慕建案銷售資訊平台",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#0A1F0A",
-  "theme_color": "#2D5016",
+  "background_color": "#353F41",
+  "theme_color": "#4A5759",
   "lang": "zh-TW",
   "icons": [
     {

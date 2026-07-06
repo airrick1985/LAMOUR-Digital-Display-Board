@@ -33,14 +33,14 @@ body.pano-page {
 
 .pnlm-zoom-controls {
     background: rgba(0, 0, 0, 0.5) !important;
-    border: 1px solid rgba(255, 215, 0, 0.3) !important;
+    border: 1px solid rgba(237, 175, 184, 0.3) !important;
     border-radius: 8px !important;
 }
 
 .pnlm-zoom-in,
 .pnlm-zoom-out {
     background-color: transparent !important;
-    color: #FFD700 !important;
+    color: #EDAFB8 !important;
     width: 36px !important;
     height: 36px !important;
 }
@@ -74,7 +74,7 @@ body.pano-page {
 .loc-title-overlay p {
     font-family: var(--font-english-serif);
     font-size: 16px;
-    color: rgba(255, 215, 0, 0.8);
+    color: rgba(237, 175, 184, 0.8);
     letter-spacing: 6px;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
@@ -153,14 +153,14 @@ body.pano-page {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(255, 215, 0, 0.9);
+    background: rgba(237, 175, 184, 0.9);
     border: 3px solid #fff;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 4px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 20px rgba(237, 175, 184, 0.6), 0 4px 15px rgba(0, 0, 0, 0.4);
     animation: hotspot-pulse 2.5s ease-in-out infinite;
     transition: transform 0.3s ease;
 }
@@ -188,11 +188,11 @@ body.pano-page {
 
     0%,
     100% {
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.4), 0 4px 15px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 10px rgba(237, 175, 184, 0.4), 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
     50% {
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 4px 15px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 30px rgba(237, 175, 184, 0.8), 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 }
 
@@ -270,7 +270,7 @@ body.pano-page {
 .poi-modal-subtitle {
     font-family: var(--font-english-serif);
     font-size: 14px;
-    color: rgba(255, 215, 0, 1);
+    color: rgba(237, 175, 184, 1);
     letter-spacing: 3px;
     margin-bottom: 12px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.8);
@@ -305,9 +305,9 @@ body.pano-page {
 }
 
 .poi-modal-close:hover {
-    background: #ffd700;
+    background: #EDAFB8;
     color: #000;
-    border-color: #ffd700;
+    border-color: #EDAFB8;
     transform: rotate(90deg);
 }
 

@@ -19,13 +19,31 @@
     z-index: 0;
 }
 
+.hero-bg video,
 .hero-bg img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* 雙影片堆疊：靠 opacity 交叉淡化做無縫循環 */
+.hero-bg video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.hero-bg video.is-active {
+    opacity: 1;
+}
+
+.hero-bg img {
     animation: bg-ken-burns 30s linear infinite alternate;
 }
 
+/* 護字遮罩：暖炭色調（法式），上下加重、中段輕透，確保文字不被亮色背景吃掉 */
 .hero-overlay {
     position: absolute;
     top: 0;
@@ -33,10 +51,10 @@
     width: 100%;
     height: 100%;
     background: linear-gradient(to bottom,
-            rgba(10, 31, 10, 0.7) 0%,
-            rgba(10, 31, 10, 0.3) 30%,
-            rgba(10, 31, 10, 0.5) 70%,
-            rgba(10, 31, 10, 0.8) 100%);
+            rgba(35, 25, 30, 0.6) 0%,
+            rgba(35, 25, 30, 0.3) 30%,
+            rgba(35, 25, 30, 0.45) 70%,
+            rgba(35, 25, 30, 0.75) 100%);
     z-index: 1;
 }
 
@@ -88,8 +106,9 @@
     opacity: 0;
     transform: scale(0.9);
     margin-bottom: 30px;
-    animation: logo-entrance 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    filter: drop-shadow(0 15px 30px rgba(10, 31, 10, 0.8)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.15));
+    animation: logo-entrance 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+        logo-glow-breathe 7s ease-in-out 2.5s infinite;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 40px rgba(212, 175, 110, 0.3));
     position: relative;
     display: inline-block;
 }
@@ -118,14 +137,14 @@
     mask-repeat: no-repeat;
     mask-position: center;
 
-    /* 製作一條極致柔和的高光帶，光芒漸變更細膩 */
+    /* 香檳金高光帶：白色 LOGO 上以色相變化呈現掃光（法式 白/淡粉/金 色調） */
     background: linear-gradient(-60deg,
             transparent 35%,
-            rgba(255, 255, 255, 0.1) 40%,
-            rgba(255, 255, 255, 0.4) 45%,
-            rgba(255, 255, 255, 0.85) 50%,
-            rgba(255, 255, 255, 0.4) 55%,
-            rgba(255, 255, 255, 0.1) 60%,
+            rgba(244, 200, 200, 0.2) 40%,
+            rgba(212, 175, 110, 0.55) 45%,
+            rgba(255, 232, 190, 0.95) 50%,
+            rgba(212, 175, 110, 0.55) 55%,
+            rgba(244, 200, 200, 0.2) 60%,
             transparent 65%);
 
     /* 提升質感：放慢速度與滑動節奏 */
@@ -148,7 +167,21 @@
     /* 修正字距產生視覺偏移的問題 */
     opacity: 0;
     animation: text-entrance 1.5s ease-out 1.5s forwards;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    /* 雙層陰影：近距離實影保輪廓 + 遠距離柔影壓亮背景 */
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75), 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+.hero-slogan-en {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(255, 240, 220, 0.75);
+    letter-spacing: 4px;
+    margin-top: 14px;
+    opacity: 0;
+    animation: text-entrance 1.5s ease-out 1.9s forwards;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7), 0 5px 18px rgba(0, 0, 0, 0.45);
 }
 
 @keyframes bg-ken-burns {
@@ -165,14 +198,26 @@
     0% {
         opacity: 0;
         transform: scale(0.95);
-        filter: drop-shadow(0 0 0px rgba(10, 31, 10, 0)) drop-shadow(0 0 0px rgba(255, 215, 0, 0));
+        filter: drop-shadow(0 0 0px rgba(0, 0, 0, 0)) drop-shadow(0 0 0px rgba(212, 175, 110, 0));
     }
 
     100% {
         opacity: 1;
         transform: scale(1);
-        /* 深色實體陰影營造立體懸浮感 + 金色環境光暈營造奢華感 */
-        filter: drop-shadow(0 15px 30px rgba(10, 31, 10, 0.8)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.15));
+        /* 深色實體陰影營造立體懸浮感 + 香檳金環境光暈營造奢華感 */
+        filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 40px rgba(212, 175, 110, 0.3));
+    }
+}
+
+/* 珠光呼吸：金色光暈緩慢明滅，讓白色 LOGO 在暗背景上有珠光感 */
+@keyframes logo-glow-breathe {
+    0%,
+    100% {
+        filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 40px rgba(212, 175, 110, 0.3));
+    }
+
+    50% {
+        filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 60px rgba(212, 175, 110, 0.5));
     }
 }
 
@@ -228,9 +273,9 @@
 
 .anxi-home-capsule:hover {
     background: rgba(10, 10, 10, 0.85);
-    color: rgba(255, 204, 0, 0.9);
-    border-color: rgba(255, 204, 0, 0.4);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 204, 0, 0.2);
+    color: rgba(237, 175, 184, 0.9);
+    border-color: rgba(237, 175, 184, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(237, 175, 184, 0.2);
     transform: translateX(-50%) translateY(-2px);
 }
 

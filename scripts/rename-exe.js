@@ -8,8 +8,8 @@ const dateStr = date.getFullYear().toString() +
                 String(date.getDate()).padStart(2, '0');
 
 const distDir = path.join(__dirname, '..', 'dist');
-const oldName = path.join(distDir, '富宇學森-1.0.0-portable.exe');
-const newName = path.join(distDir, `富宇學森-電子表板離線版-${dateStr}.exe`);
+const oldName = path.join(distDir, '富宇樂慕-1.0.0-portable.exe');
+const newName = path.join(distDir, `富宇樂慕-電子表板離線版-${dateStr}.exe`);
 
 // 刪除舊的帶有 ${date} 的檔案
 const files = fs.readdirSync(distDir);
@@ -29,7 +29,7 @@ files.forEach(file => {
 if (fs.existsSync(oldName)) {
   try {
     fs.renameSync(oldName, newName);
-    console.log(`✓ 已重命名: 富宇學森-1.0.0-portable.exe → 富宇學森-電子表板離線版-${dateStr}.exe`);
+    console.log(`✓ 已重命名: 富宇樂慕-1.0.0-portable.exe → 富宇樂慕-電子表板離線版-${dateStr}.exe`);
   } catch (err) {
     console.error('❌ 重命名失敗:', err.message);
     process.exit(1);

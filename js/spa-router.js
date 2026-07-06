@@ -299,9 +299,9 @@ if (!window._spaRouterInitialized) {
             const url = new URL(a.href);
             let pathname = url.pathname;
 
-            // 處理 GitHub Pages 子路徑（移除 /fuyu-academic-forest 前綴）
-            if (pathname.includes('/fuyu-academic-forest/')) {
-                pathname = pathname.replace('/fuyu-academic-forest/', '');
+            // 處理 GitHub Pages 子路徑（移除 /LAMOUR-Digital-Display-Board 前綴）
+            if (pathname.includes('/LAMOUR-Digital-Display-Board/')) {
+                pathname = pathname.replace('/LAMOUR-Digital-Display-Board/', '');
             } else if (pathname.startsWith('/')) {
                 pathname = pathname.substring(1);
             }

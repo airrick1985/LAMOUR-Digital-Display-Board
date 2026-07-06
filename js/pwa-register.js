@@ -57,7 +57,7 @@ if ('serviceWorker' in navigator) {
       top: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(135deg, #2D5016 0%, #3d6b1f 100%);
+      background: linear-gradient(135deg, #4A5759 0%, #3d6b1f 100%);
       color: white;
       padding: 16px 20px;
       display: flex;
@@ -286,11 +286,11 @@ if ('serviceWorker' in navigator) {
               }
 
               // 對於根路徑，根據環境判斷
-              // Electron 環境（localhost）使用空路徑，Web 使用 /fuyu-academic-forest
+              // Electron 環境（localhost）使用空路徑，Web 使用 /LAMOUR-Digital-Display-Board
               if (basePath === '') {
                 // 檢測是否在 Electron 環境中
                 const isElectron = window.isElectron === true || window.location.hostname === 'localhost';
-                basePath = isElectron ? '' : '/fuyu-academic-forest';
+                basePath = isElectron ? '' : '/LAMOUR-Digital-Display-Board';
               }
 
               const manifestUrl = basePath + '/assets-manifest.json';

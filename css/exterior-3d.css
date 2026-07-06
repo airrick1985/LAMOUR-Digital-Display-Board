@@ -91,9 +91,9 @@
 
 .ext3d-arrow:hover {
     opacity: 1;
-    background: rgba(255, 215, 0, 0.2);
-    border-color: rgba(255, 215, 0, 0.4);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    background: rgba(237, 175, 184, 0.2);
+    border-color: rgba(237, 175, 184, 0.4);
+    box-shadow: 0 0 20px rgba(237, 175, 184, 0.2);
 }
 
 .ext3d-arrow svg {
@@ -142,9 +142,9 @@
 }
 
 .ext3d-dot.active {
-    background: var(--color-accent, #ffd700);
-    border-color: var(--color-accent, #ffd700);
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    background: var(--color-accent, #EDAFB8);
+    border-color: var(--color-accent, #EDAFB8);
+    box-shadow: 0 0 10px rgba(237, 175, 184, 0.5);
     transform: scale(1.2);
 }
 
@@ -237,4 +237,73 @@
         opacity: 0;
         transform: translateX(-50%) translateY(20px);
     }
+}
+/* ===== 日夜景切換 ===== */
+/* 夜景圖層：疊在日景上方，靠 opacity 交叉淡化 */
+.ext3d-night-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: transform 0.08s linear, opacity 1.2s ease;
+}
+
+.ext3d-slide.night .ext3d-night-layer {
+    opacity: 1;
+}
+
+/* 切換按鈕：玻璃質感膠囊 + 日/夜分段 */
+.ext3d-daynight {
+    position: absolute;
+    right: 40px;
+    bottom: 100px;
+    z-index: 12;
+    display: flex;
+    gap: 4px;
+    padding: 5px;
+    border-radius: 50px;
+    background: rgba(30, 35, 36, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.dn-option {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 20px;
+    border: none;
+    border-radius: 40px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.55);
+    font-family: var(--font-serif);
+    font-size: 15px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: background 0.45s ease, color 0.45s ease, box-shadow 0.45s ease;
+}
+
+.dn-option svg {
+    width: 17px;
+    height: 17px;
+}
+
+.dn-option:hover {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* 日景 active：晨光暖金 */
+.dn-option.day.active {
+    background: linear-gradient(135deg, #F7E1D7 0%, #EDAFB8 100%);
+    color: #4A5759;
+    box-shadow: 0 2px 12px rgba(237, 175, 184, 0.45);
+}
+
+/* 夜景 active：暮色深藍 + 粉色月光描邊 */
+.dn-option.night.active {
+    background: linear-gradient(135deg, #4A5759 0%, #353F41 100%);
+    color: #F7E1D7;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(237, 175, 184, 0.35);
 }

@@ -1,7 +1,7 @@
 {
-  "name": "fuyu-academic-forest",
+  "name": "lamour-digital-display-board",
   "version": "1.0.0",
-  "description": "富宇學森 The Academic Forest",
+  "description": "富宇樂慕 LAMOUR",
   "main": "index.html",
   "scripts": {
     "dev": "npx serve .",
@@ -22,8 +22,8 @@
     "sharp": "^0.34.5"
   },
   "build": {
-    "appId": "com.fuyuacademicforest.app",
-    "productName": "富宇學森",
+    "appId": "com.lamourddb.app",
+    "productName": "富宇樂慕",
     "asar": false,
     "extraMetadata": {
       "main": "electron/main.js"
@@ -66,12 +66,12 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "富宇學森",
+      "shortcutName": "富宇樂慕",
       "installerIcon": "app-icon-256.png",
       "uninstallerIcon": "app-icon-256.png"
     },
     "portable": {
-      "artifactName": "富宇學森-${version}-portable.exe"
+      "artifactName": "富宇樂慕-${version}-portable.exe"
     }
   }
 }

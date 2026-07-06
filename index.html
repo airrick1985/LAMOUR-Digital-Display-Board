@@ -7,25 +7,25 @@
     <meta name="app-version" content="1.0.3">
     <script>
       if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
-        document.write('<base href="/fuyu-academic-forest/">');
+        document.write('<base href="/LAMOUR-Digital-Display-Board/">');
       }
     </script>
-    <title>富宇學森-電子表板</title>
+    <title>富宇樂慕-電子表板</title>
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2D5016">
+    <meta name="theme-color" content="#4A5759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="富宇學森">
+    <meta name="apple-mobile-web-app-title" content="富宇樂慕">
     <link rel="apple-touch-icon" href="assets/images/fuyu-logo.webp">
     <!-- CSS -->
-    <link rel="stylesheet" href="css/variables.css?v=1.0.2">
-    <link rel="stylesheet" href="css/global.css?v=1.0.2">
-    <link rel="stylesheet" href="css/topbar.css?v=1.0.2">
-    <link rel="stylesheet" href="css/hero.css?v=1.0.2">
+    <link rel="stylesheet" href="css/variables.css?v=1.0.3">
+    <link rel="stylesheet" href="css/global.css?v=1.0.3">
+    <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
+    <link rel="stylesheet" href="css/hero.css?v=1.0.5">
     <!-- PWA Update Loading Screen -->
     <style id="pwa-loading-style">
       #pwa-loading-overlay {
@@ -34,7 +34,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, #0A1F0A 0%, #1a3a1a 100%);
+        background: linear-gradient(135deg, #353F41 0%, #4A5759 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -56,7 +56,7 @@
         height: 60px;
         margin: 0 auto 20px;
         border: 3px solid rgba(255, 255, 255, 0.2);
-        border-top-color: #2D5016;
+        border-top-color: #EDAFB8;
         border-radius: 50%;
         animation: pwa-spin 1s linear infinite;
       }
@@ -87,7 +87,9 @@
     <section class="hero">
         <!-- Background -->
         <div class="hero-bg">
-            <img src="assets/images/hero-forest.webp" alt="Forest Background">
+            <!-- 雙影片交叉淡化實現無縫循環，播放速度由 hero-video.js 控制 -->
+            <video class="is-active" src="assets/video/home_background_slow.mp4" autoplay muted playsinline preload="auto"></video>
+            <video src="assets/video/home_background_slow.mp4" muted playsinline preload="auto"></video>
         </div>
         <div class="hero-overlay"></div>
 
@@ -97,11 +99,12 @@
         <!-- Content -->
         <div class="hero-content">
             <!-- 建案專屬 LOGO，data-logo-url 替換為建案的 logo.png 或 SVG 檔案即可套用 -->
-            <div class="hero-logo" style="--logo-url: url('../assets/images/xuesen_logo.webp');">
-                <img src="assets/images/xuesen_logo.webp" alt="富宇學森 LOGO">
+            <div class="hero-logo" style="--logo-url: url('../assets/images/lamour_logo.webp');">
+                <img src="assets/images/lamour_logo.webp" alt="富宇樂慕 LOGO">
                 <div class="logo-shine-layer"></div>
             </div>
-            <h2 class="hero-slogan">學境寓所．校園共森</h2>
+            <h2 class="hero-slogan">－預見未來，選定這隅綻放－</h2>
+            <p class="hero-slogan-en">See the future, bloom here.</p>
         </div>
 
         <!-- 底部導航至 ANXI 官網 -->
@@ -112,9 +115,11 @@
 
     <!-- JS -->
     <script src="js/topbar.js?v=1.0.2"></script>
-    <script src="js/fireflies.js?v=1.0.2"></script>
+    <script src="js/fireflies.js?v=1.0.3"></script>
+    <script src="js/hero-video.js?v=1.0.0"></script>
     <script src="js/birds.js?v=1.0.2"></script>
 
+    <script src="js/cursor-petals.js?v=1.0.2"></script>
     <script src="js/spa-router.js?v=1.0.2"></script>
     <!-- Asset Update Manager -->
     <script src="js/asset-update-manager.js"></script>

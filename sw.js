@@ -2,17 +2,17 @@
 
 // Version is read from HTML meta tag and cached here
 let CACHE_VERSION = '1.0.0';
-let CACHE_NAME = `fuyu-forest-${CACHE_VERSION}`;
+let CACHE_NAME = `lamour-ddb-${CACHE_VERSION}`;
 
 // Asset manifest cache name
-const MANIFEST_CACHE_NAME = 'fuyu-asset-manifest-v1';
+const MANIFEST_CACHE_NAME = 'lamour-asset-manifest-v1';
 
 // 檢測是否在 Electron 環境中運行
 // Service Worker 中 window 未定義，使用 self.location.origin 來判斷
 const IS_ELECTRON = typeof self !== 'undefined' &&
                    (self.location.origin === 'http://localhost:3456' ||
                     self.location.origin.includes('localhost'));
-const BASE_PATH = IS_ELECTRON ? '' : '/fuyu-academic-forest';
+const BASE_PATH = IS_ELECTRON ? '' : '/LAMOUR-Digital-Display-Board';
 
 // 路徑轉換函數
 function resolvePath(path) {
@@ -61,7 +61,8 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           // Delete caches that don't match current version, but preserve manifest cache
-          if (!cacheName.includes(CACHE_VERSION) && cacheName !== MANIFEST_CACHE_NAME) {
+          // Also delete legacy caches from the old fuyu-academic-forest naming
+          if ((!cacheName.includes(CACHE_VERSION) && cacheName !== MANIFEST_CACHE_NAME) || cacheName.startsWith('fuyu-')) {
             console.log(`[SW] Deleting old cache: ${cacheName}`);
             return caches.delete(cacheName).then(() => {
               console.log(`[SW] Successfully deleted: ${cacheName}`);
@@ -187,12 +188,12 @@ self.addEventListener('message', event => {
       console.log(`[SW] Version update detected: ${CACHE_VERSION} → ${newVersion}`);
       const oldVersion = CACHE_VERSION;
       CACHE_VERSION = newVersion;
-      CACHE_NAME = `fuyu-forest-${CACHE_VERSION}`;
+      CACHE_NAME = `lamour-ddb-${CACHE_VERSION}`;
 
       // 立即清除舊版本緩存
       caches.keys().then(cacheNames => {
         cacheNames.forEach(cacheName => {
-          if (cacheName.includes(`fuyu-forest-${oldVersion}`)) {
+          if (cacheName.includes(`lamour-ddb-${oldVersion}`)) {
             console.log(`[SW] 🗑️ 清除舊緩存: ${cacheName}`);
             caches.delete(cacheName);
           }

@@ -7,25 +7,25 @@
     <meta name="app-version" content="1.0.3">
     <script>
       if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
-        document.write('<base href="/fuyu-academic-forest/">');
+        document.write('<base href="/LAMOUR-Digital-Display-Board/">');
       }
     </script>
-    <title>平面規劃 - 富宇學森 The Academic Forest</title>
+    <title>平面規劃 - 富宇樂慕 LAMOUR</title>
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2D5016">
+    <meta name="theme-color" content="#4A5759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="富宇學森">
+    <meta name="apple-mobile-web-app-title" content="富宇樂慕">
     <link rel="apple-touch-icon" href="assets/images/fuyu-logo.webp">
     <!-- CSS -->
-    <link rel="stylesheet" href="css/variables.css?v=1.0.2">
-    <link rel="stylesheet" href="css/global.css?v=1.0.2">
-    <link rel="stylesheet" href="css/topbar.css?v=1.0.2">
-    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.2">
+    <link rel="stylesheet" href="css/variables.css?v=1.0.3">
+    <link rel="stylesheet" href="css/global.css?v=1.0.3">
+    <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
+    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.3">
     <!-- Pannellum 360 全景套件（本地版本） -->
     <link rel="stylesheet" href="assets/pannellum/pannellum.min.css">
     <!-- PWA Update Loading Screen -->
@@ -36,7 +36,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, #0A1F0A 0%, #1a3a1a 100%);
+        background: linear-gradient(135deg, #353F41 0%, #4A5759 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -58,7 +58,7 @@
         height: 60px;
         margin: 0 auto 20px;
         border: 3px solid rgba(255, 255, 255, 0.2);
-        border-top-color: #2D5016;
+        border-top-color: #EDAFB8;
         border-radius: 50%;
         animation: pwa-spin 1s linear infinite;
       }
@@ -301,45 +301,45 @@
     <div class="fp-info-lightbox" id="fpInfoLightbox">
         <!-- 圖片輪播 -->
         <div class="fp-info-slide active" data-id="hall"
-             data-title="學森大廳" data-subtitle="GRAND LOBBY"
-             data-desc="挑高氣派的迎賓門廳，以溫潤木質與石材鋪陳，搭配藝術燈光與綠意中庭意象，迎來富宇學森第一道優雅序章。">
+             data-title="樂慕大廳" data-subtitle="GRAND LOBBY"
+             data-desc="挑高氣派的迎賓門廳，以溫潤木質與石材鋪陳，搭配藝術燈光與綠意中庭意象，迎來富宇樂慕第一道優雅序章。">
             <div class="fp-info-img-wrap">
-                <img src="assets/images/3D-03.webp" alt="富宇學森 1F - 學森大廳" draggable="false">
+                <img src="assets/images/3D-03.webp" alt="富宇樂慕 1F - 樂慕大廳" draggable="false">
             </div>
         </div>
         <div class="fp-info-slide" data-id="meeting"
              data-title="雅森會客區" data-subtitle="ELEGANT LOUNGE"
              data-desc="低調奢華的會客交流空間，融合柔軟坐席與精品設計家具，提供住戶迎賓接待、靜謐閱讀與輕鬆社交的場域。">
             <div class="fp-info-img-wrap">
-                <img src="assets/images/3D-04.webp" alt="富宇學森 1F - 雅森會客區" draggable="false">
+                <img src="assets/images/3D-04.webp" alt="富宇樂慕 1F - 雅森會客區" draggable="false">
             </div>
         </div>
         <div class="fp-info-slide" data-id="class"
              data-title="知森家教室" data-subtitle="STUDY ROOM"
              data-desc="為下一代量身打造的靜謐學習空間，明亮自然光與專屬書桌規劃，培養孩子專注學習的最佳場景。">
             <div class="fp-info-img-wrap">
-                <img src="assets/images/3D-05.webp" alt="富宇學森 1F - 知森家教室" draggable="false">
+                <img src="assets/images/3D-05.webp" alt="富宇樂慕 1F - 知森家教室" draggable="false">
             </div>
         </div>
         <div class="fp-info-slide" data-id="gym"
              data-title="氧森健身房" data-subtitle="FITNESS CENTER"
              data-desc="採光通透的專業健身空間，配備有氧與重訓器材，於家中即可輕鬆完成日常運動，常保健康活力。">
             <div class="fp-info-img-wrap">
-                <img src="assets/images/3D-06.webp" alt="富宇學森 1F - 氧森健身房" draggable="false">
+                <img src="assets/images/3D-06.webp" alt="富宇樂慕 1F - 氧森健身房" draggable="false">
             </div>
         </div>
         <div class="fp-info-slide" data-id="lounge"
              data-title="悅森 Lounge" data-subtitle="JOYFUL LOUNGE"
              data-desc="溫潤悠閒的休憩交誼廳，吧檯、沙發與品味擺設交織出夜晚最舒心的角落，獨享或共聚都自在從容。">
             <div class="fp-info-img-wrap">
-                <img src="assets/images/3D-07.webp" alt="富宇學森 1F - 悅森Lounge" draggable="false">
+                <img src="assets/images/3D-07.webp" alt="富宇樂慕 1F - 悅森Lounge" draggable="false">
             </div>
         </div>
         <div class="fp-info-slide" data-id="garden"
              data-title="沐森景觀庭園" data-subtitle="LANDSCAPE GARDEN"
              data-desc="以森林意象延伸的戶外綠意庭園，喬木、灌木與水景層層堆疊，提供住戶日常散步、靜心冥想的療癒之所。">
             <div class="fp-info-img-wrap">
-                <img src="assets/images/3D-08.webp" alt="富宇學森 1F - 沐森景觀庭園" draggable="false">
+                <img src="assets/images/3D-08.webp" alt="富宇樂慕 1F - 沐森景觀庭園" draggable="false">
             </div>
         </div>
 
@@ -360,7 +360,7 @@
 
         <!-- 左下文字卡 -->
         <div class="fp-info-card" id="fpInfoCard">
-            <h3 class="info-title" id="fpInfoTitle">學森大廳</h3>
+            <h3 class="info-title" id="fpInfoTitle">樂慕大廳</h3>
             <p class="info-subtitle" id="fpInfoSubtitle">GRAND LOBBY</p>
             <div class="info-divider"></div>
             <p class="info-description" id="fpInfoDesc"></p>
@@ -889,7 +889,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, #0A1F0A 0%, #1a3a1a 100%);
+        background: linear-gradient(135deg, #353F41 0%, #4A5759 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -911,7 +911,7 @@
         height: 60px;
         margin: 0 auto 20px;
         border: 3px solid rgba(255, 255, 255, 0.2);
-        border-top-color: #2D5016;
+        border-top-color: #EDAFB8;
         border-radius: 50%;
         animation: pwa-spin 1s linear infinite;
       }
@@ -1582,7 +1582,7 @@
             const hotspotsData = [
   {
     "id": "hall",
-    "label": "學森大廳",
+    "label": "樂慕大廳",
     "img": "assets/images/3D-03.webp",
     "x": 57.6,
     "y": 54.2
@@ -1920,6 +1920,7 @@
         })();
     </script>
     <script src="js/fireflies.js?v=2"></script>
+    <script src="js/cursor-petals.js?v=1.0.2"></script>
     <script src="js/spa-router.js?v=1.0.2"></script>
     <!-- Pannellum 360 必須在初始化前加載（同步加載，不用 defer）（本地版本） -->
     <script src="assets/pannellum/pannellum.min.js"></script>

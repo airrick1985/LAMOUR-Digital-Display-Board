@@ -7,25 +7,25 @@
     <meta name="app-version" content="1.0.3">
     <script>
       if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
-        document.write('<base href="/fuyu-academic-forest/">');
+        document.write('<base href="/LAMOUR-Digital-Display-Board/">');
       }
     </script>
-    <title>外觀3D - 富宇學森 The Academic Forest</title>
+    <title>外觀3D - 富宇樂慕 LAMOUR</title>
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2D5016">
+    <meta name="theme-color" content="#4A5759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="富宇學森">
+    <meta name="apple-mobile-web-app-title" content="富宇樂慕">
     <link rel="apple-touch-icon" href="assets/images/fuyu-logo.webp">
     <!-- CSS -->
-    <link rel="stylesheet" href="css/variables.css?v=1.0.2">
-    <link rel="stylesheet" href="css/global.css?v=1.0.2">
-    <link rel="stylesheet" href="css/topbar.css?v=1.0.2">
-    <link rel="stylesheet" href="css/exterior-3d.css?v=1.0.3">
+    <link rel="stylesheet" href="css/variables.css?v=1.0.3">
+    <link rel="stylesheet" href="css/global.css?v=1.0.3">
+    <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
+    <link rel="stylesheet" href="css/exterior-3d.css?v=1.0.4">
     <!-- PWA Update Loading Screen -->
     <style id="pwa-loading-style">
       #pwa-loading-overlay {
@@ -34,7 +34,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, #0A1F0A 0%, #1a3a1a 100%);
+        background: linear-gradient(135deg, #353F41 0%, #4A5759 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -56,7 +56,7 @@
         height: 60px;
         margin: 0 auto 20px;
         border: 3px solid rgba(255, 255, 255, 0.2);
-        border-top-color: #2D5016;
+        border-top-color: #EDAFB8;
         border-radius: 50%;
         animation: pwa-spin 1s linear infinite;
       }
@@ -86,11 +86,12 @@
     <div class="ext3d-viewer" id="ext3dViewer">
 
         <!-- 圖片輪播 -->
-        <div class="ext3d-slide active" data-index="0">
-            <img src="assets/images/3D-01.webp" alt="富宇學森 外觀3D透視圖 - 日景" draggable="false">
+        <div class="ext3d-slide active" data-index="0" id="dayNightSlide">
+            <img src="assets/images/3D-01.webp" alt="富宇樂慕 外觀3D透視圖 - 日景" draggable="false">
+            <img class="ext3d-night-layer" src="assets/images/3D-01-night.webp" alt="富宇樂慕 外觀3D透視圖 - 夜景" draggable="false">
         </div>
         <div class="ext3d-slide" data-index="1">
-            <img src="assets/images/3D-02.webp" alt="富宇學森 外觀3D透視圖 - 夜間光影" draggable="false">
+            <img src="assets/images/3D-02.webp" alt="富宇樂慕 外觀3D透視圖 - 夜間光影" draggable="false">
         </div>
 
         <!-- 左右箭頭 -->
@@ -114,6 +115,23 @@
         <div class="ext3d-title-overlay">
             <h2>外觀3D</h2>
             <p>EXTERIOR 3D RENDERING</p>
+        </div>
+
+        <!-- 日夜景切換 -->
+        <div class="ext3d-daynight" id="dayNightToggle">
+            <button class="dn-option day active" id="dnDay" aria-label="日景">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                </svg>
+                <span>日景</span>
+            </button>
+            <button class="dn-option night" id="dnNight" aria-label="夜景">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <span>夜景</span>
+            </button>
         </div>
 
         <!-- 計數器 -->
@@ -169,6 +187,9 @@
                 dotsContainer.children[currentIndex].classList.add('active');
                 counter.textContent = `${currentIndex + 1} / ${totalSlides}`;
 
+                // 只有第一張（有日夜景圖層）顯示切換按鈕
+                dayNightToggle.style.display = currentIndex === 0 ? 'flex' : 'none';
+
                 // 確保新圖片的縮放也已重設
                 resetSlideTransform(currentIndex);
             }
@@ -181,6 +202,21 @@
                 if (e.key === 'ArrowLeft') goToSlide(currentIndex - 1);
                 if (e.key === 'ArrowRight') goToSlide(currentIndex + 1);
             });
+
+            // ===== 日夜景切換 =====
+            const dayNightToggle = document.getElementById('dayNightToggle');
+            const dayNightSlide = document.getElementById('dayNightSlide');
+            const dnDay = document.getElementById('dnDay');
+            const dnNight = document.getElementById('dnNight');
+
+            function setNightMode(on) {
+                dayNightSlide.classList.toggle('night', on);
+                dnDay.classList.toggle('active', !on);
+                dnNight.classList.toggle('active', on);
+            }
+
+            dnDay.addEventListener('click', () => setNightMode(false));
+            dnNight.addEventListener('click', () => setNightMode(true));
 
             // ===== 每張圖片獨立的縮放/拖曳 =====
             const slideStates = Array.from(slides).map(() => ({
@@ -212,18 +248,22 @@
                     s.translateX = Math.max(-maxTx, Math.min(maxTx, s.translateX));
                     s.translateY = Math.max(-maxTy, Math.min(maxTy, s.translateY));
                 }
-                img.style.transform = `translate(${s.translateX}px, ${s.translateY}px) scale(${s.scale})`;
+                // 套用到 slide 內所有圖層（日/夜景層需同步縮放拖曳）
+                slides[index].querySelectorAll('img').forEach(layer => {
+                    layer.style.transform = `translate(${s.translateX}px, ${s.translateY}px) scale(${s.scale})`;
+                });
             }
 
             function resetSlideTransform(index) {
                 slideStates[index] = { scale: 1, translateX: 0, translateY: 0 };
-                const img = slides[index].querySelector('img');
-                img.style.transform = 'translate(0px, 0px) scale(1)';
+                slides[index].querySelectorAll('img').forEach(layer => {
+                    layer.style.transform = 'translate(0px, 0px) scale(1)';
+                });
             }
 
             // --- 拖曳 ---
             viewer.addEventListener('mousedown', (e) => {
-                if (e.target.closest('.ext3d-arrow') || e.target.closest('.ext3d-dot')) return;
+                if (e.target.closest('.ext3d-arrow') || e.target.closest('.ext3d-dot') || e.target.closest('.ext3d-daynight')) return;
                 isDragging = true;
                 startX = e.clientX;
                 startY = e.clientY;
@@ -266,7 +306,7 @@
 
             // --- 雙擊還原 ---
             viewer.addEventListener('dblclick', (e) => {
-                if (e.target.closest('.ext3d-arrow') || e.target.closest('.ext3d-dot')) return;
+                if (e.target.closest('.ext3d-arrow') || e.target.closest('.ext3d-dot') || e.target.closest('.ext3d-daynight')) return;
                 resetSlideTransform(currentIndex);
                 // 還原後重新播放 Ken Burns
                 const slide = slides[currentIndex];
@@ -277,6 +317,7 @@
 
         })();
     </script>
+    <script src="js/cursor-petals.js?v=1.0.2"></script>
     <script src="js/spa-router.js?v=1.0.2"></script>
     <!-- Asset Update Manager -->
     <script src="js/asset-update-manager.js"></script>

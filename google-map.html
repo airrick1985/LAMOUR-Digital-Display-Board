@@ -7,25 +7,25 @@
     <meta name="app-version" content="1.0.3">
     <script>
       if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
-        document.write('<base href="/fuyu-academic-forest/">');
+        document.write('<base href="/LAMOUR-Digital-Display-Board/">');
       }
     </script>
-    <title>基地位置 - Google地圖 - 富宇學森 The Academic Forest</title>
+    <title>基地位置 - Google地圖 - 富宇樂慕 LAMOUR</title>
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2D5016">
+    <meta name="theme-color" content="#4A5759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="富宇學森">
+    <meta name="apple-mobile-web-app-title" content="富宇樂慕">
     <link rel="apple-touch-icon" href="assets/images/fuyu-logo.webp">
     <!-- CSS -->
-    <link rel="stylesheet" href="css/variables.css?v=1.0.2">
-    <link rel="stylesheet" href="css/global.css?v=1.0.2">
-    <link rel="stylesheet" href="css/topbar.css?v=1.0.2">
-    <link rel="stylesheet" href="css/google-map.css?v=1.0.2">
+    <link rel="stylesheet" href="css/variables.css?v=1.0.3">
+    <link rel="stylesheet" href="css/global.css?v=1.0.3">
+    <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
+    <link rel="stylesheet" href="css/google-map.css?v=1.0.3">
     <!-- PWA Update Loading Screen -->
     <style id="pwa-loading-style">
       #pwa-loading-overlay {
@@ -34,7 +34,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, #0A1F0A 0%, #1a3a1a 100%);
+        background: linear-gradient(135deg, #353F41 0%, #4A5759 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -56,7 +56,7 @@
         height: 60px;
         margin: 0 auto 20px;
         border: 3px solid rgba(255, 255, 255, 0.2);
-        border-top-color: #2D5016;
+        border-top-color: #EDAFB8;
         border-radius: 50%;
         animation: pwa-spin 1s linear infinite;
       }
@@ -246,7 +246,7 @@
             const locationData = {
                 lat: 24.787786,
                 lng: 121.015289,
-                title: '富宇學森基地位置',
+                title: '富宇樂慕基地位置',
                 address: '新竹市東區長春街'
             };
 
@@ -375,12 +375,12 @@
                 // 為 CHIP 添加懸停效果
                 baseLocationChip.addEventListener('mouseover', function() {
                     this.style.transform = 'scale(1.05)';
-                    this.style.boxShadow = '0 6px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.5)';
+                    this.style.boxShadow = '0 6px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(237, 175, 184, 0.5)';
                 });
 
                 baseLocationChip.addEventListener('mouseout', function() {
                     this.style.transform = 'scale(1)';
-                    this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 215, 0, 0.3)';
+                    this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(237, 175, 184, 0.3)';
                 });
 
                 // ===== 添加呼吸感的黃色光球 =====
@@ -395,9 +395,9 @@
                     },
                     radius: 50,
                     map: map,
-                    fillColor: '#FFD700',
+                    fillColor: '#EDAFB8',
                     fillOpacity: 0.1,
-                    strokeColor: '#FFD700',
+                    strokeColor: '#EDAFB8',
                     strokeWeight: 2,
                     strokeOpacity: 0.3
                 });
@@ -411,9 +411,9 @@
                     },
                     radius: 30,
                     map: map,
-                    fillColor: '#FFD700',
+                    fillColor: '#EDAFB8',
                     fillOpacity: 0.2,
-                    strokeColor: '#FFD700',
+                    strokeColor: '#EDAFB8',
                     strokeWeight: 2,
                     strokeOpacity: 0.5
                 });
@@ -427,7 +427,7 @@
                     },
                     radius: 12,
                     map: map,
-                    fillColor: '#FFD700',
+                    fillColor: '#EDAFB8',
                     fillOpacity: 0.8,
                     strokeColor: '#FFFFFF',
                     strokeWeight: 2,
@@ -507,7 +507,7 @@
                         this.div.style.cssText = `
                             position: absolute;
                             background: rgba(20, 30, 20, 0.97);
-                            border: 1px solid rgba(255, 215, 0, 0.3);
+                            border: 1px solid rgba(237, 175, 184, 0.3);
                             border-radius: 12px;
                             padding: 14px;
                             min-width: 260px;
@@ -596,7 +596,7 @@
                         // 創建面板內容
                         const panelContent = `
                             <div style="margin-bottom: 12px;">
-                                <div style="color: #FFD700; font-weight: 600; font-size: 13px; margin-bottom: 8px;">📍 ${locationName}</div>
+                                <div style="color: #EDAFB8; font-weight: 600; font-size: 13px; margin-bottom: 8px;">📍 ${locationName}</div>
                                 <div style="color: rgba(255, 255, 255, 0.6); font-size: 11px;">
                                     <div>緯度: ${lat.toFixed(6)}</div>
                                     <div>經度: ${lng.toFixed(6)}</div>
@@ -605,10 +605,10 @@
                             <button class="custom-panel-navigate" style="
                                 width: 100%;
                                 padding: 9px;
-                                background: linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(255, 200, 0, 0.8));
+                                background: linear-gradient(135deg, rgba(237, 175, 184, 0.9), rgba(255, 200, 0, 0.8));
                                 border: none;
                                 border-radius: 6px;
-                                color: #0A1F0A;
+                                color: #353F41;
                                 font-weight: 600;
                                 font-size: 12px;
                                 cursor: pointer;
@@ -619,7 +619,7 @@
                                 width: 100%;
                                 padding: 7px;
                                 background: transparent;
-                                border: 1px solid rgba(255, 215, 0, 0.3);
+                                border: 1px solid rgba(237, 175, 184, 0.3);
                                 border-radius: 6px;
                                 color: rgba(255, 255, 255, 0.7);
                                 font-size: 11px;
@@ -649,11 +649,11 @@
                                 });
 
                                 navBtn.addEventListener('mouseover', () => {
-                                    navBtn.style.background = 'linear-gradient(135deg, rgba(255, 215, 0, 1), rgba(255, 200, 0, 1))';
-                                    navBtn.style.boxShadow = '0 0 12px rgba(255, 215, 0, 0.5)';
+                                    navBtn.style.background = 'linear-gradient(135deg, rgba(237, 175, 184, 1), rgba(255, 200, 0, 1))';
+                                    navBtn.style.boxShadow = '0 0 12px rgba(237, 175, 184, 0.5)';
                                 });
                                 navBtn.addEventListener('mouseout', () => {
-                                    navBtn.style.background = 'linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(255, 200, 0, 0.8))';
+                                    navBtn.style.background = 'linear-gradient(135deg, rgba(237, 175, 184, 0.9), rgba(255, 200, 0, 0.8))';
                                     navBtn.style.boxShadow = 'none';
                                 });
                             }
@@ -668,11 +668,11 @@
                                 });
 
                                 closeBtn.addEventListener('mouseover', () => {
-                                    closeBtn.style.borderColor = 'rgba(255, 215, 0, 0.6)';
+                                    closeBtn.style.borderColor = 'rgba(237, 175, 184, 0.6)';
                                     closeBtn.style.color = 'rgba(255, 255, 255, 0.9)';
                                 });
                                 closeBtn.addEventListener('mouseout', () => {
-                                    closeBtn.style.borderColor = 'rgba(255, 215, 0, 0.3)';
+                                    closeBtn.style.borderColor = 'rgba(237, 175, 184, 0.3)';
                                     closeBtn.style.color = 'rgba(255, 255, 255, 0.7)';
                                 });
                             }
@@ -694,7 +694,7 @@
                     left: 0;
                     right: 0;
                     background: rgba(20, 30, 20, 0.97);
-                    border: 1px solid rgba(255, 215, 0, 0.3);
+                    border: 1px solid rgba(237, 175, 184, 0.3);
                     border-top: none;
                     border-radius: 0 0 8px 8px;
                     list-style: none;
@@ -748,13 +748,13 @@
                                             color: #E8F5E9;
                                             font-size: 13px;
                                             cursor: pointer;
-                                            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+                                            border-bottom: 1px solid rgba(237, 175, 184, 0.1);
                                             transition: background 0.2s ease;
                                         `;
                                         li.textContent = prediction.description;
 
                                         li.addEventListener('mouseover', () => {
-                                            li.style.background = 'rgba(255, 215, 0, 0.1)';
+                                            li.style.background = 'rgba(237, 175, 184, 0.1)';
                                         });
                                         li.addEventListener('mouseout', () => {
                                             li.style.background = 'transparent';
@@ -1281,13 +1281,13 @@
                     const banner = document.createElement('div');
                     banner.id = 'navigation-info-banner';
                     banner.innerHTML = `
-                        <div style="background: rgba(255, 215, 0, 0.95); color: #0A1F0A; padding: 14px 20px; border-radius: 8px; font-weight: 600; text-align: center; display: flex; align-items: center; justify-content: center; gap: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
+                        <div style="background: rgba(237, 175, 184, 0.95); color: #353F41; padding: 14px 20px; border-radius: 8px; font-weight: 600; text-align: center; display: flex; align-items: center; justify-content: center; gap: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
                             <span>📍 ${locationName}</span>
                             <span style="color: #666; font-weight: 500;">|</span>
                             <span>${distance}km</span>
                             <span style="color: #666; font-weight: 500;">|</span>
                             <span>⏱️ 約 ${duration} 分鐘</span>
-                            <button style="background: none; border: none; cursor: pointer; font-size: 18px; color: #0A1F0A; margin-left: auto; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onclick="
+                            <button style="background: none; border: none; cursor: pointer; font-size: 18px; color: #353F41; margin-left: auto; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" onclick="
                                 if (window.currentPolyline) {
                                     window.currentPolyline.setMap(null);
                                     window.currentPolyline = null;
@@ -1349,6 +1349,7 @@
         })();
     </script>
 
+    <script src="js/cursor-petals.js?v=1.0.2"></script>
     <script src="js/spa-router.js?v=1.0.2"></script>
     <!-- Asset Update Manager -->
     <script src="js/asset-update-manager.js"></script>

@@ -1,17 +1,22 @@
 {
-  "version": "1.0.99",
-  "timestamp": 1782903177387,
-  "generatedAt": "2026-07-01T10:52:57.387Z",
+  "version": "1.0.100",
+  "timestamp": 1783337522220,
+  "generatedAt": "2026-07-06T11:32:02.220Z",
   "assets": {
     "assets/images/360pano.webp": {
-      "hash": "c6c3785fd4e1",
-      "size": 23399190,
-      "mtime": 1780811798288.3872
+      "hash": "d3173d8cd791",
+      "size": 21768976,
+      "mtime": 1783332337566.9717
+    },
+    "assets/images/3D-01-night.webp": {
+      "hash": "a30f48d83d30",
+      "size": 720434,
+      "mtime": 1783333780103.7856
     },
     "assets/images/3D-01.webp": {
-      "hash": "51e5c54337b1",
-      "size": 759538,
-      "mtime": 1778482727110.8484
+      "hash": "5ff77c9e743f",
+      "size": 929846,
+      "mtime": 1783333737754.5579
     },
     "assets/images/3D-02.webp": {
       "hash": "26ec6dfdd7d1",
@@ -19,34 +24,34 @@
       "mtime": 1780724548367.3154
     },
     "assets/images/3D-03.webp": {
-      "hash": "ef4d3a6a319a",
-      "size": 1026768,
-      "mtime": 1782902902806.7683
+      "hash": "da3d3ba3a086",
+      "size": 1154332,
+      "mtime": 1783333973996.696
     },
     "assets/images/3D-04.webp": {
-      "hash": "0e9270833fa7",
-      "size": 1005276,
-      "mtime": 1782902913564.4458
+      "hash": "fb705190f038",
+      "size": 1573236,
+      "mtime": 1783334101808.475
     },
     "assets/images/3D-05.webp": {
-      "hash": "5c6cdced84a0",
-      "size": 993730,
-      "mtime": 1782902926806.6128
+      "hash": "4833b05d6d1e",
+      "size": 1140770,
+      "mtime": 1783334042851.221
     },
     "assets/images/3D-06.webp": {
-      "hash": "f561997a3c65",
-      "size": 967594,
-      "mtime": 1782902937383.8584
+      "hash": "831ed5c48c5d",
+      "size": 767144,
+      "mtime": 1783333990969.3357
     },
     "assets/images/3D-07.webp": {
-      "hash": "1ab1294caeec",
-      "size": 988446,
-      "mtime": 1782902949763.8557
+      "hash": "a8206b25d5ef",
+      "size": 831794,
+      "mtime": 1783334022613.4553
     },
     "assets/images/3D-08.webp": {
-      "hash": "426bc4dd0aff",
-      "size": 1829236,
-      "mtime": 1780724533567.4329
+      "hash": "f34db935e4f2",
+      "size": 561762,
+      "mtime": 1783334138371.556
     },
     "assets/images/architect-01.webp": {
       "hash": "d80fea55c444",
@@ -54,9 +59,9 @@
       "mtime": 1774585152741.568
     },
     "assets/images/architect-02.webp": {
-      "hash": "32926f79b17b",
-      "size": 292480,
-      "mtime": 1778482670980.3508
+      "hash": "0f4bdae1d83b",
+      "size": 128144,
+      "mtime": 1783319034737.786
     },
     "assets/images/CCPark.webp": {
       "hash": "e3aee98db72e",
@@ -524,9 +529,9 @@
       "mtime": 1774585311693.7412
     },
     "assets/images/hero-forest.webp": {
-      "hash": "4fe5bb0ba7fd",
-      "size": 2208592,
-      "mtime": 1774543339148.1106
+      "hash": "925b077b2c2d",
+      "size": 750232,
+      "mtime": 1783320942002.4521
     },
     "assets/images/HSP.webp": {
       "hash": "3e5176799f43",
@@ -542,6 +547,11 @@
       "hash": "cb930418f1c1",
       "size": 755096,
       "mtime": 1780810598374.345
+    },
+    "assets/images/lamour_logo.webp": {
+      "hash": "73d60ade56a9",
+      "size": 95758,
+      "mtime": 1783309515424.1729
     },
     "assets/images/layout/1F.webp": {
       "hash": "d79d4f1032bd",
@@ -639,9 +649,9 @@
       "mtime": 1780219611810.0027
     },
     "assets/images/location.webp": {
-      "hash": "c5d4deb44551",
-      "size": 3029596,
-      "mtime": 1780807544326.363
+      "hash": "39579ed89aaf",
+      "size": 1307594,
+      "mtime": 1783323819204.1655
     },
     "assets/images/NEHS.webp": {
       "hash": "7e1f55d0308b",
@@ -673,10 +683,10 @@
       "size": 463814,
       "mtime": 1774585409411.2683
     },
-    "assets/images/xuesen_logo.webp": {
-      "hash": "fab186b97e0f",
-      "size": 112856,
-      "mtime": 1774585458700.3127
+    "assets/images/xinke-jh.webp": {
+      "hash": "d2579531b0db",
+      "size": 1890054,
+      "mtime": 1783325132438.1572
     },
     "assets/pannellum/pannellum.min.css": {
       "hash": "273b96f3a2ec",
@@ -689,114 +699,134 @@
       "mtime": 1775190611728.9397
     },
     "assets/sound/BGM.mp3": {
-      "hash": "c9e9e3376c99",
-      "size": 3732702,
-      "mtime": 1774532222924.2942
+      "hash": "9481f23a7212",
+      "size": 4343304,
+      "mtime": 1783337017096.5046
+    },
+    "assets/video/home_background.mp4": {
+      "hash": "0ca7da646ae5",
+      "size": 1995840,
+      "mtime": 1783310655788.7395
+    },
+    "assets/video/home_background_slow.mp4": {
+      "hash": "fb19eb530f5d",
+      "size": 3866150,
+      "mtime": 1783320018153.0667
     },
     "css/brand.css": {
-      "hash": "a3b499829337",
-      "size": 3353,
-      "mtime": 1774543362703.9128
+      "hash": "cfb04816c9e6",
+      "size": 4454,
+      "mtime": 1783319404747.8438
     },
     "css/coming-soon.css": {
-      "hash": "b72fa6839cf1",
-      "size": 2341,
-      "mtime": 1774585644211.4097
+      "hash": "47b65c9d8c79",
+      "size": 2235,
+      "mtime": 1783318889768.3577
     },
     "css/construction.css": {
-      "hash": "f8e10c54038d",
-      "size": 22313,
-      "mtime": 1781415735790.454
+      "hash": "141eb5527112",
+      "size": 22315,
+      "mtime": 1783318889790.3625
     },
     "css/exterior-3d.css": {
-      "hash": "f8d5b289ad18",
-      "size": 5086,
-      "mtime": 1780480896557.265
+      "hash": "2b9ba3641785",
+      "size": 6812,
+      "mtime": 1783334034269.7607
     },
     "css/floor-plan.css": {
-      "hash": "6ff2f3bafb99",
-      "size": 37671,
-      "mtime": 1778484838698.1335
+      "hash": "c47ccb7e891a",
+      "size": 37691,
+      "mtime": 1783318889814.3608
     },
     "css/global.css": {
-      "hash": "3ae12bd09be5",
-      "size": 1152,
-      "mtime": 1775980836526.0518
+      "hash": "84eff3d0f883",
+      "size": 1097,
+      "mtime": 1783318889827.366
     },
     "css/google-map.css": {
-      "hash": "8ba2e27607e0",
-      "size": 15338,
-      "mtime": 1776004466333.8564
+      "hash": "40115af4178e",
+      "size": 15402,
+      "mtime": 1783318889839.3674
     },
     "css/hero.css": {
-      "hash": "c3625a4385b8",
-      "size": 6079,
-      "mtime": 1774536028592.9312
+      "hash": "bf781f0aa678",
+      "size": 7174,
+      "mtime": 1783318934625.4421
     },
     "css/location.css": {
-      "hash": "614496b32f75",
-      "size": 7059,
-      "mtime": 1774942208796.6353
+      "hash": "15f4b5f4200b",
+      "size": 6752,
+      "mtime": 1783318889866.8828
     },
     "css/materials.css": {
       "hash": "26c3a4426108",
       "size": 23511,
-      "mtime": 1775975267274.4373
+      "mtime": 1783318889880.8828
     },
     "css/panorama.css": {
-      "hash": "c3a27e744779",
-      "size": 6501,
-      "mtime": 1774942235948.653
+      "hash": "4d90448a8b94",
+      "size": 8259,
+      "mtime": 1783324797887.324
     },
     "css/public-3d.css": {
-      "hash": "5a07af1714d4",
-      "size": 8105,
-      "mtime": 1778484368158.536
+      "hash": "ccbd05a5ebae",
+      "size": 8117,
+      "mtime": 1783318889906.8843
     },
     "css/topbar.css": {
-      "hash": "e5b4eb5b6cf0",
-      "size": 5955,
-      "mtime": 1780481135273.983
+      "hash": "271271d67e67",
+      "size": 5715,
+      "mtime": 1783318889922.8838
     },
     "css/variables.css": {
-      "hash": "0d8c0ce0351b",
-      "size": 865,
-      "mtime": 1774154142260.6814
+      "hash": "f6a56414aa93",
+      "size": 835,
+      "mtime": 1783318889939.891
     },
     "js/animations.js": {
       "hash": "3b61b715eddc",
       "size": 1105,
-      "mtime": 1775980782281.468
+      "mtime": 1783318889950.4116
     },
     "js/asset-update-manager.js": {
-      "hash": "b55fb95ef7e2",
-      "size": 13751,
-      "mtime": 1776234463578.9224
+      "hash": "bc24cd2f491e",
+      "size": 13767,
+      "mtime": 1783318889967.411
     },
     "js/birds.js": {
-      "hash": "5eea9680646d",
-      "size": 2957,
-      "mtime": 1774156285910.8396
+      "hash": "fe2da2c4480c",
+      "size": 2884,
+      "mtime": 1783318889988.4097
+    },
+    "js/cursor-petals.js": {
+      "hash": "14eb7c70b923",
+      "size": 8731,
+      "mtime": 1783320453923.2422
     },
     "js/fireflies.js": {
-      "hash": "908cf6e0f791",
-      "size": 2718,
-      "mtime": 1774155032212.1345
+      "hash": "1beea691a2aa",
+      "size": 4663,
+      "mtime": 1783318890009.4124
+    },
+    "js/hero-video.js": {
+      "hash": "dbc83cd5242c",
+      "size": 2103,
+      "mtime": 1783319866617.4448
     },
     "js/pwa-register.js": {
-      "hash": "f2457cf903ca",
-      "size": 14508,
-      "mtime": 1776234442471.6812
+      "hash": "3d9737b6c64a",
+      "size": 14129,
+      "mtime": 1783318890014.4111
     },
     "js/spa-router.js": {
-      "hash": "f9447121ce0f",
-      "size": 14842,
-      "mtime": 1776240343939.2778
+      "hash": "6e5a657a2857",
+      "size": 14549,
+      "mtime": 1783318890037.4177
     },
     "js/topbar.js": {
-      "hash": "7291c16b0618",
+      "hash": "860278b057aa",
       "size": 19129,
-      "mtime": 1780481112562.0989
+      "mtime": 1783318890061.517
     }
   }
 }

@@ -7,26 +7,26 @@
     <meta name="app-version" content="1.0.3">
     <script>
       if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
-        document.write('<base href="/fuyu-academic-forest/">');
+        document.write('<base href="/LAMOUR-Digital-Display-Board/">');
       }
     </script>
-    <title>全景 - 富宇學森 The Academic Forest</title>
+    <title>全景 - 富宇樂慕 LAMOUR</title>
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2D5016">
+    <meta name="theme-color" content="#4A5759">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="富宇學森">
+    <meta name="apple-mobile-web-app-title" content="富宇樂慕">
     <link rel="apple-touch-icon" href="assets/images/fuyu-logo.webp">
     <!-- CSS -->
-    <link rel="stylesheet" href="css/variables.css?v=1.0.2">
-    <link rel="stylesheet" href="css/global.css?v=1.0.2">
-    <link rel="stylesheet" href="css/topbar.css?v=1.0.2">
+    <link rel="stylesheet" href="css/variables.css?v=1.0.3">
+    <link rel="stylesheet" href="css/global.css?v=1.0.3">
+    <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
 
-    <link rel="stylesheet" href="css/panorama.css?v=1.0.2">
+    <link rel="stylesheet" href="css/panorama.css?v=1.0.5">
     <!-- PWA Update Loading Screen -->
     <style id="pwa-loading-style">
       #pwa-loading-overlay {
@@ -35,7 +35,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, #0A1F0A 0%, #1a3a1a 100%);
+        background: linear-gradient(135deg, #353F41 0%, #4A5759 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -57,7 +57,7 @@
         height: 60px;
         margin: 0 auto 20px;
         border: 3px solid rgba(255, 255, 255, 0.2);
-        border-top-color: #2D5016;
+        border-top-color: #EDAFB8;
         border-radius: 50%;
         animation: pwa-spin 1s linear infinite;
       }
@@ -92,7 +92,12 @@
     <div class="pnrm-modal-overlay" id="poiModal">
         <div class="pnrm-modal" style="position: relative;">
             <button class="pnrm-modal-close" id="poiModalClose">×</button>
-            <img class="pnrm-modal-img" id="poiModalImg" src="" alt="">
+            <div class="pnrm-modal-media">
+                <img class="pnrm-modal-img" id="poiModalImg" src="" alt="">
+                <button class="pnrm-slide-nav prev" id="poiSlidePrev" aria-label="上一張">&#10094;</button>
+                <button class="pnrm-slide-nav next" id="poiSlideNext" aria-label="下一張">&#10095;</button>
+            </div>
+            <div class="pnrm-modal-dots" id="poiModalDots"></div>
             <div class="pnrm-modal-body">
                 <h3 class="pnrm-modal-title" id="poiModalTitle"></h3>
                 <div class="pnrm-modal-subtitle" id="poiModalSubtitle"></div>
@@ -135,69 +140,55 @@
 
             const hotspots = [
                 {
-                    id: 'station', x: 4.88, y: 24.50, w: 1.0, h: 14.5,
-                    label: '新莊車站', title: '新莊車站', subtitle: 'TRAIN STATION',
-                    image: 'assets/images/train-station.webp', desc: '徒步11分鐘，約800公尺'
-                },
-                {
-                    id: 'KHPark', x: 22.42, y: 24.50, w: 1.0, h: 14.5,
-                    label: '關新公園', title: '關新公園', subtitle: 'Guanxin Park',
-                    image: 'assets/images/KHPark.webp', desc: '徒步8分鐘，約550公尺'
-                },
-                {
-                    id: 'HSP', x: 41.53, y: 24.50, w: 1.0, h: 14.5,
+                    id: 'HSP', x: 13.31, y: 29.00, w: 1.0, h: 14.5,
                     label: '竹科園區', title: '竹科園區', subtitle: 'Hsinchu Science Park',
-                    image: 'assets/images/HSP.webp', desc: '開車7分鐘，約2公里'
+                    image: 'assets/images/HSP.webp', desc: '距離1.6公里，開車5分鐘'
                 },
                 {
-                    id: 'CCpark', x: 52.84, y: 24.50, w: 1.0, h: 14.5,
-                    label: '長春公園', title: '長春公園', subtitle: 'Changchun Park',
-                    image: 'assets/images/CCPark.webp', desc: '徒步2分鐘，約120公尺'
-                },
-                {
-                    id: 'GWJH', x: 58.60, y: 24.50, w: 1.0, h: 14.5,
-                    label: '光武國中', title: '光武國中', subtitle: 'Guangwu Junior High School',
-                    image: 'assets/images/GWJH.webp', desc: '徒步6分鐘，約450公尺'
-                },
-                {
-                    id: 'NYIO', x: 61.32, y: 24.50, w: 1.0, h: 14.5,
-                    label: '紐約國際幼兒園', title: '紐約國際幼兒園', subtitle: 'New York International Organization',
-                    image: 'assets/images/NYIO.webp', desc: '徒步4分鐘，約300公尺'
-                },
-                {
-                    id: 'GPES', x: 64.60, y: 24.50, w: 1.0, h: 14.5,
-                    label: '關埔國小', title: '關埔國小', subtitle: 'Guanpu Elementary School',
-                    image: 'assets/images/GPES.webp', desc: '徒步5分鐘，約350公尺'
-                },
-                {
-                    id: 'Sun Yat-sen Freeway', x: 75.60, y: 24.50, w: 1.0, h: 14.5,
-                    label: '國道一號', title: '國道一號', subtitle: 'Sun Yat-sen Freeway',
-                    image: 'assets/images/Sun Yat-sen Freeway.webp', desc: '開車5分鐘，約1.5公里'
-                },
-                {
-                    id: 'Starbucks', x: 80.20, y: 24.50, w: 1.0, h: 14.5,
-                    label: '星巴克', title: '星巴克', subtitle: 'Starbucks',
-                    image: 'assets/images/Starbucks.webp', desc: '徒步8分鐘，約650公尺'
-                },
-                {
-                    id: 'DECATHLON', x: 88.00, y: 24.50, w: 1.0, h: 14.5,
-                    label: '迪卡儂', title: '迪卡儂', subtitle: 'DECATHLON',
-                    image: 'assets/images/DECATHLON.webp', desc: '開車4分鐘，約1公里'
-                },
-                {
-                    id: 'COSTCO', x: 96.80, y: 24.50, w: 1.0, h: 14.5,
-                    label: '好市多', title: '好市多', subtitle: 'COSTCO',
-                    image: 'assets/images/COSTCO.webp', desc: '開車6分鐘，約1.3公里'
-                },
-                {
-                    id: 'NEHS', x: 36.83, y: 24.50, w: 1.0, h: 14.5,
+                    id: 'NEHS', x: 27.81, y: 29.00, w: 1.0, h: 14.5,
                     label: '竹科實中', title: '竹科實中', subtitle: 'National Experimental High School',
-                    image: 'assets/images/NEHS.webp', desc: '開車5分鐘，約2公里'
+                    image: 'assets/images/NEHS.webp', desc: '距離1公里，開車3分鐘'
                 },
                 {
-                    id: 'LakePlacid', x: 45.06, y: 24.50, w: 1.0, h: 14.5,
+                    id: 'JinshanSt', x: 32.2, y: 29.00, w: 1.0, h: 14.5,
+                    label: '金山街商圈', title: '金山街商圈', subtitle: 'Jinshan Street Shopping District',
+                    image: 'assets/images/jinshan-street.webp', desc: '距離850公尺，開車3分鐘'
+                },
+                {
+                    id: 'LakePlacid', x: 36.89, y: 29.00, w: 1.0, h: 14.5,
                     label: '靜心湖', title: '靜心湖', subtitle: 'Lake Placid',
-                    image: 'assets/images/Lake-Placid.webp', desc: '開車5分鐘，約2.60公里'
+                    image: 'assets/images/Lake-Placid.webp', desc: '距離1.1公里，徒步17分鐘'
+                },
+                {
+                    id: 'JinshanmianPark', x: 53.15, y: 29.00, w: 1.0, h: 14.5,
+                    label: '金山面公園', title: '金山面公園', subtitle: 'Jinshanmian Park',
+                    image: 'assets/images/jinshanmian-park.webp', desc: '距離900公尺，徒步13分鐘'
+                },
+                {
+                    id: 'GuanpuDistrict', x: 60.47, y: 29.00, w: 1.0, h: 14.5,
+                    label: '關埔商圈', title: '關埔商圈', subtitle: 'Guanpu Shopping District',
+                    image: 'assets/images/Starbucks.webp',
+                    images: [
+                        'assets/images/Starbucks.webp',
+                        'assets/images/DECATHLON.webp',
+                        'assets/images/COSTCO.webp'
+                    ],
+                    desc: '距離1.6公里，開車8分鐘'
+                },
+                {
+                    id: 'XinkeJH', x: 65.99, y: 29.00, w: 1.0, h: 14.5,
+                    label: '新科國中', title: '新科國中', subtitle: 'Xinke Junior High School',
+                    image: 'assets/images/xinke-jh.webp', desc: '距離850公尺，開車4分鐘'
+                },
+                {
+                    id: 'GuandongES', x: 68.81, y: 29.00, w: 1.0, h: 14.5,
+                    label: '關東國小', title: '關東國小', subtitle: 'Guandong Elementary School',
+                    image: 'assets/images/guandong-es.webp', desc: '距離1公里，開車4分鐘'
+                },
+                {
+                    id: 'station', x: 72.28, y: 29.00, w: 1.0, h: 14.5,
+                    label: '新莊車站', title: '新莊車站', subtitle: 'Xinzhuang Train Station',
+                    image: 'assets/images/train-station.webp', desc: '距離900公尺，開車3分鐘'
                 }
             ];
 
@@ -408,9 +399,56 @@
             const modalDesc = document.getElementById('poiModalDesc');
             const modalClose = document.getElementById('poiModalClose');
 
+            // ===== 多圖手動輪播（hotspot 有 images 陣列時自動啟用） =====
+            const modalDots = document.getElementById('poiModalDots');
+            const slidePrev = document.getElementById('poiSlidePrev');
+            const slideNext = document.getElementById('poiSlideNext');
+            let slideImages = [];
+            let slideIndex = 0;
+
+            function showSlide(i) {
+                slideIndex = (i + slideImages.length) % slideImages.length;
+                modalImg.style.opacity = '0';
+                setTimeout(() => {
+                    modalImg.src = slideImages[slideIndex];
+                    modalImg.style.opacity = '1';
+                }, 200);
+                Array.from(modalDots.children).forEach((d, j) => {
+                    d.classList.toggle('active', j === slideIndex);
+                });
+            }
+
+            slidePrev.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showSlide(slideIndex - 1);
+            });
+            slideNext.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showSlide(slideIndex + 1);
+            });
+
             function openPoiModal(poi) {
-                modalImg.src = poi.image;
+                slideImages = poi.images || [poi.image];
+                slideIndex = 0;
+                modalImg.src = slideImages[0];
+                modalImg.style.opacity = '1';
                 modalImg.alt = poi.title;
+
+                // 單圖隱藏切換 UI，多圖顯示左右箭頭與圓點
+                const multi = slideImages.length > 1;
+                slidePrev.style.display = multi ? '' : 'none';
+                slideNext.style.display = multi ? '' : 'none';
+
+                modalDots.innerHTML = '';
+                if (multi) {
+                    slideImages.forEach((_, i) => {
+                        const dot = document.createElement('span');
+                        dot.className = 'pnrm-modal-dot' + (i === 0 ? ' active' : '');
+                        dot.addEventListener('click', () => showSlide(i));
+                        modalDots.appendChild(dot);
+                    });
+                }
+
                 modalTitle.textContent = poi.title;
                 modalSubtitle.textContent = poi.subtitle;
                 modalDesc.textContent = poi.desc;
@@ -427,11 +465,17 @@
             });
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closePoiModal();
+                // 彈窗開啟且為多圖時，方向鍵也能切換
+                if (modal.classList.contains('active') && slideImages.length > 1) {
+                    if (e.key === 'ArrowLeft') showSlide(slideIndex - 1);
+                    if (e.key === 'ArrowRight') showSlide(slideIndex + 1);
+                }
             });
 
         })();
     </script>
     <!-- Asset Update Manager -->
+    <script src="js/cursor-petals.js?v=1.0.2"></script>
     <script src="js/asset-update-manager.js"></script>
     <script src="js/pwa-register.js?v=1.0.2" defer></script>
 </body>

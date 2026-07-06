@@ -133,10 +133,10 @@ html:has(body.pano-page) {
     left: 50%;
     transform: translateX(-50%) translateY(10px);
     background: rgba(30, 40, 30, 0.95);
-    color: #ffd700;
+    color: #EDAFB8;
     padding: 8px 14px;
     border-radius: 6px;
-    border: 1px solid rgba(255, 215, 0, 0.4);
+    border: 1px solid rgba(237, 175, 184, 0.4);
     font-size: 14px;
     white-space: nowrap;
     opacity: 0;
@@ -209,6 +209,86 @@ html:has(body.pano-page) {
     border-radius: 8px; /* 輕微導角 */
     display: block;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); /* 增強立體感 */
+    transition: opacity 0.25s ease; /* 多圖輪播的淡入淡出 */
+}
+
+/* ===== 多圖輪播指示圓點 ===== */
+.pnrm-modal-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.pnrm-modal-dots:empty {
+    display: none;
+}
+
+.pnrm-modal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: background var(--transition-standard), transform var(--transition-standard);
+}
+
+.pnrm-modal-dot:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.pnrm-modal-dot.active {
+    background: var(--color-accent);
+    transform: scale(1.2);
+}
+
+/* ===== 多圖手動切換：左右箭頭 ===== */
+.pnrm-modal-media {
+    position: relative;
+    display: inline-block;
+}
+
+.pnrm-slide-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(30, 35, 36, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity var(--transition-standard),
+        background var(--transition-standard),
+        border-color var(--transition-standard);
+}
+
+.pnrm-slide-nav.prev {
+    left: 16px;
+}
+
+.pnrm-slide-nav.next {
+    right: 16px;
+}
+
+.pnrm-slide-nav:hover {
+    opacity: 1;
+    background: rgba(30, 35, 36, 0.75);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.pnrm-slide-nav:active {
+    transform: translateY(-50%) scale(0.92);
 }
 
 .pnrm-modal-body {
@@ -229,7 +309,7 @@ html:has(body.pano-page) {
 .pnrm-modal-subtitle {
     font-family: var(--font-english-serif);
     font-size: 14px;
-    color: rgba(255, 215, 0, 1);
+    color: rgba(237, 175, 184, 1);
     letter-spacing: 3px;
     margin-bottom: 12px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.8);
@@ -264,9 +344,9 @@ html:has(body.pano-page) {
 }
 
 .pnrm-modal-close:hover {
-    background: #ffd700;
+    background: #EDAFB8;
     color: #000;
-    border-color: #ffd700;
+    border-color: #EDAFB8;
     transform: rotate(90deg);
 }
 
