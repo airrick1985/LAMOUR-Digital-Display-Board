@@ -1,7 +1,7 @@
 {
-  "version": "1.0.100",
-  "timestamp": 1783337522220,
-  "generatedAt": "2026-07-06T11:32:02.220Z",
+  "version": "1.0.101",
+  "timestamp": 1783338389983,
+  "generatedAt": "2026-07-06T11:46:29.983Z",
   "assets": {
     "assets/images/360pano.webp": {
       "hash": "d3173d8cd791",
@@ -819,9 +819,9 @@
       "mtime": 1783318890014.4111
     },
     "js/spa-router.js": {
-      "hash": "6e5a657a2857",
-      "size": 14549,
-      "mtime": 1783318890037.4177
+      "hash": "e3b6372495d5",
+      "size": 14574,
+      "mtime": 1783338331067.7817
     },
     "js/topbar.js": {
       "hash": "860278b057aa",

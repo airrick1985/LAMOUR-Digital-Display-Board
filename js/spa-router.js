@@ -107,8 +107,8 @@ if (!window._spaRouterInitialized) {
               let src = img.getAttribute('src');
               // 如果是相對路徑，補上完整的 URL（跳過 data URI 和絕對 URL）
               if (src && !src.startsWith('http') && !src.startsWith('/') && !src.startsWith('data:')) {
-                // 使用 location.origin 確保在 Electron 中也能正確加載
-                const fullUrl = new URL(src, window.location.origin).href;
+                // 以當前完整網址為基準解析，保留 GitHub Pages 子路徑（Electron 也正確）
+                const fullUrl = new URL(src, window.location.href).href;
                 img.setAttribute('src', fullUrl);
               }
             });
@@ -149,7 +149,7 @@ if (!window._spaRouterInitialized) {
               let src = img.getAttribute('src');
               // 跳過 data URI 和絕對 URL，只修復相對路徑
               if (src && !src.startsWith('http') && !src.startsWith('/') && !src.startsWith('data:')) {
-                const fullUrl = new URL(src, window.location.origin).href;
+                const fullUrl = new URL(src, window.location.href).href;
                 img.setAttribute('src', fullUrl);
                 console.log(`[SPA Router] 修復圖片路徑: ${src} → ${fullUrl}`);
               }
