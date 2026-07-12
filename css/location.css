@@ -196,6 +196,76 @@ body.pano-page {
     }
 }
 
+/* ===== 熱點矩形（參考 panorama.html） =====
+ * 平常完全透明、只接受點擊;debug 模式顯示黃色矩形方便對位 */
+.loc-hotspot {
+    background: transparent;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.loc-hotspot.debug {
+    /* Debug模式顯示明顯的黃色矩形區塊與定位十字 */
+    background: rgba(255, 255, 0, 0.3);
+    border: 2px solid yellow;
+}
+
+.loc-hotspot.debug::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: red;
+    border-radius: 50%;
+}
+
+/* Debug 模式在矩形上方顯示名稱與尺寸，方便逐一調整 w/h */
+.loc-hotspot-debug-tag {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font: 12px monospace;
+    color: #000;
+    background: #ffe600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+/* Hover 浮動提示 (Tooltip)：讀取 data-desc 屬性顯示距離資訊 */
+.loc-hotspot::after {
+    content: attr(data-desc);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(30, 40, 30, 0.95);
+    color: #EDAFB8;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(237, 175, 184, 0.4);
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+    letter-spacing: 1.5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    z-index: 10;
+}
+
+.loc-hotspot:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
 /* ===== Modal Dialog (Lightbox) ===== */
 .poi-modal-overlay {
     position: fixed;

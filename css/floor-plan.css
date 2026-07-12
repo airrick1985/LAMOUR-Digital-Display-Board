@@ -1030,10 +1030,17 @@ body.lightbox-active .fp-nav-items {
     cursor: pointer;
     pointer-events: auto;
     z-index: 9;
-    /* 預設常駐顯示紅點 (含呼吸動畫)；Debug 模式啟用拖曳能力 */
+    /* 正常模式：紅點視覺隱藏，僅保留可點擊區與 hover 標籤；Debug 模式才顯示紅點並可拖曳 */
     opacity: 1;
     transition: opacity 0.25s;
     will-change: transform;
+}
+
+/* 紅點視覺 (核心 + 呼吸圈) 預設不渲染，動畫也不會空轉 */
+.fp-hotspot .hotspot-core,
+.fp-hotspot .hotspot-ring,
+.fp-hotspot .hotspot-ring-outer {
+    display: none;
 }
 
 .fp-hotspot .hotspot-core {
@@ -1130,6 +1137,12 @@ body.lightbox-active .fp-nav-items {
 }
 
 /* Debug 模式 — 全部紅點與標籤常駐顯示，可拖曳 */
+body.fp-hotspot-debug .fp-hotspot .hotspot-core,
+body.fp-hotspot-debug .fp-hotspot .hotspot-ring,
+body.fp-hotspot-debug .fp-hotspot .hotspot-ring-outer {
+    display: block;
+}
+
 body.fp-hotspot-debug .fp-hotspot {
     opacity: 1;
     cursor: grab;
@@ -1319,6 +1332,95 @@ body.fp-hotspot-debug .fp-hotspot .hotspot-label::after {
 
 .fp-info-slide.active .fp-info-img-wrap img {
     animation: fp-info-zoomIn 25s ease-out forwards;
+}
+
+/* ===== 文字型幻燈片 (尚無 3D 情境圖的公設空間) ===== */
+.fp-info-text-slide {
+    background:
+        radial-gradient(circle at 50% 32%, rgba(237, 175, 184, 0.12) 0%, transparent 58%),
+        linear-gradient(135deg, #1b2224 0%, #2c3437 48%, #191e20 100%);
+}
+
+/* 內縮細線裝飾框，呼應法式典雅調性 */
+.fp-info-text-slide::before {
+    content: '';
+    position: absolute;
+    inset: 6% 7%;
+    border: 1px solid rgba(237, 175, 184, 0.18);
+    pointer-events: none;
+}
+
+.fp-info-textcard {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    padding: 0 32px;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+}
+
+.fp-info-slide.active .fp-info-textcard {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fp-info-textcard .tc-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(237, 175, 184, 0.5);
+    border-radius: 50%;
+    font-family: var(--font-english-serif, serif);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: var(--color-accent, #EDAFB8);
+}
+
+.fp-info-textcard .tc-title {
+    margin: 0 0 12px 0;
+    font-family: var(--font-serif, serif);
+    font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+    font-weight: 600;
+    letter-spacing: 8px;
+    text-indent: 8px; /* 補償字距造成的視覺偏左 */
+}
+
+.fp-info-textcard .tc-subtitle {
+    margin: 0;
+    font-family: var(--font-english-serif, serif);
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(237, 175, 184, 0.85);
+}
+
+.fp-info-textcard .tc-divider {
+    width: 56px;
+    height: 1px;
+    margin: 24px auto;
+    background: var(--color-accent, #EDAFB8);
+    opacity: 0.7;
+}
+
+.fp-info-textcard .tc-desc {
+    max-width: 540px;
+    margin: 0 auto;
+    font-size: clamp(0.9rem, 1.1vw, 1.02rem);
+    line-height: 2;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+/* 文字幻燈片：3D 免責聲明不適用 */
+.fp-info-lightbox.text-mode .fp-info-disclaimer {
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* 關閉按鈕 */
@@ -1590,6 +1692,12 @@ body.fp-hotspot-debug .fp-hotspot .hotspot-label::after {
         opacity: 1;
         margin-top: 2px;
     }
+    .fp-info-textcard { padding: 0 22px; }
+    .fp-info-textcard .tc-title { letter-spacing: 4px; text-indent: 4px; }
+    .fp-info-textcard .tc-subtitle { letter-spacing: 3px; }
+    .fp-info-textcard .tc-desc { line-height: 1.9; letter-spacing: 1px; }
+    .fp-info-textcard .tc-index { width: 40px; height: 40px; margin-bottom: 16px; }
+    .fp-info-text-slide::before { inset: 5% 5%; }
     .fp-info-counter { right: 80px; font-size: 0.85rem; }
     .fp-info-lightbox-close { right: 16px; }
     .fp-info-arrow { width: 44px; height: 44px; }

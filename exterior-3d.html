@@ -90,9 +90,6 @@
             <img src="assets/images/3D-01.webp" alt="富宇樂慕 外觀3D透視圖 - 日景" draggable="false">
             <img class="ext3d-night-layer" src="assets/images/3D-01-night.webp" alt="富宇樂慕 外觀3D透視圖 - 夜景" draggable="false">
         </div>
-        <div class="ext3d-slide" data-index="1">
-            <img src="assets/images/3D-02.webp" alt="富宇樂慕 外觀3D透視圖 - 夜間光影" draggable="false">
-        </div>
 
         <!-- 左右箭頭 -->
         <button class="ext3d-arrow ext3d-arrow-prev" id="prevBtn" title="上一張">
@@ -135,7 +132,7 @@
         </div>
 
         <!-- 計數器 -->
-        <div class="ext3d-counter" id="ext3dCounter">1 / 2</div>
+        <div class="ext3d-counter" id="ext3dCounter">1 / 1</div>
 
         <!-- 3D透視圖免責聲明 -->
         <div class="ext3d-disclaimer">本3D透視圖僅供參考，實際以建造變更核准圖面為準。</div>
@@ -196,6 +193,16 @@
 
             prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
             nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+            // 只有一張圖時隱藏切換 UI（箭頭、圓點、計數器）
+            if (totalSlides <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                dotsContainer.style.display = 'none';
+                counter.style.display = 'none';
+                const hintText = document.querySelector('.ext3d-hint span:last-child');
+                if (hintText) hintText.textContent = '滾輪縮放 · 拖曳移動';
+            }
 
             // ===== 鍵盤左右箭頭 =====
             document.addEventListener('keydown', (e) => {
@@ -317,7 +324,7 @@
 
         })();
     </script>
-    <script src="js/cursor-petals.js?v=1.0.2"></script>
+    <script src="js/cursor-petals.js?v=1.0.3"></script>
     <script src="js/spa-router.js?v=1.0.2"></script>
     <!-- Asset Update Manager -->
     <script src="js/asset-update-manager.js"></script>

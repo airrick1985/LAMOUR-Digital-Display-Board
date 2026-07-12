@@ -102,38 +102,114 @@
 }
 
 /* Architecture Team Page specific */
+/* 人物照片為底圖的滿版卡片:漸層打底、文字在前;
+   漸層方向依人物臉部位置設計,不遮擋臉部 */
 .team-member {
+    position: relative;
     display: flex;
-    gap: 60px;
     align-items: center;
+    min-height: clamp(520px, 62vh, 700px);
     margin-bottom: var(--section-spacing);
-    background: var(--color-bg-card);
+    padding: 60px 70px;
     border: 1px solid var(--color-border);
     border-radius: var(--card-radius);
-    padding: 50px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    overflow: hidden;
+    background: var(--color-bg-card);
 }
 
-.team-member:nth-child(even) {
-    flex-direction: row-reverse;
+.team-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
 }
 
-.team-image-placeholder {
-    flex: 1;
-    height: 400px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px dashed var(--color-border);
-    border-radius: var(--card-radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: var(--color-text-secondary);
+.team-member::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 文字靠右:漸層由右向左收,左側人物臉部保持清晰 */
+.team-member--text-right {
+    justify-content: flex-end;
+}
+
+.team-member--text-right::before {
+    background: linear-gradient(to left,
+            rgba(35, 42, 44, 0.94) 0%,
+            rgba(35, 42, 44, 0.85) 30%,
+            rgba(35, 42, 44, 0.5) 48%,
+            rgba(35, 42, 44, 0) 62%);
+}
+
+/* 照片靠右:左側以照片同色深底延伸,漸層僅做左右銜接,
+   文字放在左側純色區,完全不與人物臉部重疊 */
+.team-member--photo-right {
+    justify-content: flex-start;
+    background: #1e2126;
+}
+
+.team-member--photo-right .team-photo {
+    left: auto;
+    right: 0;
+    width: 62%;
+    object-position: 70% 15%;
+}
+
+.team-member--photo-right::before {
+    background: linear-gradient(to right,
+            #1e2126 38%,
+            rgba(30, 33, 38, 0.55) 45%,
+            rgba(30, 33, 38, 0) 52%);
 }
 
 .team-info {
-    flex: 1;
+    position: relative;
+    z-index: 2;
+    max-width: 46%;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+}
+
+.team-member--photo-right .team-info {
+    max-width: 40%;
+}
+
+/* 窄螢幕:一律改為文字壓底、滿寬 */
+@media (max-width: 900px) {
+
+    .team-member,
+    .team-member--text-right,
+    .team-member--photo-right {
+        justify-content: flex-start;
+        align-items: flex-end;
+        min-height: 540px;
+        padding: 30px;
+    }
+
+    .team-member--photo-right .team-photo {
+        left: 0;
+        width: 100%;
+        object-position: 50% 15%;
+    }
+
+    .team-member--text-right::before,
+    .team-member--photo-right::before {
+        background: linear-gradient(to top,
+                rgba(18, 22, 28, 0.94) 0%,
+                rgba(18, 22, 28, 0.75) 30%,
+                rgba(18, 22, 28, 0.3) 55%,
+                rgba(18, 22, 28, 0) 70%);
+    }
+
+    .team-info,
+    .team-member--photo-right .team-info {
+        max-width: 100%;
+    }
 }
 
 .team-role {

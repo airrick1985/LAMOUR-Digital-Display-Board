@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/variables.css?v=1.0.3">
     <link rel="stylesheet" href="css/global.css?v=1.0.3">
     <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
-    <link rel="stylesheet" href="css/brand.css?v=1.0.4">
+    <link rel="stylesheet" href="css/brand.css?v=1.0.5">
     <!-- PWA Update Loading Screen -->
     <style id="pwa-loading-style">
       #pwa-loading-overlay {
@@ -91,9 +91,10 @@
 
         <!-- 建築設計 -->
         <section class="section fade-in">
-            <div class="team-member">
-                <img src="assets/images/architect-01.webp" alt="建築外觀" class="team-image-placeholder"
-                    style="object-fit: cover; border: none;">
+            <!-- 人物在左,文字靠右;漸層由右向左收,不遮擋左側臉部 -->
+            <div class="team-member team-member--text-right">
+                <img src="assets/images/architect-01.webp" alt="吳六合建築師" class="team-photo"
+                    style="object-position: 50% 18%;">
                 <div class="team-info">
                     <div class="team-role">建築設計 ARCHITECTURE DESIGN</div>
                     <h2 class="team-name">吳六合建築師事務所</h2>
@@ -106,9 +107,9 @@
 
         <!-- 景觀與室內設計 -->
         <section class="section fade-in">
-            <div class="team-member">
-                <img src="assets/images/architect-02.webp" alt="景觀與室內設計" class="team-image-placeholder"
-                    style="object-fit: cover; border: none;">
+            <!-- 照片靠右、文字在左側深色打底區;漸層僅做左右銜接,不遮擋臉部 -->
+            <div class="team-member team-member--photo-right">
+                <img src="assets/images/architect-02.webp" alt="玖柞設計 朱伯晟 × 蔡雅怡" class="team-photo">
                 <div class="team-info">
                     <div class="team-role">景觀與室內設計 LANDSCAPE & INTERIOR</div>
                     <h2 class="team-name">玖柞設計</h2>
@@ -135,7 +136,7 @@
     <script src="js/topbar.js"></script>
     <script src="js/animations.js"></script>
 
-    <script src="js/cursor-petals.js?v=1.0.2"></script>
+    <script src="js/cursor-petals.js?v=1.0.3"></script>
     <script src="js/spa-router.js?v=1.0.2"></script>
     <!-- Asset Update Manager -->
     <script src="js/asset-update-manager.js"></script>
