@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="app-version" content="1.0.0">
+    <script>
+      if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
+        document.write('<base href="/LAMOUR-Digital-Display-Board/">');
+      }
+    </script>
+    <title>景觀3D - 富宇樂慕 LAMOUR</title>
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4A5759">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="富宇樂慕">
+    <link rel="apple-touch-icon" href="assets/images/fuyu-logo.webp">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css?v=1.0.3">
+    <link rel="stylesheet" href="css/global.css?v=1.0.3">
+    <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
+    <link rel="stylesheet" href="css/public-3d.css?v=1.0.0">
+    <!-- PWA Update Loading Screen -->
+    <style id="pwa-loading-style">
+      #pwa-loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #353F41 0%, #4A5759 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        opacity: 1;
+        transition: opacity 0.5s ease-out;
+      }
+      #pwa-loading-overlay.hidden {
+        pointer-events: none;
+        opacity: 0;
+      }
+      .pwa-loading-content {
+        text-align: center;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      .pwa-loading-spinner {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 20px;
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        border-top-color: #EDAFB8;
+        border-radius: 50%;
+        animation: pwa-spin 1s linear infinite;
+      }
+      @keyframes pwa-spin {
+        to { transform: rotate(360deg); }
+      }
+      .pwa-loading-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #ccc;
+      }
+    </style>
+</head>
+
+<body class="pano-page">
+    <!-- PWA Loading Overlay -->
+    <div id="pwa-loading-overlay">
+      <div class="pwa-loading-content">
+        <div class="pwa-loading-spinner"></div>
+        <div class="pwa-loading-text">正在檢查更新...</div>
+      </div>
+    </div>
+    <!-- Top Bar (由 topbar.js 統一注入) -->
+    <div id="topbar-root"></div>
+
+    <!-- 全螢幕景觀3D 圖片檢視器 -->
+    <div class="pub3d-viewer" id="pub3dViewer">
+
+        <!-- 圖片輪播 -->
+        <div class="pub3d-slide active" data-index="0"
+             data-tag="01"
+             data-title="慕光步道"
+             data-subtitle="LA PROMENADE"
+             data-desc="社區臨街退縮讓出的林蔭綠廊，喬木成蔭、花圃綴彩，晨昏漫步其間，讓歸家的最後一段路，都走得從容而優雅。">
+            <div class="pub3d-img-wrap">
+                <img src="assets/images/3D-L-01.webp" alt="富宇樂慕 景觀3D - 慕光步道" draggable="false">
+            </div>
+        </div>
+        <div class="pub3d-slide" data-index="1"
+             data-tag="02"
+             data-title="慕語花園"
+             data-subtitle="LE JARDIN"
+             data-desc="中庭花園以四季花木鋪陳，蜿蜒石徑串起繽紛花影與靜謐綠意，微風輕拂、花語呢喃，日常散步也如置身法式庭園。">
+            <div class="pub3d-img-wrap">
+                <img src="assets/images/3D-L-02.webp" alt="富宇樂慕 景觀3D - 慕語花園" draggable="false">
+            </div>
+        </div>
+
+        <!-- 左右箭頭 -->
+        <button class="pub3d-arrow pub3d-arrow-prev" id="pubPrevBtn" title="上一張">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button class="pub3d-arrow pub3d-arrow-next" id="pubNextBtn" title="下一張">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+
+        <!-- 景觀介紹文字卡片 -->
+        <div class="pub3d-info-card" id="pub3dInfoCard">
+            <h3 class="info-title" id="pub3dInfoTitle">慕光步道</h3>
+            <p class="info-subtitle" id="pub3dInfoSubtitle">LA PROMENADE</p>
+            <div class="info-divider"></div>
+            <p class="info-description" id="pub3dInfoDesc"></p>
+        </div>
+
+        <!-- 底部導航 -->
+        <div class="pub3d-bottom-bar">
+            <div class="pub3d-dots" id="pub3dDots"></div>
+        </div>
+
+        <!-- 頁面標題 -->
+        <div class="pub3d-title-overlay">
+            <h2>景觀3D</h2>
+            <p>LANDSCAPE 3D</p>
+        </div>
+
+        <!-- 計數器 -->
+        <div class="pub3d-counter" id="pub3dCounter">1 / 2</div>
+
+        <!-- 3D透視圖免責聲明 -->
+        <div class="pub3d-disclaimer">本3D透視圖僅供參考，實際以建造變更核准圖面為準。</div>
+
+        <!-- 操作提示 -->
+        <div class="pub3d-hint">
+            <span>提示</span>
+            <span>左右箭頭切換</span>
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="js/topbar.js"></script>
+    <script>
+        (() => {
+            const viewer = document.getElementById('pub3dViewer');
+            const slides = viewer.querySelectorAll('.pub3d-slide');
+            const dotsContainer = document.getElementById('pub3dDots');
+            const counter = document.getElementById('pub3dCounter');
+            const prevBtn = document.getElementById('pubPrevBtn');
+            const nextBtn = document.getElementById('pubNextBtn');
+            const infoCard = document.getElementById('pub3dInfoCard');
+            const infoTitle = document.getElementById('pub3dInfoTitle');
+            const infoSubtitle = document.getElementById('pub3dInfoSubtitle');
+            const infoDesc = document.getElementById('pub3dInfoDesc');
+            const totalSlides = slides.length;
+
+            let currentIndex = 0;
+
+            // ===== 建立圓點導航 =====
+            slides.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'pub3d-dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+
+            // ===== 更新介紹卡片 =====
+            function updateInfoCard(index) {
+                const slide = slides[index];
+                infoCard.classList.remove('visible');
+                // 短暫等待後再更新內容並淡入
+                setTimeout(() => {
+                    infoTitle.textContent = slide.dataset.title || '';
+                    infoSubtitle.textContent = slide.dataset.subtitle || '';
+                    infoDesc.textContent = slide.dataset.desc || '';
+                    infoCard.classList.add('visible');
+                }, 250);
+            }
+
+            // ===== 重設 Zoom In 動畫 =====
+            function restartZoom(index) {
+                const wrap = slides[index].querySelector('.pub3d-img-wrap');
+                const img = wrap.querySelector('img');
+                if (!img) return;
+                // 透過移除/重新觸發 reflow，使動畫從頭播放
+                img.style.animation = 'none';
+                // 強制 reflow
+                void img.offsetWidth;
+                img.style.animation = '';
+            }
+
+            function goToSlide(index) {
+                slides[currentIndex].classList.remove('active');
+                dotsContainer.children[currentIndex].classList.remove('active');
+
+                currentIndex = (index + totalSlides) % totalSlides;
+
+                slides[currentIndex].classList.add('active');
+                dotsContainer.children[currentIndex].classList.add('active');
+                counter.textContent = `${currentIndex + 1} / ${totalSlides}`;
+
+                restartZoom(currentIndex);
+                updateInfoCard(currentIndex);
+            }
+
+            prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+            nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+            // ===== 鍵盤左右箭頭 =====
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') goToSlide(currentIndex - 1);
+                if (e.key === 'ArrowRight') goToSlide(currentIndex + 1);
+            });
+
+            // ===== 初始化第一張的文字卡片 =====
+            updateInfoCard(0);
+
+        })();
+    </script>
+    <script src="js/cursor-petals.js?v=1.0.3"></script>
+    <script src="js/spa-router.js?v=1.0.2"></script>
+    <!-- Asset Update Manager -->
+    <script src="js/asset-update-manager.js"></script>
+    <script src="js/pwa-register.js?v=1.0.2" defer></script>
+</body>
+
+</html>

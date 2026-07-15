@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/variables.css?v=1.0.3">
     <link rel="stylesheet" href="css/global.css?v=1.0.3">
     <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
-    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.3">
+    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.4">
     <!-- Pannellum 360 全景套件（本地版本） -->
     <link rel="stylesheet" href="assets/pannellum/pannellum.min.css">
     <!-- PWA Update Loading Screen -->
@@ -336,15 +336,11 @@
                 <img src="assets/images/3D-06.webp" alt="富宇樂慕 1F - 慕動健身房" draggable="false">
             </div>
         </div>
-        <div class="fp-info-slide fp-info-text-slide" data-id="play"
+        <div class="fp-info-slide" data-id="play"
              data-title="慕趣遊戲室" data-subtitle="PETIT PARADIS"
              data-desc="專屬孩子的小小天堂，柔軟遊具與童趣光影相伴，笑聲在午後陽光裡輕輕跳躍，讓每一天的成長都充滿驚喜。">
-            <div class="fp-info-textcard">
-                <span class="tc-index">05</span>
-                <h2 class="tc-title">慕趣遊戲室</h2>
-                <p class="tc-subtitle">PETIT PARADIS</p>
-                <div class="tc-divider"></div>
-                <p class="tc-desc">專屬孩子的小小天堂，柔軟遊具與童趣光影相伴，笑聲在午後陽光裡輕輕跳躍，讓每一天的成長都充滿驚喜。</p>
+            <div class="fp-info-img-wrap">
+                <img src="assets/images/3D-02.webp" alt="富宇樂慕 1F - 慕趣遊戲室" draggable="false">
             </div>
         </div>
         <div class="fp-info-slide fp-info-text-slide" data-id="chess"
@@ -405,6 +401,20 @@
                 <img src="assets/images/3D-08.webp" alt="富宇樂慕 1F - 慕遊休憩室" draggable="false">
             </div>
         </div>
+        <div class="fp-info-slide" data-id="walkway"
+             data-title="慕光步道" data-subtitle="LA PROMENADE"
+             data-desc="社區臨街退縮讓出的林蔭綠廊，喬木成蔭、花圃綴彩，晨昏漫步其間，讓歸家的最後一段路，都走得從容而優雅。">
+            <div class="fp-info-img-wrap">
+                <img src="assets/images/3D-L-01.webp" alt="富宇樂慕 1F - 慕光步道" draggable="false">
+            </div>
+        </div>
+        <div class="fp-info-slide" data-id="courtyard"
+             data-title="慕語花園" data-subtitle="LE JARDIN"
+             data-desc="中庭花園以四季花木鋪陳，蜿蜒石徑串起繽紛花影與靜謐綠意，微風輕拂、花語呢喃，日常散步也如置身法式庭園。">
+            <div class="fp-info-img-wrap">
+                <img src="assets/images/3D-L-02.webp" alt="富宇樂慕 1F - 慕語花園" draggable="false">
+            </div>
+        </div>
 
         <!-- 關閉 -->
         <button class="fp-info-lightbox-close" id="fpInfoLightboxClose" title="關閉">✕</button>
@@ -435,7 +445,7 @@
         </div>
 
         <!-- 計數器 -->
-        <div class="fp-info-counter" id="fpInfoCounter">1 / 11</div>
+        <div class="fp-info-counter" id="fpInfoCounter">1 / 13</div>
 
         <!-- 免責聲明 -->
         <div class="fp-info-disclaimer">本3D透視圖僅供參考，實際以建造變更核准圖面為準。</div>
@@ -453,7 +463,7 @@
         <h3>🔴 1F Hotspot Debug 面板</h3>
         <div class="fp-hotspot-debug-list" id="fpHotspotDebugList"></div>
         <button class="fp-hotspot-debug-export" id="fpHotspotDebugExport">📋 匯出座標 (複製到剪貼簿)</button>
-        <div class="fp-hotspot-debug-hint">先點開 1F 平面圖後，於燈箱中拖曳紅點調整位置。<br>連按 5 次 D 鍵或 ESC 可關閉本面板。</div>
+        <div class="fp-hotspot-debug-hint">先點開 1F 平面圖後，於燈箱中拖曳紅點調整位置；<br>左側圖例矩形可整塊拖曳移動、右下角紅色手把調整大小。<br>連按 5 次 D 鍵或 ESC 可關閉本面板。</div>
     </div>
 
     <!-- 列印設定 Modal 對話框 -->
@@ -1055,6 +1065,7 @@
                 if (e.target.closest('.fp-lightbox-info')) return;
                 // 點到熱點(hotspot) 時，由熱點專屬邏輯處理 (打開子燈箱或拖曳)
                 if (e.target.closest('.fp-hotspot')) return;
+                if (e.target.closest('.fp-hotspot-rect')) return;
 
                 e.preventDefault(); // 防止圖片的原生拖曳行為
                 lbDragging = true;
@@ -1642,20 +1653,21 @@
             // ===== 1F 燈箱熱點 (Hotspots) =====
             // 對應 1F 平面配置參考圖上的 ①～⑩ 編號。x / y 為相對於 1F 圖片自然尺寸的百分比座標。
             // ⑤⑥⑧⑨⑩ 為新增座標，係依圖面編號目測換算，可用 Debug 面板拖曳微調 (連按 5 次 D 鍵)。
+            // walkway / courtyard 為景觀 3D 熱點（前院退縮步道、中庭花園），座標為目測值，同樣可用 Debug 面板微調。
             const hotspotsData =[
   {
     "id": "hall",
     "label": "樂慕大廳",
     "img": "assets/images/3D-03.webp",
-    "x": 49.5,
-    "y": 75
+    "x": 49,
+    "y": 74
   },
   {
     "id": "lounge",
     "label": "慕聚交誼廳",
     "img": "assets/images/3D-07.webp",
-    "x": 38.5,
-    "y": 74.9
+    "x": 38.1,
+    "y": 74
   },
   {
     "id": "class",
@@ -1668,46 +1680,80 @@
     "id": "gym",
     "label": "慕動健身房",
     "img": "assets/images/3D-06.webp",
-    "x": 60.9,
-    "y": 38.9
+    "x": 60.5,
+    "y": 35.5
   },
   {
     "id": "play",
     "label": "慕趣遊戲室",
-    "x": 49.3,
-    "y": 35.2
+    "img": "assets/images/3D-02.webp",
+    "x": 48.9,
+    "y": 35.5
   },
   {
     "id": "chess",
     "label": "慕弈棋藝室",
-    "x": 47.4,
+    "x": 47,
     "y": 44.2
   },
   {
     "id": "meeting",
     "label": "慕影視聽室",
     "img": "assets/images/3D-04.webp",
-    "x": 60.7,
-    "y": 48.8
+    "x": 60.6,
+    "y": 48.9
   },
   {
     "id": "mail",
     "label": "信箱區",
-    "x": 49.7,
-    "y": 64.6
+    "x": 49,
+    "y": 64.5
   },
   {
     "id": "parcel",
     "label": "宅配包裹室",
-    "x": 56.2,
+    "x": 56.1,
     "y": 64.6
   },
   {
     "id": "recycle",
     "label": "資源回收室",
-    "x": 67,
-    "y": 72.7
+    "x": 66.7,
+    "y": 73.9
+  },
+  {
+    "id": "walkway",
+    "label": "慕光步道",
+    "img": "assets/images/3D-L-01.webp",
+    "x": 49,
+    "y": 90.4
+  },
+  {
+    "id": "courtyard",
+    "label": "慕語花園",
+    "img": "assets/images/3D-L-02.webp",
+    "x": 57.5,
+    "y": 19.7
   }
+];
+
+            // ===== 1F 左側圖例文字的矩形熱點 =====
+            // 對應 1F 圖左側「①樂慕大廳 GRAND LOBBY …」等文字列，點擊同樣開啟子燈箱。
+            // x / y 為矩形左上角、w / h 為寬高，均為相對 1F 圖片自然尺寸的百分比。
+            // 平常隱形（圖面上已有名稱，不另顯示標籤）；Debug 模式顯示外框，可拖曳移動、右下角手把可調整大小。
+            const legendHotspotsData = [
+  { "id": "hall",      "label": "樂慕大廳(圖例)",   "x": 0, "y": 14.8, "w": 15.6, "h": 3.1 },
+  { "id": "lounge",    "label": "慕聚交誼廳(圖例)", "x": 0, "y": 20.7, "w": 15.3, "h": 3 },
+  { "id": "class",     "label": "慕讀圖書室(圖例)", "x": 0, "y": 26.1, "w": 19.1, "h": 3.8 },
+  { "id": "gym",       "label": "慕動健身房(圖例)", "x": 0, "y": 31.7, "w": 19.1, "h": 3.5 },
+  { "id": "play",      "label": "慕趣遊戲室(圖例)", "x": 0, "y": 37.4, "w": 17.7, "h": 3.2 },
+  { "id": "chess",     "label": "慕弈棋藝室(圖例)", "x": 0, "y": 43,   "w": 16.2, "h": 3.2 },
+  { "id": "meeting",   "label": "慕影視聽室(圖例)", "x": 0, "y": 48.4, "w": 18.2, "h": 3.5 },
+  { "id": "mail",      "label": "信箱區(圖例)",     "x": 0, "y": 53.7, "w": 11.9, "h": 3.6 },
+  { "id": "parcel",    "label": "宅配包裹室(圖例)", "x": 0, "y": 59.5, "w": 19.1, "h": 3.1 },
+  { "id": "recycle",   "label": "資源回收室(圖例)", "x": 0, "y": 65,   "w": 16.7, "h": 3.4 },
+  { "id": "walkway",   "label": "慕光步道(圖例)",   "x": 0, "y": 70.6, "w": 16.3, "h": 3.1 },
+  { "id": "courtyard", "label": "慕語花園(圖例)",   "x": 0, "y": 76.2, "w": 13.9, "h": 3.3 }
 ];
 
             
@@ -1737,6 +1783,11 @@
             let hotspotDragMoved = false;
             let hotspotDragOffsetX = 0;
             let hotspotDragOffsetY = 0;
+            // 圖例矩形熱點的拖曳/縮放狀態
+            let rectDragTarget = null;
+            let rectResizeTarget = null;
+            let rectDragOffsetX = 0;
+            let rectDragOffsetY = 0;
 
             function buildHotspots() {
                 hotspotLayer.innerHTML = '';
@@ -1762,6 +1813,28 @@
                             return;
                         }
                         if (hotspotDebugMode) return; // Debug 模式下不開啟子燈箱
+                        openInfoLightbox(hs);
+                    });
+                    hotspotLayer.appendChild(el);
+                });
+
+                // 左側圖例文字的矩形熱點（平常隱形、無 hover 標籤，Debug 才顯示外框）
+                legendHotspotsData.forEach(hs => {
+                    const el = document.createElement('div');
+                    el.className = 'fp-hotspot-rect';
+                    el.dataset.id = hs.id;
+                    el.style.left = `${hs.x}%`;
+                    el.style.top = `${hs.y}%`;
+                    el.style.width = `${hs.w}%`;
+                    el.style.height = `${hs.h}%`;
+                    el.innerHTML = `<div class="rect-resize-handle" title="拖曳調整大小"></div>`;
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (hotspotDragMoved) {
+                            hotspotDragMoved = false;
+                            return;
+                        }
+                        if (hotspotDebugMode) return;
                         openInfoLightbox(hs);
                     });
                     hotspotLayer.appendChild(el);
@@ -1939,16 +2012,35 @@
                     `;
                     hotspotDebugList.appendChild(item);
                 });
+                legendHotspotsData.forEach(hs => {
+                    const item = document.createElement('div');
+                    item.className = 'fp-hotspot-debug-item';
+                    item.innerHTML = `
+                        <span class="debug-name">${hs.label}</span>
+                        <span class="debug-pos">x: ${hs.x.toFixed(1)}% y: ${hs.y.toFixed(1)}% w: ${hs.w.toFixed(1)}% h: ${hs.h.toFixed(1)}%</span>
+                    `;
+                    hotspotDebugList.appendChild(item);
+                });
             }
 
             hotspotDebugExport.addEventListener('click', () => {
-                const exportData = hotspotsData.map(hs => ({
-                    id: hs.id,
-                    label: hs.label,
-                    img: hs.img,
-                    x: parseFloat(hs.x.toFixed(1)),
-                    y: parseFloat(hs.y.toFixed(1))
-                }));
+                const exportData = {
+                    hotspots: hotspotsData.map(hs => ({
+                        id: hs.id,
+                        label: hs.label,
+                        img: hs.img,
+                        x: parseFloat(hs.x.toFixed(1)),
+                        y: parseFloat(hs.y.toFixed(1))
+                    })),
+                    legendHotspots: legendHotspotsData.map(hs => ({
+                        id: hs.id,
+                        label: hs.label,
+                        x: parseFloat(hs.x.toFixed(1)),
+                        y: parseFloat(hs.y.toFixed(1)),
+                        w: parseFloat(hs.w.toFixed(1)),
+                        h: parseFloat(hs.h.toFixed(1))
+                    }))
+                };
                 const jsonStr = JSON.stringify(exportData, null, 2);
                 navigator.clipboard.writeText(jsonStr).then(() => {
                     hotspotDebugExport.textContent = '✅ 已複製！';
@@ -1963,6 +2055,28 @@
             // ===== Debug 模式下：拖曳熱點 =====
             hotspotLayer.addEventListener('mousedown', (e) => {
                 if (!hotspotDebugMode) return;
+
+                // 圖例矩形：右下角手把 = 縮放，其餘區域 = 移動
+                const resizeHandle = e.target.closest('.rect-resize-handle');
+                if (resizeHandle) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    rectResizeTarget = resizeHandle.closest('.fp-hotspot-rect');
+                    hotspotDragMoved = false;
+                    return;
+                }
+                const rectEl = e.target.closest('.fp-hotspot-rect');
+                if (rectEl) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    rectDragTarget = rectEl;
+                    hotspotDragMoved = false;
+                    const r = rectEl.getBoundingClientRect();
+                    rectDragOffsetX = e.clientX - r.left;
+                    rectDragOffsetY = e.clientY - r.top;
+                    return;
+                }
+
                 const target = e.target.closest('.fp-hotspot');
                 if (!target) return;
                 e.preventDefault();
@@ -1975,9 +2089,44 @@
             });
 
             window.addEventListener('mousemove', (e) => {
-                if (!hotspotDragTarget) return;
+                if (!hotspotDragTarget && !rectDragTarget && !rectResizeTarget) return;
                 const imgRect = lightboxImg.getBoundingClientRect();
                 if (!imgRect.width || !imgRect.height) return;
+
+                // 圖例矩形：移動
+                if (rectDragTarget) {
+                    const hs = legendHotspotsData.find(h => h.id === rectDragTarget.dataset.id);
+                    if (!hs) return;
+                    let x = ((e.clientX - rectDragOffsetX - imgRect.left) / imgRect.width) * 100;
+                    let y = ((e.clientY - rectDragOffsetY - imgRect.top) / imgRect.height) * 100;
+                    x = Math.max(0, Math.min(100 - hs.w, x));
+                    y = Math.max(0, Math.min(100 - hs.h, y));
+                    rectDragTarget.style.left = `${x}%`;
+                    rectDragTarget.style.top = `${y}%`;
+                    hs.x = x;
+                    hs.y = y;
+                    hotspotDragMoved = true;
+                    updateHotspotDebugList();
+                    return;
+                }
+
+                // 圖例矩形：右下角縮放
+                if (rectResizeTarget) {
+                    const hs = legendHotspotsData.find(h => h.id === rectResizeTarget.dataset.id);
+                    if (!hs) return;
+                    let w = ((e.clientX - imgRect.left) / imgRect.width) * 100 - hs.x;
+                    let h = ((e.clientY - imgRect.top) / imgRect.height) * 100 - hs.y;
+                    w = Math.max(1, Math.min(100 - hs.x, w));
+                    h = Math.max(0.8, Math.min(100 - hs.y, h));
+                    rectResizeTarget.style.width = `${w}%`;
+                    rectResizeTarget.style.height = `${h}%`;
+                    hs.w = w;
+                    hs.h = h;
+                    hotspotDragMoved = true;
+                    updateHotspotDebugList();
+                    return;
+                }
+
                 const x = ((e.clientX - hotspotDragOffsetX - imgRect.left) / imgRect.width) * 100;
                 const y = ((e.clientY - hotspotDragOffsetY - imgRect.top) / imgRect.height) * 100;
                 const cx = Math.max(0, Math.min(100, x));
@@ -1995,8 +2144,10 @@
             });
 
             window.addEventListener('mouseup', () => {
-                if (hotspotDragTarget) {
+                if (hotspotDragTarget || rectDragTarget || rectResizeTarget) {
                     hotspotDragTarget = null;
+                    rectDragTarget = null;
+                    rectResizeTarget = null;
                     // 延遲清旗標讓接續 click 知道剛剛是拖曳
                     setTimeout(() => { hotspotDragMoved = false; }, 50);
                 }

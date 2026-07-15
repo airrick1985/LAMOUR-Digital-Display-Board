@@ -1016,9 +1016,50 @@ body.lightbox-active .fp-nav-items {
 }
 
 /* 量測模式時關閉熱點點擊 */
-.fp-lightbox.measuring .fp-hotspot {
+.fp-lightbox.measuring .fp-hotspot,
+.fp-lightbox.measuring .fp-hotspot-rect {
     pointer-events: none;
     opacity: 0 !important;
+}
+
+/* ===== 1F 左側圖例文字的矩形熱點 ===== */
+/* 平常完全隱形（圖面上已印有名稱，不需 hover 標籤），僅保留可點擊區；
+   矩形隨圖面縮放（不做反向縮放補償），才能持續貼合圖例文字。 */
+.fp-hotspot-rect {
+    position: absolute;
+    background: transparent;
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 9;
+}
+
+.fp-hotspot-rect .rect-resize-handle {
+    display: none;
+    position: absolute;
+    right: -7px;
+    bottom: -7px;
+    width: 14px;
+    height: 14px;
+    background: #ff4444;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    cursor: nwse-resize;
+    z-index: 2;
+}
+
+/* Debug 模式 — 顯示矩形外框，可拖曳移動、右下角手把調整大小 */
+body.fp-hotspot-debug .fp-hotspot-rect {
+    border: 2px dashed rgba(255, 68, 68, 0.85);
+    background: rgba(255, 68, 68, 0.15);
+    cursor: grab;
+}
+
+body.fp-hotspot-debug .fp-hotspot-rect:active {
+    cursor: grabbing;
+}
+
+body.fp-hotspot-debug .fp-hotspot-rect .rect-resize-handle {
+    display: block;
 }
 
 .fp-hotspot {
