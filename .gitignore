@@ -15,3 +15,6 @@ node_modules/
 .env
 dist/
 package-lock.json
+
+# Office 暫存鎖檔
+~$*

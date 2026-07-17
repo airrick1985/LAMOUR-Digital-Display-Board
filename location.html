@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="app-version" content="1.0.3">
+    <meta name="app-version" content="1.0.4">
     <script>
       if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
         document.write('<base href="/LAMOUR-Digital-Display-Board/">');
@@ -297,7 +297,7 @@ pitch: -29.9865,
             ];
 
             // 是否開啟 debug 模式（true: 點擊畫面在前端浮層顯示 yaw/pitch 座標）
-            const hotSpotDebug = true;
+            const hotSpotDebug = false;
 
             // w / h 的基準視角：矩形在此 hfov 下等於設定的像素值，縮放時等比調整
             const BASE_HFOV = 120;

@@ -648,6 +648,124 @@ body.lightbox-active .fp-nav-items {
     color: #8b6914;
 }
 
+/* ===== 「4-15F平面圖」返回按鈕（僅 A1~A8 傢俱配置圖顯示） ===== */
+/* 置於頂部凍結導覽列左上角（燈箱開啟時 .fp-nav 吸附頂端，z-index 100000）；
+   按鈕位於燈箱之外，z-index 100002 高於凍結列。醒目香檳金漸層樣式。 */
+.fp-back-floor-btn {
+    position: fixed;
+    top: 7px;
+    left: 16px;
+    z-index: 100002;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 22px 9px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, #c89b45 0%, #8b6914 55%, #a67c1f 100%);
+    color: #fff;
+    font-family: var(--font-sans, system-ui);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    cursor: pointer;
+    overflow: hidden; /* 供光澤掃過效果裁切 */
+    box-shadow: 0 4px 14px rgba(139, 105, 20, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease,
+                transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                box-shadow 0.25s ease,
+                filter 0.25s ease;
+}
+
+.fp-back-floor-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    animation: backBtnGlow 2.8s ease-in-out infinite; /* 呼吸光暈，提高辨識度 */
+}
+
+@keyframes backBtnGlow {
+    0%, 100% {
+        box-shadow: 0 4px 14px rgba(139, 105, 20, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 22px rgba(200, 155, 69, 0.75),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* 光澤掃過（hover 時） */
+.fp-back-floor-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.45) 50%, transparent 100%);
+    transform: skewX(-20deg);
+    transition: left 0.55s ease;
+    pointer-events: none;
+}
+
+.fp-back-floor-btn:hover::after {
+    left: 120%;
+}
+
+.fp-back-floor-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.fp-back-floor-btn:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 6px 24px rgba(200, 155, 69, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.fp-back-floor-btn:hover svg {
+    transform: translateX(-3px); /* 箭頭微微左移，暗示「返回」 */
+}
+
+.fp-back-floor-btn:active {
+    transform: translateY(1px);
+}
+
+/* Debug 模式：按鈕可自由拖曳定位（紅框提示；燈箱開啟時強制顯示以便調整） */
+body.fp-hotspot-debug .fp-back-floor-btn {
+    outline: 2px dashed rgba(255, 68, 68, 0.85);
+    outline-offset: 3px;
+    cursor: grab;
+}
+
+body.fp-hotspot-debug .fp-back-floor-btn:active {
+    cursor: grabbing;
+    transform: none;
+}
+
+body.fp-hotspot-debug.lightbox-active .fp-back-floor-btn {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+/* 燈箱內圖面切換的淡出淡入 */
+#fpLightboxImg {
+    transition: opacity 0.26s ease;
+}
+
+#fpLightboxImg.fp-img-fading {
+    opacity: 0;
+}
+
 .fp-lightbox-hint {
     position: absolute;
     bottom: 30px;
@@ -801,6 +919,130 @@ body.lightbox-active .fp-nav-items {
 .unit-txt {
     color: #888;
     font-size: 20px !important;
+}
+
+/* ===== 全區坪數表：可點擊展開面積明細 ===== */
+.area-hint {
+    font-size: 18px;
+    color: #a08a55;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 10px;
+    opacity: 0.85;
+}
+
+.area-table-interactive .area-mrow {
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.area-table-interactive .area-mrow:hover td {
+    background: rgba(180, 165, 130, 0.12);
+}
+
+.area-table-interactive .area-mrow.open td {
+    background: rgba(180, 165, 130, 0.18);
+    border-bottom-color: transparent;
+}
+
+.area-table-interactive .area-mrow td:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.area-table-interactive .area-mrow td:last-child {
+    border-radius: 0 10px 10px 0;
+    white-space: nowrap;
+}
+
+/* 展開指示箭頭 */
+.row-chevron {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-left: 14px;
+    border-right: 3px solid #b4a582;
+    border-bottom: 3px solid #b4a582;
+    transform: rotate(45deg) translateY(-3px);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    vertical-align: middle;
+}
+
+.area-mrow.open .row-chevron {
+    transform: rotate(225deg) translateY(-2px);
+    border-color: #8b6914;
+}
+
+/* 明細列：平滑展開/收合 */
+.area-drow td {
+    padding: 0 !important;
+    border-bottom: none !important;
+}
+
+.area-drow-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 28px;
+    margin: 0 4px;
+    background: linear-gradient(180deg, rgba(180, 165, 130, 0.10), rgba(180, 165, 130, 0.04));
+    border-left: 3px solid rgba(139, 105, 20, 0.45);
+    border-radius: 0 0 12px 12px;
+    transform: translateY(-8px);
+    transition: max-height 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+                opacity 0.35s ease,
+                padding 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.area-drow.open .area-drow-inner {
+    max-height: 320px;
+    opacity: 1;
+    padding: 22px 28px;
+    transform: translateY(0);
+}
+
+.drow-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 60px;
+    font-size: 24px;
+    color: #666;
+    letter-spacing: 2px;
+}
+
+.drow-line span:last-child {
+    font-weight: 600;
+    font-family: var(--font-english-sans, 'Arial', sans-serif);
+    color: #333;
+}
+
+.drow-line.drow-total {
+    margin-top: 4px;
+    padding-top: 14px;
+    border-top: 2px solid rgba(180, 165, 130, 0.55);
+    font-size: 27px;
+    font-weight: 700;
+    color: #8b6914;
+}
+
+.drow-line.drow-total span:last-child {
+    color: #8b6914;
+}
+
+/* 露臺面積列（總建坪之外的附加項目，以較淡色階區隔） */
+.drow-line.drow-terrace {
+    font-size: 22px;
+    color: #8a7a55;
+    letter-spacing: 2px;
+}
+
+.drow-line.drow-terrace span:last-child {
+    color: #8a7a55;
+    font-weight: 600;
 }
 
 /* 個別戶別細項 (放大200%) */
@@ -1062,6 +1304,71 @@ body.fp-hotspot-debug .fp-hotspot-rect .rect-resize-handle {
     display: block;
 }
 
+/* ===== 4-15F 各戶矩形熱點 ===== */
+/* 平常隱形；hover 時微金高亮並浮現該戶總建坪，點擊進入該戶傢俱配置圖 */
+.fp-unit-rect {
+    border-radius: 10px;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* hover 高亮已依需求停用（矩形平常與 hover 時皆隱形）；
+   若要恢復，取消下方註解即可。
+.fp-unit-rect:hover {
+    background: rgba(237, 175, 184, 0.16);
+    box-shadow: inset 0 0 0 2px rgba(200, 160, 90, 0.65);
+}
+*/
+
+/* hover 浮現的坪數標籤（白玻璃 + 金字，配合燈箱資訊面板質感） */
+.rect-area-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.85);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(180, 165, 130, 0.55);
+    border-radius: 999px;
+    padding: 12px 28px;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #333;
+    font-family: var(--font-english-sans, 'Arial', sans-serif);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.rect-area-label b {
+    color: #8b6914;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+/* hover 坪數標籤已依需求停用；若要恢復，取消下方註解即可。
+.fp-unit-rect:hover .rect-area-label {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+*/
+
+/* Debug 模式下隱藏 hover 標籤，避免干擾拖曳/縮放 */
+body.fp-hotspot-debug .rect-area-label {
+    display: none;
+}
+
+/* 2F / 3F：傢俱配置圖尚未設計，點擊不動作 → 不顯示手型游標（hover 坪數照常） */
+.fp-unit-rect.no-plan {
+    cursor: default;
+}
+
 .fp-hotspot {
     position: absolute;
     width: 28px;
@@ -1234,6 +1541,51 @@ body.fp-hotspot-debug .fp-hotspot .hotspot-label::after {
     letter-spacing: 1px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: grab; /* 標題列可拖曳移動面板 */
+    user-select: none;
+}
+
+.fp-hotspot-debug-panel h3:active {
+    cursor: grabbing;
+}
+
+.fp-hotspot-debug-header-btns {
+    display: flex;
+    gap: 6px;
+}
+
+.fp-hotspot-debug-header-btns button {
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #f0f0f0;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.fp-hotspot-debug-header-btns button:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+/* 收合狀態：只留標題列 */
+.fp-hotspot-debug-panel.collapsed .fp-hotspot-debug-list,
+.fp-hotspot-debug-panel.collapsed .fp-hotspot-debug-export,
+.fp-hotspot-debug-panel.collapsed .fp-hotspot-debug-hint {
+    display: none;
+}
+
+.fp-hotspot-debug-panel.collapsed h3 {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .fp-hotspot-debug-list {

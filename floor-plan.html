@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="app-version" content="1.0.3">
+    <meta name="app-version" content="1.0.4">
     <script>
       if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
         document.write('<base href="/LAMOUR-Digital-Display-Board/">');
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/variables.css?v=1.0.3">
     <link rel="stylesheet" href="css/global.css?v=1.0.3">
     <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
-    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.4">
+    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.14">
     <!-- Pannellum 360 全景套件（本地版本） -->
     <link rel="stylesheet" href="assets/pannellum/pannellum.min.css">
     <!-- PWA Update Loading Screen -->
@@ -107,7 +107,7 @@
                         <a href="#plan-1F" class="fp-nav-link active" data-target="plan-1F">1F</a>
                         <a href="#plan-2F" class="fp-nav-link" data-target="plan-2F">2F</a>
                         <a href="#plan-3F" class="fp-nav-link" data-target="plan-3F">3F</a>
-                        <a href="#plan-4-14F" class="fp-nav-link" data-target="plan-4-14F">4-14F</a>
+                        <a href="#plan-4-15F" class="fp-nav-link" data-target="plan-4-15F">4-15F</a>
                         <a href="#plan-RF" class="fp-nav-link" data-target="plan-RF">RF</a>
                     </div>
                 </div>
@@ -130,9 +130,11 @@
                 <div class="fp-nav-group">
                     <button class="fp-nav-group-toggle" aria-expanded="false">樓層環景 ▼</button>
                     <div class="fp-nav-items" style="display: none;">
-                        <a href="#" class="fp-nav-link pano-link" data-src="assets/images/layout/low.webp">2-6F</a>
-                        <a href="#" class="fp-nav-link pano-link" data-src="assets/images/layout/midum.webp">7-11F</a>
-                        <a href="#" class="fp-nav-link pano-link" data-src="assets/images/layout/high.webp">12-14F</a>
+                        <a href="#" class="fp-nav-link pano-link" data-src="assets/images/layout/2-4F.webp">2-4F</a>
+                        <a href="#" class="fp-nav-link pano-link" data-src="assets/images/layout/5-7F.webp">5-7F</a>
+                        <a href="#" class="fp-nav-link pano-link" data-src="assets/images/layout/8-10F.webp">8-10F</a>
+                        <a href="#" class="fp-nav-link pano-link" data-src="assets/images/layout/11-13F.webp">11-13F</a>
+                        <a href="#" class="fp-nav-link pano-link" data-src="assets/images/layout/14-15F.webp">14-15F</a>
                     </div>
                 </div>
 
@@ -170,9 +172,9 @@
             </div>
         </section>
 
-        <section class="fp-section" id="plan-4-14F">
+        <section class="fp-section" id="plan-4-15F">
             <div class="fp-image-wrapper">
-                <img src="assets/images/layout/4-14F.webp" alt="4-14F 平面配置參考圖" loading="lazy">
+                <img src="assets/images/layout/4-15F.webp" alt="4-15F 平面配置參考圖" loading="lazy">
             </div>
         </section>
 
@@ -294,6 +296,15 @@
         <div class="fp-lightbox-info" id="fpLightboxInfo"></div>
     </div>
 
+    <!-- 傢俱配置圖 → 返回 4-15F 樓層平面（置於頂部凍結導覽列左上角；
+         需在燈箱 stacking context 之外，z-index 才能高於凍結列） -->
+    <button class="fp-back-floor-btn" id="fpBackFloorBtn" title="返回 4-15F 樓層平面">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>4-15F平面圖</span>
+    </button>
+
     <!-- 獨立的 360 環景燈箱 (360 Panorama Modal) -->
     <div class="fp-lightbox" id="fpPanoLightbox" style="z-index: 999998; background-color: #000;">
         <button class="fp-lightbox-close" id="fpPanoLightboxClose" title="關閉環景" style="z-index: 100001;">✕</button>
@@ -401,6 +412,17 @@
                 <img src="assets/images/3D-08.webp" alt="富宇樂慕 1F - 慕遊休憩室" draggable="false">
             </div>
         </div>
+        <div class="fp-info-slide fp-info-text-slide" data-id="laundry"
+             data-title="曬被區" data-subtitle="SÉCHAGE DE LA LITERIE"
+             data-desc="頂樓專屬曬被場域，陽光遍灑、通風開闊，讓棉被與寢具在暖陽下盡情舒展，把日光的芬芳一併帶回家。">
+            <div class="fp-info-textcard">
+                <span class="tc-index">RF</span>
+                <h2 class="tc-title">曬被區</h2>
+                <p class="tc-subtitle">SÉCHAGE DE LA LITERIE</p>
+                <div class="tc-divider"></div>
+                <p class="tc-desc">頂樓專屬曬被場域，陽光遍灑、通風開闊，讓棉被與寢具在暖陽下盡情舒展，把日光的芬芳一併帶回家。</p>
+            </div>
+        </div>
         <div class="fp-info-slide" data-id="walkway"
              data-title="慕光步道" data-subtitle="LA PROMENADE"
              data-desc="社區臨街退縮讓出的林蔭綠廊，喬木成蔭、花圃綴彩，晨昏漫步其間，讓歸家的最後一段路，都走得從容而優雅。">
@@ -457,13 +479,19 @@
         </div>
     </div>
 
-    <!-- 1F 熱點 Debug 面板 (連按 5 次 D 鍵切換) -->
+    <!-- 熱點 Debug 面板 (連按 5 次 D 鍵切換；支援 1F / RF / 4-15F) -->
     <div class="fp-hotspot-debug-toast" id="fpHotspotDebugToast"></div>
     <div class="fp-hotspot-debug-panel" id="fpHotspotDebugPanel">
-        <h3>🔴 1F Hotspot Debug 面板</h3>
+        <h3 class="fp-hotspot-debug-header" id="fpHotspotDebugHeader" title="按住拖曳可移動面板">
+            <span>🔴 Hotspot Debug 面板</span>
+            <span class="fp-hotspot-debug-header-btns">
+                <button id="fpHotspotDebugDock" title="移到左/右側">⇄</button>
+                <button id="fpHotspotDebugCollapse" title="收合/展開面板">—</button>
+            </span>
+        </h3>
         <div class="fp-hotspot-debug-list" id="fpHotspotDebugList"></div>
         <button class="fp-hotspot-debug-export" id="fpHotspotDebugExport">📋 匯出座標 (複製到剪貼簿)</button>
-        <div class="fp-hotspot-debug-hint">先點開 1F 平面圖後，於燈箱中拖曳紅點調整位置；<br>左側圖例矩形可整塊拖曳移動、右下角紅色手把調整大小。<br>連按 5 次 D 鍵或 ESC 可關閉本面板。</div>
+        <div class="fp-hotspot-debug-hint">先點開 1F / 2F / 3F / 4-15F / RF 平面圖後，於燈箱中拖曳紅點調整位置；<br>矩形熱點可整塊拖曳移動、右下角紅色手把調整大小。<br>標題列可拖曳移動面板、⇄ 快速換邊、— 收合。<br>連按 5 次 D 鍵或 ESC 可關閉本面板。</div>
     </div>
 
     <!-- 列印設定 Modal 對話框 -->
@@ -611,24 +639,87 @@
             const lightboxInfo = document.getElementById('fpLightboxInfo');
 
             // 坪數資料
+            // 資料來源：docs/(2)樂幕誤差表1150617_簽約面積.xlsx「簽約面積」表。
+            // main=主建物(坪) E欄、balc=陽台(坪) G欄、pub=公設合計(坪) L欄、
+            // total=總建坪(坪) N欄、terrace=露臺面積(坪) T欄。
+            // areaData：個別戶別傢俱配置圖 (A1~A8) 用，取標準層（樓層=4）數值。
             const areaData = {
-                '全區': [
-                    { unit: 'A1', area: 35.08 },
-                    { unit: 'A2', area: 35.08 },
-                    { unit: 'A3', area: 26.39 },
-                    { unit: 'A5', area: 31.31 },
-                    { unit: 'A6', area: 25.22 },
-                    { unit: 'A7', area: 35.08 },
-                    { unit: 'A8', area: 35.08 }
-                ],
-                'A1': { main: 20.58, balc: 2.29, pub: 12.21, total: 35.08 },
-                'A2': { main: 20.58, balc: 2.29, pub: 12.21, total: 35.08 },
-                'A3': { main: 15.64, balc: 1.57, pub: 9.18, total: 26.39 },
-                'A5': { main: 18.83, balc: 1.59, pub: 10.90, total: 31.31 },
-                'A6': { main: 14.82, balc: 1.63, pub: 8.78, total: 25.22 },
-                'A7': { main: 20.58, balc: 2.29, pub: 12.21, total: 35.08 },
-                'A8': { main: 20.58, balc: 2.29, pub: 12.21, total: 35.08 }
+                'A1': { main: 21.87, balc: 2.16, pub: 12.83, total: 36.86 },
+                'A2': { main: 23.04, balc: 1.33, pub: 13.01, total: 37.38 },
+                'A3': { main: 17.00, balc: 2.27, pub: 10.28, total: 29.55 },
+                'A5': { main: 23.07, balc: 1.33, pub: 13.03, total: 37.43 },
+                'A6': { main: 18.75, balc: 2.27, pub: 11.22, total: 32.24 },
+                'A7': { main: 21.40, balc: 2.99, pub: 13.03, total: 37.42 },
+                'A8': { main: 21.50, balc: 2.94, pub: 13.05, total: 37.49 }
             };
+
+            // floorAreaData：各樓層平面圖的面積資訊面板用。
+            // 2F 無 A6 戶且每戶皆有露臺；3F 僅 A6 有露臺；4-15F 標準層無露臺。
+            const floorAreaData = {
+                '2F': [
+                    { unit: 'A1', main: 21.87, balc: 2.16, pub: 12.83, total: 36.86, terrace: 1.97 },
+                    { unit: 'A2', main: 23.04, balc: 1.33, pub: 13.01, total: 37.38, terrace: 1.90 },
+                    { unit: 'A3', main: 17.00, balc: 2.27, pub: 10.28, total: 29.55, terrace: 2.79 },
+                    { unit: 'A5', main: 23.24, balc: 1.33, pub: 13.12, total: 37.69, terrace: 1.93 },
+                    { unit: 'A7', main: 21.52, balc: 2.99, pub: 13.09, total: 37.60, terrace: 2.78 },
+                    { unit: 'A8', main: 21.50, balc: 2.94, pub: 13.05, total: 37.49, terrace: 2.11 }
+                ],
+                '3F': [
+                    { unit: 'A1', main: 21.87, balc: 2.16, pub: 12.83, total: 36.86, terrace: 0 },
+                    { unit: 'A2', main: 23.04, balc: 1.33, pub: 13.01, total: 37.38, terrace: 0 },
+                    { unit: 'A3', main: 17.00, balc: 2.27, pub: 10.28, total: 29.55, terrace: 0 },
+                    { unit: 'A5', main: 23.07, balc: 1.33, pub: 13.03, total: 37.43, terrace: 0 },
+                    { unit: 'A6', main: 18.75, balc: 2.27, pub: 11.22, total: 32.24, terrace: 2.41 },
+                    { unit: 'A7', main: 21.40, balc: 2.99, pub: 13.03, total: 37.42, terrace: 0 },
+                    { unit: 'A8', main: 21.50, balc: 2.94, pub: 13.05, total: 37.49, terrace: 0 }
+                ],
+                '4-15F': [
+                    { unit: 'A1', main: 21.87, balc: 2.16, pub: 12.83, total: 36.86, terrace: 0 },
+                    { unit: 'A2', main: 23.04, balc: 1.33, pub: 13.01, total: 37.38, terrace: 0 },
+                    { unit: 'A3', main: 17.00, balc: 2.27, pub: 10.28, total: 29.55, terrace: 0 },
+                    { unit: 'A5', main: 23.07, balc: 1.33, pub: 13.03, total: 37.43, terrace: 0 },
+                    { unit: 'A6', main: 18.75, balc: 2.27, pub: 11.22, total: 32.24, terrace: 0 },
+                    { unit: 'A7', main: 21.40, balc: 2.99, pub: 13.03, total: 37.42, terrace: 0 },
+                    { unit: 'A8', main: 21.50, balc: 2.94, pub: 13.05, total: 37.49, terrace: 0 }
+                ]
+            };
+
+            // 由圖片 alt 判斷對應的樓層面積表（4-15F 需先判斷，避免誤配）
+            function floorKeyFromAlt(alt) {
+                if (alt.includes('4-15F')) return '4-15F';
+                if (alt.includes('2F')) return '2F';
+                if (alt.includes('3F')) return '3F';
+                return null;
+            }
+
+            // 產生樓層面積資訊面板（點擊列展開明細；露臺 > 0 才顯示露臺列）
+            function buildAreaTableHtml(floorKey) {
+                const rows = floorAreaData[floorKey];
+                if (!rows) return '';
+                let html = '<div class="area-hint">點擊戶別可展開面積明細</div>';
+                html += '<table class="area-table area-table-interactive"><tbody>';
+                rows.forEach(d => {
+                    html += `<tr class="area-mrow" data-unit="${d.unit}">
+                        <td class="unit-name">${d.unit}</td>
+                        <td class="unit-val">${d.total.toFixed(2)}</td>
+                        <td class="unit-txt">坪<span class="row-chevron" aria-hidden="true"></span></td>
+                    </tr>`;
+                    const terraceLine = d.terrace > 0
+                        ? `<div class="drow-line drow-terrace"><span>露臺面積</span><span>${d.terrace.toFixed(2)} 坪</span></div>`
+                        : '';
+                    html += `<tr class="area-drow" data-unit="${d.unit}"><td colspan="3">
+                        <div class="area-drow-inner">
+                            <div class="drow-line"><span>主建物</span><span>${d.main.toFixed(2)} 坪</span></div>
+                            <div class="drow-line"><span>陽台</span><span>${d.balc.toFixed(2)} 坪</span></div>
+                            <div class="drow-line"><span>公設合計</span><span>${d.pub.toFixed(2)} 坪</span></div>
+                            <div class="drow-line drow-total"><span>總建坪</span><span>${d.total.toFixed(2)} 坪</span></div>
+                            ${terraceLine}
+                        </div>
+                    </td></tr>`;
+                });
+                html += '</tbody></table>';
+                return html;
+            }
 
             let lbScale = 1, lbTx = 0, lbTy = 0;
             let lbDragging = false, lbStartX = 0, lbStartY = 0;
@@ -655,15 +746,16 @@
                     lightboxImg.src = img.src;
                     lightboxImg.alt = img.alt;
 
+                    // A1~A8 傢俱配置圖才顯示「4-15F平面圖」返回按鈕
+                    const backFloorBtn = document.getElementById('fpBackFloorBtn');
+                    backFloorBtn.classList.toggle('visible', /A[1-8]\s*傢俱配置/.test(img.alt));
+
                     // 判斷要顯示的資訊
                     let infoHtml = '';
-                    if (img.alt.includes('4-14F')) {
-                        // 全區總坪數
-                        infoHtml = '<table class="area-table"><tbody>';
-                        areaData['全區'].forEach(row => {
-                            infoHtml += `<tr><td class="unit-name">${row.unit}</td><td class="unit-val">${row.area}</td><td class="unit-txt">坪</td></tr>`;
-                        });
-                        infoHtml += '</tbody></table>';
+                    const floorKey = floorKeyFromAlt(img.alt);
+                    if (floorKey) {
+                        // 樓層面積資訊面板（2F / 3F / 4-15F，點擊列可展開面積明細）
+                        infoHtml = buildAreaTableHtml(floorKey);
                     } else {
                         // 個別戶別坪數
                         const match = img.alt.match(/A[1-8]/);
@@ -671,11 +763,11 @@
                             const d = areaData[match[0]];
                             infoHtml = `
                                 <div class="area-detail">
-                                    <div class="area-row"><span>主建物</span><span>${d.main} 坪</span></div>
-                                    <div class="area-row"><span>附屬建物(陽台)</span><span>${d.balc} 坪</span></div>
-                                    <div class="area-row"><span>共有部分(公設)</span><span>${d.pub} 坪</span></div>
+                                    <div class="area-row"><span>主建物</span><span>${d.main.toFixed(2)} 坪</span></div>
+                                    <div class="area-row"><span>附屬建物(陽台)</span><span>${d.balc.toFixed(2)} 坪</span></div>
+                                    <div class="area-row"><span>共有部分(公設)</span><span>${d.pub.toFixed(2)} 坪</span></div>
                                     <div class="area-divider"></div>
-                                    <div class="area-row total"><span>權狀坪數</span><span>${d.total} 坪</span></div>
+                                    <div class="area-row total"><span>總建坪</span><span>${d.total.toFixed(2)} 坪</span></div>
                                 </div>
                             `;
                         }
@@ -725,10 +817,96 @@
                 });
             });
 
+            // ===== 全區坪數表：點擊列展開/收合面積明細 (手風琴，單開) =====
+            lightboxInfo.addEventListener('click', (e) => {
+                const mrow = e.target.closest('.area-mrow');
+                if (!mrow) return;
+                e.stopPropagation();
+                const table = mrow.closest('.area-table');
+                const unit = mrow.dataset.unit;
+                const wasOpen = mrow.classList.contains('open');
+                // 單開模式：先收合其他已展開的列
+                table.querySelectorAll('.area-mrow.open, .area-drow.open').forEach(el => el.classList.remove('open'));
+                if (!wasOpen) {
+                    mrow.classList.add('open');
+                    const drow = table.querySelector(`.area-drow[data-unit="${unit}"]`);
+                    if (drow) drow.classList.add('open');
+                }
+            });
+            // 防止在明細列上按壓時觸發燈箱拖曳
+            lightboxInfo.addEventListener('mousedown', (e) => {
+                if (e.target.closest('.area-mrow') || e.target.closest('.area-drow')) e.stopPropagation();
+            });
+
+            // ===== 燈箱內圖面切換（淡出 → 換圖 → 淡入） =====
+            function fadeSwapLightboxTo(imgSelector) {
+                const target = document.querySelector(imgSelector);
+                if (!target) return;
+                lightboxImg.classList.add('fp-img-fading');
+                setTimeout(() => {
+                    target.click(); // 沿用完整開圖流程（資訊面板、熱點、丈量重設）
+                    requestAnimationFrame(() => requestAnimationFrame(() => {
+                        lightboxImg.classList.remove('fp-img-fading');
+                    }));
+                }, 260);
+            }
+
+            // 「4-15F平面圖」返回按鈕（僅 A1~A8 傢俱配置圖顯示）
+            const backFloorBtn = document.getElementById('fpBackFloorBtn');
+            backFloorBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (hotspotDebugMode) return; // Debug 模式下點擊不導頁（供拖曳定位）
+                backFloorBtn.classList.remove('visible');
+                fadeSwapLightboxTo('#plan-4-15F .fp-image-wrapper img');
+            });
+
+            // ===== 「4-15F平面圖」按鈕 Debug 拖曳定位 =====
+            // Debug 模式 (連按 5 次 D) 下可將按鈕拖到任意位置；
+            // 座標以視窗百分比 (left% / top%) 記錄，可由 Debug 面板匯出。
+            let backBtnDebugPos = null;   // { left, top } 單位：% of viewport
+            let backBtnDragging = false;
+            let backBtnDragOffX = 0, backBtnDragOffY = 0;
+
+            backFloorBtn.addEventListener('mousedown', (e) => {
+                if (!hotspotDebugMode) return;
+                e.preventDefault();
+                e.stopPropagation();
+                const r = backFloorBtn.getBoundingClientRect();
+                backBtnDragOffX = e.clientX - r.left;
+                backBtnDragOffY = e.clientY - r.top;
+                // 切換為 fixed 定位以脫離丈量工具列，自由拖曳
+                backFloorBtn.style.position = 'fixed';
+                backFloorBtn.style.left = `${r.left}px`;
+                backFloorBtn.style.top = `${r.top}px`;
+                backFloorBtn.style.right = 'auto';
+                backFloorBtn.style.bottom = 'auto';
+                backFloorBtn.style.zIndex = '100002';
+                backBtnDragging = true;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!backBtnDragging) return;
+                const w = backFloorBtn.offsetWidth, h = backFloorBtn.offsetHeight;
+                const left = Math.max(0, Math.min(window.innerWidth - w, e.clientX - backBtnDragOffX));
+                const top = Math.max(0, Math.min(window.innerHeight - h, e.clientY - backBtnDragOffY));
+                backFloorBtn.style.left = `${left}px`;
+                backFloorBtn.style.top = `${top}px`;
+                backBtnDebugPos = {
+                    left: (left / window.innerWidth) * 100,
+                    top: (top / window.innerHeight) * 100
+                };
+                updateHotspotDebugList();
+            });
+
+            window.addEventListener('mouseup', () => {
+                backBtnDragging = false;
+            });
+
             function closeLightbox() {
                 lightbox.classList.remove('active');
                 document.body.classList.remove('lightbox-active');
                 document.body.style.overflow = '';
+                backFloorBtn.classList.remove('visible');
 
                 // 退出燈箱時，清除所有測量標記與比例尺狀態
                 const clearBtn = document.getElementById('btnMeasureClear');
@@ -754,14 +932,21 @@
                     // 讀取面積資訊（直接從 JS 資料取得）
                     let infoHtml = '';
                     const match = imgAlt.match(/A[1-8]/);
-                    if (imgAlt.includes('4-14F')) {
+                    const printFloorKey = floorKeyFromAlt(imgAlt);
+                    if (printFloorKey) {
+                        // 樓層面積一覽（2F / 3F / 4-15F；該層有露臺者加註露臺欄）
+                        const hasTerrace = floorAreaData[printFloorKey].some(d => d.terrace > 0);
                         infoHtml = '<h3>面積一覽</h3>';
                         infoHtml += '<table>';
-                        areaData['全區'].forEach(row => {
+                        floorAreaData[printFloorKey].forEach(d => {
+                            const terraceTxt = hasTerrace
+                                ? `<td style="color:#8a7a55;">${d.terrace > 0 ? '露臺 ' + d.terrace.toFixed(2) + ' 坪' : ''}</td>`
+                                : '';
                             infoHtml += `<tr>
-                                <td>${row.unit}</td>
-                                <td>${row.area}</td>
+                                <td>${d.unit}</td>
+                                <td>${d.total.toFixed(2)}</td>
                                 <td>坪</td>
+                                ${terraceTxt}
                             </tr>`;
                         });
                         infoHtml += '</table>';
@@ -782,7 +967,7 @@
                             </tr>`;
                         });
                         infoHtml += `<tr style="border-top:2px solid #8b6914;font-weight:700;color:#8b6914;">
-                            <td>權狀坪數</td>
+                            <td>總建坪</td>
                             <td>${d.total}</td>
                             <td>坪</td>
                         </tr>`;
@@ -1756,7 +1941,67 @@
   { "id": "courtyard", "label": "慕語花園(圖例)",   "x": 0, "y": 76.2, "w": 13.9, "h": 3.3 }
 ];
 
-            
+            // ===== RF 燈箱熱點 (Hotspots) =====
+            // 對應 RF 平面配置參考圖上印製的 ①慕遊休憩室、②曬被區(兩處) 編號。
+            // slide 欄位指向 fp-info-lightbox 中的 data-id；曬被區兩個紅點共用同一張說明。
+            // x / y 為相對 RF 圖片自然尺寸的百分比，係依印製標記目測，可用 Debug 面板拖曳微調 (連按 5 次 D 鍵)。
+            const rfHotspotsData = [
+  { "id": "rf-garden",    "label": "慕遊休憩室", "slide": "garden",  "x": 55.6, "y": 53.7 },
+  { "id": "rf-laundry-1", "label": "曬被區",     "slide": "laundry", "x": 51.6, "y": 37.9 },
+  { "id": "rf-laundry-2", "label": "曬被區",     "slide": "laundry", "x": 49.3, "y": 71.7 }
+];
+
+            // ===== RF 左側圖例文字的矩形熱點 =====
+            // 對應 RF 圖左上「①慕遊休憩室 VR LOUNGE」「②曬被區」文字列，點擊開啟對應說明。
+            const rfLegendHotspotsData = [
+  { "id": "rf-garden",  "label": "慕遊休憩室(圖例)", "slide": "garden",  "x": 0.6, "y": 11.4, "w": 17,  "h": 3.5 },
+  { "id": "rf-laundry", "label": "曬被區(圖例)",     "slide": "laundry", "x": 0.3, "y": 17.5, "w": 7.5, "h": 3.4 }
+];
+
+            // ===== 4-15F 標準層各戶矩形熱點 =====
+            // unit 欄位對應 areaData 戶別；hover 顯示總建坪(坪)，點擊開啟該戶傢俱配置圖。
+            // x / y 為矩形左上角、w / h 為寬高（相對 4-15F 圖片自然尺寸百分比），
+            // 係依圖面各戶範圍目測，可用 Debug 面板拖曳移動、右下角手把調整大小 (連按 5 次 D 鍵)。
+            const unitHotspotsData = [
+  { "id": "unit-A1", "unit": "A1", "label": "A1", "x": 45,   "y": 8,    "w": 16.5, "h": 29 },
+  { "id": "unit-A2", "unit": "A2", "label": "A2", "x": 61.5, "y": 8,    "w": 14.5, "h": 30 },
+  { "id": "unit-A3", "unit": "A3", "label": "A3", "x": 60.5, "y": 38,   "w": 15.5, "h": 29.9 },
+  { "id": "unit-A5", "unit": "A5", "label": "A5", "x": 60.5, "y": 67.4, "w": 15.5, "h": 30.4 },
+  { "id": "unit-A6", "unit": "A6", "label": "A6", "x": 45.5, "y": 67.4, "w": 15,   "h": 30.8 },
+  { "id": "unit-A7", "unit": "A7", "label": "A7", "x": 26.5, "y": 72.4, "w": 18.5, "h": 27 },
+  { "id": "unit-A8", "unit": "A8", "label": "A8", "x": 24.5, "y": 33,   "w": 17.5, "h": 34.4 }
+];
+
+            // ===== 2F 各戶矩形熱點 =====
+            // 此層無 A6 戶。noPlan：傢俱配置圖尚未設計，點擊暫不動作（hover 坪數照常顯示）。
+            const unit2FHotspotsData = [
+  { "id": "unit2-A1", "unit": "A1", "label": "A1", "noPlan": true, "x": 44,   "y": 8,    "w": 15.8, "h": 29 },
+  { "id": "unit2-A2", "unit": "A2", "label": "A2", "noPlan": true, "x": 59.8, "y": 8,    "w": 15.2, "h": 28.7 },
+  { "id": "unit2-A3", "unit": "A3", "label": "A3", "noPlan": true, "x": 59.3, "y": 36.6, "w": 16.2, "h": 30.5 },
+  { "id": "unit2-A5", "unit": "A5", "label": "A5", "noPlan": true, "x": 59.8, "y": 67.4, "w": 16,   "h": 30.3 },
+  { "id": "unit2-A7", "unit": "A7", "label": "A7", "noPlan": true, "x": 25.3, "y": 71.9, "w": 19.9, "h": 27.5 },
+  { "id": "unit2-A8", "unit": "A8", "label": "A8", "noPlan": true, "x": 24.5, "y": 33,   "w": 17,   "h": 34.8 }
+];
+
+            // ===== 3F 各戶矩形熱點 =====（佈局同標準層，noPlan 同上）
+            const unit3FHotspotsData = [
+  { "id": "unit3-A1", "unit": "A1", "label": "A1", "noPlan": true, "x": 45,   "y": 8,    "w": 16.5, "h": 29 },
+  { "id": "unit3-A2", "unit": "A2", "label": "A2", "noPlan": true, "x": 61.5, "y": 8,    "w": 14.5, "h": 30 },
+  { "id": "unit3-A3", "unit": "A3", "label": "A3", "noPlan": true, "x": 60.5, "y": 38,   "w": 15.5, "h": 29.9 },
+  { "id": "unit3-A5", "unit": "A5", "label": "A5", "noPlan": true, "x": 60.5, "y": 67.4, "w": 15.5, "h": 30.4 },
+  { "id": "unit3-A6", "unit": "A6", "label": "A6", "noPlan": true, "x": 45.5, "y": 67.4, "w": 15,   "h": 30.8 },
+  { "id": "unit3-A7", "unit": "A7", "label": "A7", "noPlan": true, "x": 26.5, "y": 72.4, "w": 18.5, "h": 27 },
+  { "id": "unit3-A8", "unit": "A8", "label": "A8", "noPlan": true, "x": 24.5, "y": 33,   "w": 17.5, "h": 34.4 }
+];
+
+            // 樓層 → 各戶矩形熱點對照
+            const unitHotspotsByFloor = {
+                '2F': unit2FHotspotsData,
+                '3F': unit3FHotspotsData,
+                '4-15F': unitHotspotsData
+            };
+
+
 
             const hotspotLayer = document.getElementById('fpHotspotLayer');
             const infoLightbox = document.getElementById('fpInfoLightbox');
@@ -1789,10 +2034,23 @@
             let rectDragOffsetX = 0;
             let rectDragOffsetY = 0;
 
+            // 依當前燈箱圖面切換 1F / RF / 2F / 3F / 4-15F 熱點資料
+            let currentHotspotFloor = '1F';
+            function activeHotspots() {
+                if (currentHotspotFloor === 'RF') return rfHotspotsData;
+                if (unitHotspotsByFloor[currentHotspotFloor]) return []; // 各戶樓層只有矩形熱點，無紅點
+                return hotspotsData;
+            }
+            function activeLegendHotspots() {
+                if (currentHotspotFloor === 'RF') return rfLegendHotspotsData;
+                if (unitHotspotsByFloor[currentHotspotFloor]) return unitHotspotsByFloor[currentHotspotFloor];
+                return legendHotspotsData;
+            }
+
             function buildHotspots() {
                 hotspotLayer.innerHTML = '';
                 const invScale = 1 / (lbScale || 1);
-                hotspotsData.forEach(hs => {
+                activeHotspots().forEach(hs => {
                     const el = document.createElement('div');
                     el.className = 'fp-hotspot';
                     el.dataset.id = hs.id;
@@ -1818,16 +2076,26 @@
                     hotspotLayer.appendChild(el);
                 });
 
-                // 左側圖例文字的矩形熱點（平常隱形、無 hover 標籤，Debug 才顯示外框）
-                legendHotspotsData.forEach(hs => {
+                // 矩形熱點（圖例文字或 4-15F 各戶範圍；平常隱形，Debug 才顯示外框）
+                activeLegendHotspots().forEach(hs => {
                     const el = document.createElement('div');
-                    el.className = 'fp-hotspot-rect';
+                    el.className = 'fp-hotspot-rect'
+                        + (hs.unit ? ' fp-unit-rect' : '')
+                        + (hs.noPlan ? ' no-plan' : '');
                     el.dataset.id = hs.id;
                     el.style.left = `${hs.x}%`;
                     el.style.top = `${hs.y}%`;
                     el.style.width = `${hs.w}%`;
                     el.style.height = `${hs.h}%`;
-                    el.innerHTML = `<div class="rect-resize-handle" title="拖曳調整大小"></div>`;
+                    // 各戶熱點：hover 顯示該戶總建坪(坪)，依當前樓層取值（2F 部分戶別與標準層不同）
+                    const floorRows = floorAreaData[currentHotspotFloor];
+                    const unitRow = (hs.unit && floorRows) ? floorRows.find(r => r.unit === hs.unit) : null;
+                    const unitTotal = unitRow ? unitRow.total
+                        : (hs.unit && areaData[hs.unit] ? areaData[hs.unit].total : null);
+                    const areaLabel = (hs.unit && unitTotal != null)
+                        ? `<span class="rect-area-label"><b>${hs.unit}</b>${unitTotal.toFixed(2)} 坪</span>`
+                        : '';
+                    el.innerHTML = `<div class="rect-resize-handle" title="拖曳調整大小"></div>${areaLabel}`;
                     el.addEventListener('click', (e) => {
                         e.stopPropagation();
                         if (hotspotDragMoved) {
@@ -1835,18 +2103,38 @@
                             return;
                         }
                         if (hotspotDebugMode) return;
-                        openInfoLightbox(hs);
+                        if (hs.unit) {
+                            // noPlan：該樓層傢俱配置圖尚未設計，點擊暫不動作
+                            if (!hs.noPlan) openUnitPlan(hs.unit);
+                        } else {
+                            openInfoLightbox(hs);
+                        }
                     });
                     hotspotLayer.appendChild(el);
                 });
             }
 
-            // 依當前燈箱顯示的圖面決定是否顯示熱點 (僅 1F)
+            // 於燈箱中直接切換至指定戶別的傢俱配置圖（淡出淡入 + 完整開圖流程）
+            function openUnitPlan(unit) {
+                fadeSwapLightboxTo(`#plan-${unit} .fp-image-wrapper img`);
+            }
+
+            // 依當前燈箱顯示的圖面決定是否顯示熱點 (1F / RF / 2F / 3F / 4-15F)
             function showHotspotsForCurrentImage() {
                 const src = lightboxImg.src || '';
                 const alt = lightboxImg.alt || '';
-                const is1F = /\/1F\.webp(\?|$)/i.test(src) || /(^|[^\d])1F([^\d]|$)/.test(alt);
-                if (is1F) {
+                const is415F = /\/4-15F\.webp(\?|$)/i.test(src) || alt.includes('4-15F');
+                const is2F = !is415F && (/\/2F\.webp(\?|$)/i.test(src) || alt.startsWith('2F'));
+                const is3F = !is415F && (/\/3F\.webp(\?|$)/i.test(src) || alt.startsWith('3F'));
+                const is1F = !is415F && (/\/1F\.webp(\?|$)/i.test(src) || /(^|[^\d])1F([^\d]|$)/.test(alt));
+                const isRF = /\/RF\.webp(\?|$)/i.test(src) || /(^|[^A-Za-z])RF([^A-Za-z]|$)/.test(alt);
+                if (is1F || isRF || is415F || is2F || is3F) {
+                    currentHotspotFloor = is415F ? '4-15F'
+                        : is2F ? '2F'
+                        : is3F ? '3F'
+                        : (isRF ? 'RF' : '1F');
+                    buildHotspots();          // 依當前樓層重建對應熱點
+                    updateHotspotDebugList();
                     hotspotLayer.classList.add('active');
                 } else {
                     hotspotLayer.classList.remove('active');
@@ -1900,7 +2188,8 @@
             }
 
             function openInfoLightbox(hs) {
-                const idx = Array.from(infoSlides).findIndex(s => s.dataset.id === hs.id);
+                const slideId = hs.slide || hs.id;
+                const idx = Array.from(infoSlides).findIndex(s => s.dataset.id === slideId);
                 const target = idx >= 0 ? idx : 0;
 
                 // 模態顯示前先把對應 slide 設為 active，避免開啟瞬間看到第一張再切換
@@ -1989,8 +2278,61 @@
                 hotspotDebugPanel.classList.toggle('active', on);
                 document.body.classList.toggle('fp-hotspot-debug', on);
                 updateHotspotDebugList();
-                showHotspotDebugToast(on ? '🔧 1F Hotspot Debug 已啟用' : '🔒 1F Hotspot Debug 已關閉');
+                showHotspotDebugToast(on ? `🔧 ${currentHotspotFloor} Hotspot Debug 已啟用` : '🔒 Hotspot Debug 已關閉');
             }
+
+            // ===== Debug 面板：拖曳移動 / 換邊 / 收合（避免擋住要調整的區塊） =====
+            const hotspotDebugHeader = document.getElementById('fpHotspotDebugHeader');
+            const hotspotDebugDock = document.getElementById('fpHotspotDebugDock');
+            const hotspotDebugCollapse = document.getElementById('fpHotspotDebugCollapse');
+            let panelDragging = false;
+            let panelDragOffX = 0, panelDragOffY = 0;
+
+            // 標題列拖曳移動面板
+            hotspotDebugHeader.addEventListener('mousedown', (e) => {
+                if (e.target.closest('button')) return; // 按鈕不觸發拖曳
+                e.preventDefault();
+                const r = hotspotDebugPanel.getBoundingClientRect();
+                panelDragOffX = e.clientX - r.left;
+                panelDragOffY = e.clientY - r.top;
+                hotspotDebugPanel.style.left = `${r.left}px`;
+                hotspotDebugPanel.style.top = `${r.top}px`;
+                hotspotDebugPanel.style.right = 'auto';
+                panelDragging = true;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!panelDragging) return;
+                const w = hotspotDebugPanel.offsetWidth, h = hotspotDebugPanel.offsetHeight;
+                const left = Math.max(0, Math.min(window.innerWidth - w, e.clientX - panelDragOffX));
+                const top = Math.max(0, Math.min(window.innerHeight - h, e.clientY - panelDragOffY));
+                hotspotDebugPanel.style.left = `${left}px`;
+                hotspotDebugPanel.style.top = `${top}px`;
+            });
+
+            window.addEventListener('mouseup', () => { panelDragging = false; });
+
+            // ⇄ 快速換邊（左 ↔ 右）
+            hotspotDebugDock.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const r = hotspotDebugPanel.getBoundingClientRect();
+                const onLeft = r.left < window.innerWidth / 2;
+                hotspotDebugPanel.style.top = `${r.top}px`;
+                if (onLeft) {
+                    hotspotDebugPanel.style.left = 'auto';
+                    hotspotDebugPanel.style.right = '20px';
+                } else {
+                    hotspotDebugPanel.style.left = '20px';
+                    hotspotDebugPanel.style.right = 'auto';
+                }
+            });
+
+            // — 收合/展開（只留標題列）
+            hotspotDebugCollapse.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const collapsed = hotspotDebugPanel.classList.toggle('collapsed');
+                hotspotDebugCollapse.textContent = collapsed ? '▣' : '—';
+            });
 
             function showHotspotDebugToast(msg) {
                 hotspotDebugToast.textContent = msg;
@@ -2003,7 +2345,7 @@
 
             function updateHotspotDebugList() {
                 hotspotDebugList.innerHTML = '';
-                hotspotsData.forEach(hs => {
+                activeHotspots().forEach(hs => {
                     const item = document.createElement('div');
                     item.className = 'fp-hotspot-debug-item';
                     item.innerHTML = `
@@ -2012,7 +2354,7 @@
                     `;
                     hotspotDebugList.appendChild(item);
                 });
-                legendHotspotsData.forEach(hs => {
+                activeLegendHotspots().forEach(hs => {
                     const item = document.createElement('div');
                     item.className = 'fp-hotspot-debug-item';
                     item.innerHTML = `
@@ -2021,25 +2363,42 @@
                     `;
                     hotspotDebugList.appendChild(item);
                 });
+
+                // 「4-15F平面圖」按鈕位置（視窗百分比；拖曳後更新）
+                const btnItem = document.createElement('div');
+                btnItem.className = 'fp-hotspot-debug-item';
+                btnItem.innerHTML = `
+                    <span class="debug-name">4-15F平面圖按鈕</span>
+                    <span class="debug-pos">${backBtnDebugPos
+                        ? `left: ${backBtnDebugPos.left.toFixed(1)}% top: ${backBtnDebugPos.top.toFixed(1)}% (viewport)`
+                        : '未拖曳（預設：丈量按鈕上方）'}</span>
+                `;
+                hotspotDebugList.appendChild(btnItem);
             }
 
             hotspotDebugExport.addEventListener('click', () => {
                 const exportData = {
-                    hotspots: hotspotsData.map(hs => ({
+                    floor: currentHotspotFloor,
+                    hotspots: activeHotspots().map(hs => ({
                         id: hs.id,
                         label: hs.label,
                         img: hs.img,
                         x: parseFloat(hs.x.toFixed(1)),
                         y: parseFloat(hs.y.toFixed(1))
                     })),
-                    legendHotspots: legendHotspotsData.map(hs => ({
+                    legendHotspots: activeLegendHotspots().map(hs => ({
                         id: hs.id,
                         label: hs.label,
                         x: parseFloat(hs.x.toFixed(1)),
                         y: parseFloat(hs.y.toFixed(1)),
                         w: parseFloat(hs.w.toFixed(1)),
                         h: parseFloat(hs.h.toFixed(1))
-                    }))
+                    })),
+                    backFloorBtn: backBtnDebugPos ? {
+                        left: parseFloat(backBtnDebugPos.left.toFixed(1)),
+                        top: parseFloat(backBtnDebugPos.top.toFixed(1)),
+                        unit: '%viewport'
+                    } : null
                 };
                 const jsonStr = JSON.stringify(exportData, null, 2);
                 navigator.clipboard.writeText(jsonStr).then(() => {
@@ -2095,7 +2454,7 @@
 
                 // 圖例矩形：移動
                 if (rectDragTarget) {
-                    const hs = legendHotspotsData.find(h => h.id === rectDragTarget.dataset.id);
+                    const hs = activeLegendHotspots().find(h => h.id === rectDragTarget.dataset.id);
                     if (!hs) return;
                     let x = ((e.clientX - rectDragOffsetX - imgRect.left) / imgRect.width) * 100;
                     let y = ((e.clientY - rectDragOffsetY - imgRect.top) / imgRect.height) * 100;
@@ -2112,7 +2471,7 @@
 
                 // 圖例矩形：右下角縮放
                 if (rectResizeTarget) {
-                    const hs = legendHotspotsData.find(h => h.id === rectResizeTarget.dataset.id);
+                    const hs = activeLegendHotspots().find(h => h.id === rectResizeTarget.dataset.id);
                     if (!hs) return;
                     let w = ((e.clientX - imgRect.left) / imgRect.width) * 100 - hs.x;
                     let h = ((e.clientY - imgRect.top) / imgRect.height) * 100 - hs.y;
@@ -2135,7 +2494,7 @@
                 hotspotDragTarget.style.top = `${cy}%`;
                 hotspotDragMoved = true;
                 const id = hotspotDragTarget.dataset.id;
-                const hs = hotspotsData.find(h => h.id === id);
+                const hs = activeHotspots().find(h => h.id === id);
                 if (hs) {
                     hs.x = cx;
                     hs.y = cy;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="app-version" content="1.0.3">
+    <meta name="app-version" content="1.0.4">
     <script>
       if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
         document.write('<base href="/LAMOUR-Digital-Display-Board/">');
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/variables.css?v=1.0.3">
     <link rel="stylesheet" href="css/global.css?v=1.0.3">
     <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
-    <link rel="stylesheet" href="css/exterior-3d.css?v=1.0.4">
+    <link rel="stylesheet" href="css/exterior-3d.css?v=1.0.5">
     <!-- PWA Update Loading Screen -->
     <style id="pwa-loading-style">
       #pwa-loading-overlay {
@@ -87,7 +87,7 @@
 
         <!-- 圖片輪播 -->
         <div class="ext3d-slide active" data-index="0" id="dayNightSlide">
-            <img src="assets/images/3D-01.webp" alt="富宇樂慕 外觀3D透視圖 - 日景" draggable="false">
+            <img class="ext3d-day-layer" src="assets/images/3D-01.webp" alt="富宇樂慕 外觀3D透視圖 - 日景" draggable="false">
             <img class="ext3d-night-layer" src="assets/images/3D-01-night.webp" alt="富宇樂慕 外觀3D透視圖 - 夜景" draggable="false">
         </div>
 
@@ -216,10 +216,23 @@
             const dnDay = document.getElementById('dnDay');
             const dnNight = document.getElementById('dnNight');
 
+            let dnSwitchTimer = null;
             function setNightMode(on) {
+                // 已是目標狀態就不重播轉場，避免重複點擊閃爍
+                if (dayNightSlide.classList.contains('night') === on) return;
+
                 dayNightSlide.classList.toggle('night', on);
                 dnDay.classList.toggle('active', !on);
                 dnNight.classList.toggle('active', on);
+
+                // 觸發暮色「漸出→漸入」轉場：移除後強制 reflow 讓動畫重頭播放
+                dayNightSlide.classList.remove('switching');
+                void dayNightSlide.offsetWidth;
+                dayNightSlide.classList.add('switching');
+                clearTimeout(dnSwitchTimer);
+                dnSwitchTimer = setTimeout(() => {
+                    dayNightSlide.classList.remove('switching');
+                }, 1100);
             }
 
             dnDay.addEventListener('click', () => setNightMode(false));

@@ -239,17 +239,41 @@
     }
 }
 /* ===== 日夜景切換 ===== */
-/* 夜景圖層：疊在日景上方，靠 opacity 交叉淡化 */
+/* 日景層與夜景層交叉溶接：兩層同步「漸出／漸入」，避免中段疊圖泛白。
+   選擇器帶 img 提高權重，確保覆蓋 .ext3d-slide img 的 transition。 */
+.ext3d-slide img.ext3d-day-layer,
+.ext3d-slide img.ext3d-night-layer {
+    transition: transform 0.08s linear, opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+}
+
+/* 夜景層疊在日景層上方 */
 .ext3d-night-layer {
     position: absolute;
     top: 0;
     left: 0;
     opacity: 0;
-    transition: transform 0.08s linear, opacity 1.2s ease;
 }
 
+/* 切到夜景：日景層淡出、夜景層淡入（真正的交叉淡化） */
+.ext3d-slide.night .ext3d-day-layer {
+    opacity: 0;
+}
 .ext3d-slide.night .ext3d-night-layer {
     opacity: 1;
+}
+
+/* 暮色轉場：切換當下畫面先微暗（漸出）再回亮（漸入），模擬晨昏過渡，
+   讓日↔夜的轉換更有電影感。由 JS 於切換時加上 .switching 觸發。 */
+.ext3d-slide.switching .ext3d-day-layer,
+.ext3d-slide.switching .ext3d-night-layer {
+    animation: ext3d-dusk 1.05s ease-in-out;
+}
+@keyframes ext3d-dusk {
+    0%   { filter: brightness(1); }
+    45%  { filter: brightness(0.78); }
+    100% { filter: brightness(1); }
 }
 
 /* 切換按鈕：玻璃質感膠囊 + 日/夜分段 */
