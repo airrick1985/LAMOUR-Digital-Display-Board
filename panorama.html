@@ -160,7 +160,13 @@
                     image: 'assets/images/Lake-Placid.webp', desc: '距離1.1公里，徒步17分鐘'
                 },
                 {
-                    id: 'JinshanmianPark', x: 53.15, y: 29.00, w: 1.0, h: 14.5,
+                    // 文字較高（含「(規劃中)」），故 y / h 與其他熱點不同
+                    id: 'KCIS', x: 53.02, y: 25.10, w: 1.0, h: 20.0,
+                    label: '康橋國際學校', title: '康橋國際學校（規劃中）', subtitle: 'Kang Chiao International School',
+                    image: 'assets/images/KCIS.webp', desc: '距離350公尺，徒步5分鐘'
+                },
+                {
+                    id: 'JinshanmianPark', x: 55.57, y: 29.00, w: 1.0, h: 14.5,
                     label: '金山面公園', title: '金山面公園', subtitle: 'Jinshanmian Park',
                     image: 'assets/images/jinshanmian-park.webp', desc: '距離900公尺，徒步13分鐘'
                 },
@@ -398,6 +404,27 @@
             const modalSubtitle = document.getElementById('poiModalSubtitle');
             const modalDesc = document.getElementById('poiModalDesc');
             const modalClose = document.getElementById('poiModalClose');
+            const modalMedia = modal.querySelector('.pnrm-modal-media');
+            const modalCard = modal.querySelector('.pnrm-modal');
+
+            // ===== 圖片缺失處理：載入失敗時隱藏圖片區塊，不顯示瀏覽器破圖圖示 =====
+            // 無圖時彈窗只剩文字，需一併切換 .no-media；否則關閉鈕（相對彈窗定位）會壓到標題
+            function toggleMedia(visible) {
+                modalMedia.style.display = visible ? '' : 'none';
+                modalCard.classList.toggle('no-media', !visible);
+            }
+
+            modalImg.addEventListener('error', () => toggleMedia(false));
+
+            function setModalImage(src) {
+                if (!src) {
+                    toggleMedia(false);
+                    modalImg.removeAttribute('src');
+                    return;
+                }
+                toggleMedia(true);
+                modalImg.src = src;
+            }
 
             // ===== 多圖手動輪播（hotspot 有 images 陣列時自動啟用） =====
             const modalDots = document.getElementById('poiModalDots');
@@ -410,7 +437,7 @@
                 slideIndex = (i + slideImages.length) % slideImages.length;
                 modalImg.style.opacity = '0';
                 setTimeout(() => {
-                    modalImg.src = slideImages[slideIndex];
+                    setModalImage(slideImages[slideIndex]);
                     modalImg.style.opacity = '1';
                 }, 200);
                 Array.from(modalDots.children).forEach((d, j) => {
@@ -428,9 +455,9 @@
             });
 
             function openPoiModal(poi) {
-                slideImages = poi.images || [poi.image];
+                slideImages = (poi.images || [poi.image]).filter(Boolean);
                 slideIndex = 0;
-                modalImg.src = slideImages[0];
+                setModalImage(slideImages[0]);
                 modalImg.style.opacity = '1';
                 modalImg.alt = poi.title;
 

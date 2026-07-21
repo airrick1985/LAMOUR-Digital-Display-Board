@@ -343,6 +343,20 @@ html:has(body.pano-page) {
     z-index: 1000000;
 }
 
+/* 缺圖時彈窗只剩文字，關閉鈕改回流內並靠右，避免壓在標題上
+   （.pnrm-modal 有 transform，fixed 定位是相對彈窗而非視窗） */
+.pnrm-modal.no-media .pnrm-modal-close {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 0 0 4px auto;
+    flex: none;
+}
+
+.pnrm-modal.no-media .pnrm-modal-body {
+    padding-top: 0;
+}
+
 .pnrm-modal-close:hover {
     background: #EDAFB8;
     color: #000;

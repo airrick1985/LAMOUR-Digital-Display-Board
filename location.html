@@ -268,6 +268,19 @@ pitch: -21.1390,
                     desc: '距離900公尺，徒步13分鐘'
                 },
                 {
+                    id: 'KCIS',
+                    yaw: -66.0000,
+pitch: -65.1000,
+                    w: 60,
+                    h: 240,
+                    label: '康橋國際學校（規劃中）',
+                    icon: '🏫',
+                    title: '康橋國際學校（規劃中）',
+                    subtitle: 'Kang Chiao International School',
+                    image: 'assets/images/KCIS.webp',
+                    desc: '距離350公尺，徒步5分鐘'
+                },
+                {
                     id: 'XinkeJH',
                     yaw: -171.4438,
 pitch: -21.2152,
@@ -412,8 +425,25 @@ pitch: -29.9865,
             const modalDesc = document.getElementById('poiModalDesc');
             const modalClose = document.getElementById('poiModalClose');
 
+            const modalCard = modal.querySelector('.poi-modal');
+
+            // 圖片缺失時隱藏 <img>，不顯示瀏覽器破圖圖示
+            // 無圖時彈窗只剩文字，需一併切換 .no-image；否則關閉鈕（相對彈窗定位）會壓到標題
+            function toggleModalImage(visible) {
+                modalImg.style.display = visible ? '' : 'none';
+                modalCard.classList.toggle('no-image', !visible);
+            }
+
+            modalImg.addEventListener('error', () => toggleModalImage(false));
+
             function openPoiModal(poi) {
-                modalImg.src = poi.image;
+                if (poi.image) {
+                    toggleModalImage(true);
+                    modalImg.src = poi.image;
+                } else {
+                    toggleModalImage(false);
+                    modalImg.removeAttribute('src');
+                }
                 modalImg.alt = poi.title;
                 modalTitle.textContent = poi.title;
                 modalSubtitle.textContent = poi.subtitle;
