@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/variables.css?v=1.0.3">
     <link rel="stylesheet" href="css/global.css?v=1.0.3">
     <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
-    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.14">
+    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.18">
     <!-- Pannellum 360 全景套件（本地版本） -->
     <link rel="stylesheet" href="assets/pannellum/pannellum.min.css">
     <!-- PWA Update Loading Screen -->
@@ -490,8 +490,20 @@
             </span>
         </h3>
         <div class="fp-hotspot-debug-list" id="fpHotspotDebugList"></div>
+        <button class="fp-hotspot-debug-export" id="fpHotspotDebugPreviewBtn">🖨️ A3 列印排版檢視器 (4-15F)</button>
         <button class="fp-hotspot-debug-export" id="fpHotspotDebugExport">📋 匯出座標 (複製到剪貼簿)</button>
-        <div class="fp-hotspot-debug-hint">先點開 1F / 2F / 3F / 4-15F / RF 平面圖後，於燈箱中拖曳紅點調整位置；<br>矩形熱點可整塊拖曳移動、右下角紅色手把調整大小。<br>標題列可拖曳移動面板、⇄ 快速換邊、— 收合。<br>連按 5 次 D 鍵或 ESC 可關閉本面板。</div>
+        <div class="fp-hotspot-debug-hint">先點開 1F / 2F / 3F / 4-15F / RF 平面圖後，於燈箱中拖曳紅點調整位置；<br>矩形熱點可整塊拖曳移動、右下角紅色手把調整大小。<br>4-15F 圖面另有藍色虛線「列印卡片」（各戶面積 / 基本資料），拖曳即可調整列印時的位置。<br>檢視：滾輪縮放；按住「空白鍵」（或 Alt / 滑鼠中鍵）再拖曳可平移畫面，即使壓在熱點或卡片上也優先平移。<br>列印底圖（4-15F）：Ctrl+滾輪 = 縮放底圖、Ctrl+拖曳 = 移動底圖、Ctrl+雙擊 = 重設，縮小底圖可避免資訊卡遮到圖面，列印會套用相同設定。<br>建議改用上方「🖨️ A3 列印排版檢視器」：以真實 A3 橫式紙面（含表頭）排版底圖與卡片，所見即所得。<br>標題列可拖曳移動面板、⇄ 快速換邊、— 收合。<br>連按 5 次 D 鍵或 ESC 可關閉本面板。</div>
+    </div>
+
+    <!-- Debug：A3 橫式列印排版檢視器（與實際列印共用同一份頁面 HTML/CSS，所見即所得） -->
+    <div class="fp-print-preview" id="fpPrintPreview">
+        <div class="fp-print-preview-toolbar">
+            <span class="fp-print-preview-hint">🖨️ A3 橫式列印排版檢視器　—　拖曳卡片＝調位置（可放到整張紙面）｜卡片右下角手把＝調寬度｜滾輪在卡片上＝字體大小｜拖曳圖面＝移動底圖｜滾輪在空白處＝縮放底圖｜雙擊圖面＝重設底圖｜ESC 關閉</span>
+            <button id="fpPrintPreviewClose" title="關閉檢視器">✕</button>
+        </div>
+        <div class="fp-print-preview-body" id="fpPrintPreviewBody">
+            <iframe id="fpPrintPreviewFrame" title="A3 列印排版預覽"></iframe>
+        </div>
     </div>
 
     <!-- 列印設定 Modal 對話框 -->
@@ -499,7 +511,13 @@
         <div class="fp-print-modal">
             <button class="fp-print-modal-close" id="fpPrintModalClose" title="關閉">✕</button>
             <h3>列印設定</h3>
-            <p>是否要包含面積資訊?</p>
+            <p id="fpPrintModalQuestion">是否要包含面積資訊?</p>
+            <div class="fp-print-modal-manager">
+                <label for="fpPrintManagerSelect">標註銷售經理</label>
+                <select id="fpPrintManagerSelect">
+                    <option value="">不標註</option>
+                </select>
+            </div>
             <div class="fp-print-modal-options">
                 <button class="fp-print-modal-btn fp-print-modal-btn-confirm" id="fpPrintIncludeArea">包含面積</button>
                 <button class="fp-print-modal-btn fp-print-modal-btn-cancel" id="fpPrintExcludeArea">只列印圖面</button>
@@ -683,6 +701,119 @@
                     { unit: 'A8', main: 21.50, balc: 2.94, pub: 13.05, total: 37.49, terrace: 0 }
                 ]
             };
+
+            // =========================================================================
+            // ★★★ 銷售資料維護區（修改名單 / 電話 / 基本資料 / 列印座標，改這裡即可）★★★
+            // =========================================================================
+
+            // 銷售經理名單（列印設定視窗的下拉選單；依姓名筆畫排序）。
+            // 新增 / 修改：照格式加一行即可；電話存純數字，顯示時會自動加分隔線。
+            const salesManagers = [
+                { name: '方慧真', phone: '0912302385' },
+                { name: '王育君', phone: '0933188876' },
+                { name: '王智慧', phone: '0975123036' },
+                { name: '何旻熙', phone: '0976210088' },
+                { name: '徐滋惠', phone: '0925679707' },
+                { name: '陳文賢', phone: '0980371014' },
+                { name: '蔡頤樺', phone: '0986183777' },
+                { name: '蔡瓏君', phone: '0933116761' },
+                { name: '謝功振', phone: '0900394313' }
+            ];
+
+            // 手機號碼顯示格式：0933188876 → 0933-188-876
+            function formatPhone(p) {
+                return String(p).replace(/^(\d{4})(\d{3})(\d{3})$/, '$1-$2-$3');
+            }
+
+            // 基本資料（列印 4-15F 時印在圖面空白處的「基本資料」卡片，一行一筆）
+            const basicInfoData = [
+                { label: '基地位置', value: '新竹市東區光復路一段335巷' },
+                { label: '基地面積', value: '約615坪　地上15F/B4' },
+                { label: '規劃戶數', value: '住家 97戶' },
+                { label: '停車位',   value: '汽車位 118個　機車位 117個' },
+                { label: '公設比',   value: '34.8%' },
+                { label: '樓高',     value: '住家 3.1米　一樓大廳挑高 8.5米' },
+                { label: '車位售價', value: 'B1-325　B2-300　B3-275　B4-250' },
+                { label: '管理費',   value: '住家 90/坪　車位 300/個' },
+                { label: '學區',     value: '關東國小、新科國中、竹科實中、康橋國際學校(規劃中)' }
+            ];
+
+            // 4-15F 列印版面座標。
+            // x / y = 卡片「左上角」相對圖框的百分比（可為負值或超過 100，即排到圖框外的紙面空白處）；
+            // w = 卡片寬度（% 圖框寬）；fs = 字級倍率（1 = 標準）。
+            // 調整方式：Debug 模式 → 「🖨️ A3 列印排版檢視器」→ 拖曳卡片移動、
+            // 拖右下角手把調寬度、滾輪在卡片上調字級 → 按「匯出座標」複製 JSON 貼回修改。
+            const printLayout415F = {
+                unitLabels: [
+                    { unit: 'A1', x: 47.7, y: -5.1, w: 9, fs: 1.1 },
+                    { unit: 'A2', x: 62.7, y: -5,   w: 9, fs: 1.1 },
+                    { unit: 'A3', x: 75.8, y: 46.9, w: 9, fs: 1.1 },
+                    { unit: 'A5', x: 61.9, y: 93.5, w: 9, fs: 1.1 },
+                    { unit: 'A6', x: 47.7, y: 93.4, w: 9, fs: 1.1 },
+                    { unit: 'A7', x: 32.3, y: 93.9, w: 9, fs: 1.1 },
+                    { unit: 'A8', x: 32.1, y: 18.4, w: 9, fs: 1.1 }
+                ],
+                infoBlock: { x: 3.8, y: 16.7, w: 22.6, fs: 1.3 },
+                // 列印底圖縮放 / 位移（避免資訊卡遮到圖面）：
+                // scale = 縮放倍率（1 = 原尺寸）；x / y = 位移（相對圖框的百分比，正值往右/下）。
+                // Debug 模式下 Ctrl+滾輪 = 縮放底圖、Ctrl+拖曳 = 移動底圖、Ctrl+雙擊 = 重設。
+                baseImage: { scale: 0.87, x: 0, y: 0 }
+            };
+            // ========================= ★ 維護區結束 ★ =========================
+
+            // ===== 列印排版共用產生器（列印視窗與 Debug「A3 排版檢視器」共用）=====
+            // 卡片基準字級（cqw = % 圖框寬）；實際字級 = 基準 × 卡片 fs 倍率
+            const PU_CARD_BASE_FONT = 0.75;  // 各戶面積卡
+            const PI_CARD_BASE_FONT = 0.78;  // 基本資料卡
+
+            // 卡片個別尺寸/字級的 inline 樣式（w、fs 未設定時用預設值）
+            function printCardSizeStyle(pl, defW, baseFont) {
+                const w = pl.w || defW;
+                const fs = pl.fs || 1;
+                return `width:${w}cqw;font-size:${(baseFont * fs).toFixed(3)}cqw;`;
+            }
+
+            // 4-15F 疊在圖面上的卡片 HTML（data-print-key 供檢視器拖曳識別）
+            function buildPrint415FOverlayHtml() {
+                let html = '';
+                printLayout415F.unitLabels.forEach(pl => {
+                    const d = floorAreaData['4-15F'].find(r => r.unit === pl.unit);
+                    if (!d) return;
+                    html += `
+                        <div class="pu-card" data-print-key="unit-${pl.unit}" style="left:${pl.x}%;top:${pl.y}%;${printCardSizeStyle(pl, 9, PU_CARD_BASE_FONT)}">
+                            <h4>${pl.unit}</h4>
+                            <div class="rows">
+                                <div class="pu-row"><span>主建物</span><span>${d.main.toFixed(2)} 坪</span></div>
+                                <div class="pu-row"><span>陽台</span><span>${d.balc.toFixed(2)} 坪</span></div>
+                                <div class="pu-row"><span>公設</span><span>${d.pub.toFixed(2)} 坪</span></div>
+                                <div class="pu-row total"><span>總建坪</span><span>${d.total.toFixed(2)} 坪</span></div>
+                            </div>
+                        </div>`;
+                });
+                let infoRows = '';
+                basicInfoData.forEach(r => {
+                    infoRows += `<div class="pi-row"><span class="lb">${r.label}</span><span class="val">${r.value}</span></div>`;
+                });
+                html += `
+                    <div class="pi-card" data-print-key="info" style="left:${printLayout415F.infoBlock.x}%;top:${printLayout415F.infoBlock.y}%;${printCardSizeStyle(printLayout415F.infoBlock, 17.5, PI_CARD_BASE_FONT)}">
+                        <h4>基本資料</h4>
+                        <div class="rows">${infoRows}</div>
+                    </div>`;
+                return html;
+            }
+
+            // 4-15F 列印底圖縮放/位移的 transform 樣式
+            function buildPrintBaseImgStyle() {
+                const bi = printLayout415F.baseImage || { scale: 1, x: 0, y: 0 };
+                return `transform: translate(${bi.x}%, ${bi.y}%) scale(${bi.scale}); transform-origin: center center;`;
+            }
+
+            // 頁首銷售經理標註 HTML
+            function buildManagerHtml(manager) {
+                return manager
+                    ? `<div class="ph-manager"><span class="mg-role">銷售經理</span><b>${manager.name}</b><span class="mg-phone">${formatPhone(manager.phone)}</span></div>`
+                    : '';
+            }
 
             // 由圖片 alt 判斷對應的樓層面積表（4-15F 需先判斷，避免誤配）
             function floorKeyFromAlt(alt) {
@@ -895,7 +1026,7 @@
                     left: (left / window.innerWidth) * 100,
                     top: (top / window.innerHeight) * 100
                 };
-                updateHotspotDebugList();
+                scheduleDebugListUpdate();
             });
 
             window.addEventListener('mouseup', () => {
@@ -921,6 +1052,18 @@
 
             // 列印功能 — 開新視窗列印（完全繞過原頁面 CSS 干擾）
             const lightboxPrint = document.getElementById('fpLightboxPrint');
+
+            // 銷售經理下拉選單（列印設定 Modal；名單維護於上方 salesManagers）
+            const printManagerSelect = document.getElementById('fpPrintManagerSelect');
+            if (printManagerSelect) {
+                salesManagers.forEach((m, i) => {
+                    const opt = document.createElement('option');
+                    opt.value = String(i);
+                    opt.textContent = `${m.name}　${formatPhone(m.phone)}`;
+                    printManagerSelect.appendChild(opt);
+                });
+            }
+
             if (lightboxPrint) {
                 lightboxPrint.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -974,63 +1117,89 @@
                         infoHtml += '</table>';
                     }
 
-                    // 如果有面積資訊，詢問用戶是否要包含
-                    if (infoHtml) {
-                        // 顯示 modal 對話框
-                        const modalOverlay = document.getElementById('fpPrintModalOverlay');
-                        const btnInclude = document.getElementById('fpPrintIncludeArea');
-                        const btnExclude = document.getElementById('fpPrintExcludeArea');
-                        const btnClose = document.getElementById('fpPrintModalClose');
+                    // 顯示列印設定 Modal（一律顯示，供選擇銷售經理；
+                    // 有面積資訊時另可選擇是否包含面積）
+                    const modalOverlay = document.getElementById('fpPrintModalOverlay');
+                    const btnInclude = document.getElementById('fpPrintIncludeArea');
+                    const btnExclude = document.getElementById('fpPrintExcludeArea');
+                    const btnClose = document.getElementById('fpPrintModalClose');
+                    const modalQuestion = document.getElementById('fpPrintModalQuestion');
 
-                        modalOverlay.style.display = 'flex';
+                    const hasArea = !!infoHtml;
+                    modalQuestion.style.display = hasArea ? '' : 'none';
+                    btnExclude.style.display = hasArea ? '' : 'none';
+                    btnInclude.textContent = hasArea ? '包含面積' : '🖨️ 開始列印';
 
-                        // 關閉 modal 函數
-                        const closeModal = () => {
-                            modalOverlay.style.display = 'none';
-                            btnInclude.removeEventListener('click', handleInclude);
-                            btnExclude.removeEventListener('click', handleExclude);
-                            btnClose.removeEventListener('click', closeModal);
-                            modalOverlay.removeEventListener('click', handleOverlayClick);
-                        };
+                    modalOverlay.style.display = 'flex';
 
-                        // 處理「包含面積」按鈕
-                        const handleInclude = () => {
+                    // 關閉 modal 函數
+                    const closeModal = () => {
+                        modalOverlay.style.display = 'none';
+                        btnInclude.removeEventListener('click', handleInclude);
+                        btnExclude.removeEventListener('click', handleExclude);
+                        btnClose.removeEventListener('click', closeModal);
+                        modalOverlay.removeEventListener('click', handleOverlayClick);
+                    };
+
+                    // 處理「包含面積 / 開始列印」按鈕
+                    const handleInclude = () => {
+                        closeModal();
+                        doPrint(hasArea);
+                    };
+
+                    // 處理「只列印圖面」按鈕
+                    const handleExclude = () => {
+                        closeModal();
+                        doPrint(false);
+                    };
+
+                    // 點擊背景關閉 modal
+                    const handleOverlayClick = (e) => {
+                        if (e.target === modalOverlay) {
                             closeModal();
-                            doPrint(true);
-                        };
+                        }
+                    };
 
-                        // 處理「只列印圖面」按鈕
-                        const handleExclude = () => {
-                            closeModal();
-                            doPrint(false);
-                        };
-
-                        // 點擊背景關閉 modal
-                        const handleOverlayClick = (e) => {
-                            if (e.target === modalOverlay) {
-                                closeModal();
-                            }
-                        };
-
-                        btnInclude.addEventListener('click', handleInclude);
-                        btnExclude.addEventListener('click', handleExclude);
-                        btnClose.addEventListener('click', closeModal);
-                        modalOverlay.addEventListener('click', handleOverlayClick);
-                    } else {
-                        // 沒有面積資訊，直接列印
-                        doPrint(true);
-                    }
+                    btnInclude.addEventListener('click', handleInclude);
+                    btnExclude.addEventListener('click', handleExclude);
+                    btnClose.addEventListener('click', closeModal);
+                    modalOverlay.addEventListener('click', handleOverlayClick);
 
                     // 核心列印邏輯函數
                     function doPrint(includeArea) {
-                        // 建構面積信息欄的 HTML（根據用戶選擇）
-                        const infoCellHtml = (infoHtml && includeArea)
-                            ? infoHtml
-                            : '';
+                        // 銷售經理標註（列印設定 Modal 下拉選單；印在頁首右側）
+                        const mgrSel = document.getElementById('fpPrintManagerSelect');
+                        const manager = (mgrSel && mgrSel.value !== '') ? salesManagers[parseInt(mgrSel.value, 10)] : null;
 
-                        // 開新視窗寫入完整的列印 HTML
+                        // 疊在圖面上的卡片與底圖縮放（僅 4-15F；與 A3 排版檢視器共用產生器）
+                        let overlayHtml = '';
+                        let panelHtml = '';
+                        let baseImgStyle = '';
+                        if (includeArea && printFloorKey === '4-15F') {
+                            overlayHtml = buildPrint415FOverlayHtml();
+                            baseImgStyle = buildPrintBaseImgStyle();
+                        } else if (includeArea && infoHtml) {
+                            // 其他樓層 / 單戶：沿用面積表，置於圖面左下角面板
+                            panelHtml = `<div class="print-info-panel">${infoHtml}</div>`;
+                        }
+
+                        // 開新視窗寫入完整的列印 HTML（頁面與 A3 排版檢視器共用同一個產生器 → 所見即所得）
                         const printWin = window.open('', '_blank', 'width=1200,height=800');
-                        printWin.document.write(`<!DOCTYPE html>
+                        printWin.document.write(buildPrintPageHtml({
+                            imgAlt, imgSrc,
+                            managerHtml: buildManagerHtml(manager),
+                            overlayHtml, panelHtml, baseImgStyle,
+                            autoPrint: true
+                        }));
+                        printWin.document.close();
+                    }
+                });
+            }
+
+            // ===== 列印頁 HTML 產生器（列印視窗與 Debug「A3 排版檢視器」共用，確保所見即所得）=====
+            function buildPrintPageHtml(opts) {
+                const { imgAlt, imgSrc, managerHtml, overlayHtml, panelHtml, baseImgStyle, autoPrint } = opts;
+                return (`<!DOCTYPE html>
                             <html>
                             <head>
                                 <title>列印 - ${imgAlt}</title>
@@ -1038,179 +1207,220 @@
                                 <style>
                                     @page {
                                         size: A3 landscape;
-                                        margin: 3mm;
-                                        page-break-after: avoid;
+                                        margin: 5mm 8mm;
                                     }
                                     * { margin: 0; padding: 0; box-sizing: border-box; }
-                                    html, body {
-                                        width: 100%;
-                                        height: auto;
-                                        background: #fff;
+                                    html, body { width: 100%; background: #fff; }
+                                    body {
+                                        font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+                                        color: #3d3628;
+                                        height: 100vh;
+                                        display: flex;
+                                        flex-direction: column;
+                                        overflow: hidden;
+                                        -webkit-print-color-adjust: exact;
+                                        print-color-adjust: exact;
                                     }
-                                    .print-container {
+                                    /* ── 頁首：品牌 + 圖名 + 銷售經理 ── */
+                                    .print-header {
+                                        flex: 0 0 auto;
                                         position: relative;
-                                        width: 100%;
-                                        min-height: 100vh;
-                                        page-break-inside: avoid;
+                                        display: flex;
+                                        align-items: flex-end;
+                                        justify-content: space-between;
+                                        gap: 16px;
+                                        padding: 2px 2px 7px;
+                                        border-bottom: 2.5px solid #8b6914;
                                     }
-                                    .print-image-area {
-                                        width: 100%;
-                                        height: 100%;
+                                    .ph-brand { display: flex; align-items: baseline; gap: 10px; }
+                                    .ph-brand .zh { font-size: 24px; font-weight: 700; letter-spacing: 8px; color: #4A5759; }
+                                    .ph-brand .en { font-size: 12px; letter-spacing: 5px; color: #8b6914; font-weight: 600; }
+                                    .ph-title {
+                                        position: absolute;
+                                        left: 50%;
+                                        bottom: 7px;
+                                        transform: translateX(-50%);
+                                        font-size: 19px;
+                                        font-weight: 700;
+                                        letter-spacing: 5px;
+                                        color: #8b6914;
+                                        white-space: nowrap;
+                                    }
+                                    .ph-manager { display: flex; align-items: baseline; gap: 10px; font-size: 13px; color: #4A5759; white-space: nowrap; }
+                                    .ph-manager .mg-role {
+                                        font-size: 11px;
+                                        letter-spacing: 2px;
+                                        color: #fff;
+                                        background: #8b6914;
+                                        border-radius: 999px;
+                                        padding: 2px 10px;
+                                    }
+                                    .ph-manager b { font-size: 17px; letter-spacing: 2px; }
+                                    .ph-manager .mg-phone { font-size: 17px; font-weight: 700; color: #8b6914; letter-spacing: 1px; }
+                                    /* ── 圖面區 ── */
+                                    .print-stage {
+                                        flex: 1 1 auto;
+                                        min-height: 0;
+                                        position: relative;
                                         display: flex;
                                         align-items: center;
                                         justify-content: center;
-                                        padding: 5mm;
-                                        page-break-inside: avoid;
+                                        padding: 4mm 0 2mm;
                                     }
-                                    .print-image-area img {
+                                    .print-image-wrap { position: relative; display: inline-block; }
+                                    .print-image-wrap img {
+                                        display: block;
                                         max-width: 100%;
-                                        max-height: 100%;
-                                        object-fit: contain;
-                                        page-break-inside: avoid;
+                                        max-height: 248mm;
+                                        width: auto;
+                                        height: auto;
                                     }
-                                    .print-info-area {
+                                    /* 疊卡圖層：與圖框同大小；卡片尺寸/字級以圖寬為基準 (cqw)，
+                                       數值與 Debug 藍色預覽卡完全一致 → 螢幕所見比例 = 列印比例 */
+                                    .print-overlay { position: absolute; inset: 0; container-type: inline-size; }
+                                    /* 各戶面積卡（4-15F；座標由 printLayout415F 控制） */
+                                    .pu-card {
                                         position: absolute;
-                                        bottom: 30mm;
-                                        left: 10mm;
-                                        width: 260px;
-                                        ${(infoHtml && includeArea) ? 'display: block;' : 'display: none;'}
+                                        width: 137px; width: 9cqw;
+                                        font-size: 11.5px; font-size: 0.75cqw;
+                                        line-height: 1.35;
                                         background: rgba(255, 255, 255, 0.95);
-                                        border: 2px solid #8b6914;
-                                        border-radius: 4px;
-                                        padding: 12px;
-                                        font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-                                        font-size: 16px;
-                                        page-break-inside: avoid;
-                                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                                        border: 1.5px solid #c8a05a;
+                                        border-radius: 0.6em;
+                                        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12);
+                                        overflow: hidden;
                                     }
-                                    .print-info-area h3 {
-                                        margin: 0 0 8px 0;
+                                    .pu-card h4 {
+                                        background: linear-gradient(135deg, #8b6914, #b08a2e);
+                                        color: #fff;
+                                        text-align: center;
+                                        font-size: 1.13em;
+                                        font-weight: 700;
+                                        letter-spacing: 0.25em;
+                                        padding: 0.22em 0 0.26em;
+                                    }
+                                    .pu-card .rows { padding: 0.35em 0.7em 0.43em; }
+                                    .pu-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.13em 0; border-bottom: 1px dashed #e6dcc4; white-space: nowrap; }
+                                    .pu-row:last-child { border-bottom: none; }
+                                    .pu-row span:first-child { color: #7a6c50; }
+                                    .pu-row span:last-child { font-weight: 600; color: #333; }
+                                    .pu-row.total { margin-top: 0.17em; border-top: 1.5px solid #c8a05a; padding-top: 0.26em; }
+                                    .pu-row.total span { color: #8b6914; font-weight: 700; }
+                                    /* 基本資料卡（座標由 printLayout415F.infoBlock 控制） */
+                                    .pi-card {
+                                        position: absolute;
+                                        width: 267px; width: 17.5cqw;
+                                        font-size: 12px; font-size: 0.78cqw;
+                                        line-height: 1.45;
+                                        background: rgba(255, 255, 255, 0.96);
+                                        border: 1.5px solid #c8a05a;
+                                        border-radius: 0.67em;
+                                        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.13);
+                                        overflow: hidden;
+                                    }
+                                    .pi-card h4 {
+                                        background: linear-gradient(135deg, #4A5759, #5d6b6d);
+                                        color: #fff;
+                                        text-align: center;
+                                        font-size: 1.13em;
+                                        font-weight: 700;
+                                        letter-spacing: 0.5em;
+                                        padding: 0.29em 0 0.33em;
+                                    }
+                                    .pi-card .rows { padding: 0.42em 0.83em 0.58em; }
+                                    .pi-row { display: flex; gap: 0.67em; padding: 0.17em 0; border-bottom: 1px dashed #e6dcc4; }
+                                    .pi-row:last-child { border-bottom: none; }
+                                    .pi-row .lb { flex: 0 0 5em; color: #8b6914; font-weight: 700; letter-spacing: 0.08em; }
+                                    .pi-row .val { flex: 1; color: #333; }
+                                    /* 面積資訊面板（2F / 3F 一覽表與 A1~A8 單戶明細） */
+                                    .print-info-panel {
+                                        position: absolute;
+                                        bottom: 12mm;
+                                        left: 4mm;
+                                        width: 272px;
+                                        background: rgba(255, 255, 255, 0.96);
+                                        border: 1.5px solid #c8a05a;
+                                        border-radius: 8px;
+                                        padding: 12px 14px;
+                                        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.13);
+                                    }
+                                    .print-info-panel h3 {
+                                        margin: 0 0 8px;
                                         font-size: 16px;
                                         color: #8b6914;
                                         border-bottom: 2px solid #8b6914;
                                         padding-bottom: 6px;
-                                        letter-spacing: 1px;
+                                        letter-spacing: 2px;
                                         text-align: center;
                                         font-weight: 700;
                                     }
-                                    .print-info-area table {
-                                        width: 100%;
-                                        border-collapse: collapse;
-                                    }
-                                    .print-info-area tr {
-                                        page-break-inside: avoid;
-                                    }
-                                    .print-info-area td {
-                                        padding: 6px 4px;
-                                        border-bottom: 1px dashed #ddd;
-                                        font-size: 15px;
-                                        line-height: 1.4;
-                                    }
-                                    .print-info-area td:first-child {
-                                        font-weight: 700;
-                                        color: #8b6914;
-                                        width: 50%;
-                                    }
-                                    .print-info-area td:nth-child(2) {
-                                        text-align: right;
-                                        font-weight: 600;
-                                        color: #333;
-                                        width: 35%;
-                                    }
-                                    .print-info-area td:nth-child(3) {
-                                        text-align: center;
-                                        color: #888;
-                                        width: 15%;
-                                    }
+                                    .print-info-panel table { width: 100%; border-collapse: collapse; }
+                                    .print-info-panel td { padding: 5px 4px; border-bottom: 1px dashed #e0d8c4; font-size: 14px; line-height: 1.4; }
+                                    .print-info-panel tr:last-child td { border-bottom: none; }
+                                    .print-info-panel td:first-child { font-weight: 700; color: #8b6914; }
+                                    .print-info-panel td:nth-child(2) { text-align: right; font-weight: 600; color: #333; }
+                                    .print-info-panel td:nth-child(3) { text-align: center; color: #888; }
+                                    /* ── 頁尾免責聲明 ── */
                                     .print-disclaimer {
-                                        position: absolute;
-                                        bottom: 5mm;
-                                        left: 0;
-                                        right: 0;
-                                        width: 100%;
-                                        border-top: 1px solid #ddd;
-                                        padding: 5px 10mm;
+                                        flex: 0 0 auto;
+                                        border-top: 1px solid #d8cfba;
+                                        padding: 4px 6mm 0;
                                         font-size: 8.5px;
-                                        color: rgba(100, 90, 70, 0.65);
-                                        line-height: 1.5;
+                                        color: rgba(100, 90, 70, 0.75);
+                                        line-height: 1.55;
                                         text-align: center;
                                         word-wrap: break-word;
                                         overflow-wrap: break-word;
-                                        page-break-inside: avoid;
                                     }
                                 </style>
-                                <!-- PWA Update Loading Screen -->
-    <style id="pwa-loading-style">
-      #pwa-loading-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, #353F41 0%, #4A5759 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 99999;
-        opacity: 1;
-        transition: opacity 0.5s ease-out;
-      }
-      #pwa-loading-overlay.hidden {
-        pointer-events: none;
-        opacity: 0;
-      }
-      .pwa-loading-content {
-        text-align: center;
-        color: #fff;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-      .pwa-loading-spinner {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto 20px;
-        border: 3px solid rgba(255, 255, 255, 0.2);
-        border-top-color: #EDAFB8;
-        border-radius: 50%;
-        animation: pwa-spin 1s linear infinite;
-      }
-      @keyframes pwa-spin {
-        to { transform: rotate(360deg); }
-      }
-      .pwa-loading-text {
-        font-size: 16px;
-        font-weight: 500;
-        color: #ccc;
-      }
-    </style>
-</head>
+                            </head>
                             <body>
-                                <div class="print-container">
-                                    <div class="print-image-area">
-                                        <img src="${imgSrc}" alt="${imgAlt}">
+                                <header class="print-header">
+                                    <div class="ph-brand"><span class="zh">富宇樂慕</span><span class="en">L'AMOUR</span></div>
+                                    <div class="ph-title">${imgAlt}</div>
+                                    ${managerHtml}
+                                </header>
+                                <main class="print-stage">
+                                    <div class="print-image-wrap">
+                                        <img src="${imgSrc}" alt="${imgAlt}" style="${baseImgStyle}">
+                                        <div class="print-overlay">${overlayHtml}</div>
                                     </div>
-                                    <div class="print-info-area">
-                                        ${infoCellHtml}
-                                    </div>
-                                    <div class="print-disclaimer">
-                                        <div style="margin-bottom: 4px;">本房屋銷售平面圖僅供參考，實際規劃與建材設備依建造變更核准圖面及買賣合約書記載為準。設備位置（包含冷氣室外機 AC、家電設備、家具配置）之方向與角度僅供參考，實際依正式水電配置圖面為準。</div>
-                                        <div style="margin-top: 4px; font-weight: 600;">不動產經紀業：一研九鼎廣告策劃有限公司</div>
-                                    </div>
-                                </div>
-                                <script>
+                                    ${panelHtml}
+                                </main>
+                                <footer class="print-disclaimer">
+                                    <div>本房屋銷售平面圖僅供參考，實際規劃與建材設備依建造變更核准圖面及買賣合約書記載為準。設備位置（包含冷氣室外機 AC、家電設備、家具配置）之方向與角度僅供參考，實際依正式水電配置圖面為準。</div>
+                                    <div style="margin-top: 2px; font-weight: 600;">不動產經紀業：一研九鼎廣告策劃有限公司</div>
+                                </footer>
+                                ${autoPrint ? `<script>
                                     // 等圖片載入完成後再列印
                                     const img = document.querySelector('img');
-                                    function doPrint() {
+                                    function fireAutoPrint() {
                                         setTimeout(() => { window.print(); window.close(); }, 300);
                                     }
-                                    if (img.complete) { doPrint(); }
-                                    else { img.onload = doPrint; }
-                                <\/script>
+                                    if (img.complete) { fireAutoPrint(); }
+                                    else { img.onload = fireAutoPrint; }
+                                <\/script>` : `<style>
+                                    /* A3 排版檢視器模式：拖曳游標提示與寬度調整手把 */
+                                    .pu-card, .pi-card { cursor: grab; }
+                                    .pu-card:active, .pi-card:active { cursor: grabbing; }
+                                    .print-image-wrap img { cursor: move; }
+                                    .pp-resize {
+                                        position: absolute;
+                                        right: 0;
+                                        bottom: 0;
+                                        width: 14px;
+                                        height: 14px;
+                                        background: #2f7fe0;
+                                        border: 2px solid #fff;
+                                        border-radius: 3px 0 0 0;
+                                        cursor: nwse-resize;
+                                        z-index: 5;
+                                        opacity: 0.85;
+                                    }
+                                </style>`}
                             </body>
                             </html>
                         `);
-                        printWin.document.close();
-                    }
-                });
             }
             // 只有在「沒有拖曳」的情況下，點擊背景才關閉
             lightbox.addEventListener('click', (e) => {
@@ -1241,16 +1451,54 @@
                 });
             }
 
+            // ===== Debug 模式底圖平移輔助 =====
+            // Debug 模式下熱點/列印卡片幾乎蓋滿圖面，按住空白鍵（或 Alt、滑鼠中鍵）
+            // 拖曳時優先平移底圖，不啟動元素拖曳；滾輪縮放則隨時可用。
+            let lbSpaceHeld = false;
+            function isPanOverride(e) {
+                return lbSpaceHeld || e.altKey || e.button === 1;
+            }
+            document.addEventListener('keydown', (e) => {
+                if (e.code !== 'Space') return;
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                if (!lightbox.classList.contains('active')) return;
+                lbSpaceHeld = true;
+                document.body.classList.add('fp-space-pan');
+                e.preventDefault(); // 防止空白鍵捲動頁面
+            });
+            document.addEventListener('keyup', (e) => {
+                if (e.code !== 'Space') return;
+                lbSpaceHeld = false;
+                document.body.classList.remove('fp-space-pan');
+            });
+            // 視窗失焦時可能收不到 keyup，保險重設
+            window.addEventListener('blur', () => {
+                lbSpaceHeld = false;
+                document.body.classList.remove('fp-space-pan');
+            });
+
             // 拖曳
+            let baseImgDragging = false; // Ctrl+拖曳：移動 4-15F「列印底圖」位置 (Debug)
             lightbox.addEventListener('mousedown', (e) => {
                 if (measureActive) return; // 啟動丈量模式時禁用拖曳
                 if (e.target.closest('.fp-lightbox-close')) return;
                 if (e.target.closest('.fp-measure-tools')) return; // 防止點擊工具列拖曳
                 // 防止點擊到彈出資訊框也觸發背景圖案的拖曳
                 if (e.target.closest('.fp-lightbox-info')) return;
-                // 點到熱點(hotspot) 時，由熱點專屬邏輯處理 (打開子燈箱或拖曳)
-                if (e.target.closest('.fp-hotspot')) return;
-                if (e.target.closest('.fp-hotspot-rect')) return;
+                // Debug 模式 Ctrl+拖曳：移動 4-15F 列印底圖（畫面即時預覽，列印同步套用）
+                if (e.ctrlKey && hotspotDebugMode && currentHotspotFloor === '4-15F') {
+                    e.preventDefault();
+                    baseImgDragging = true;
+                    lbStartX = e.clientX; lbStartY = e.clientY;
+                    return;
+                }
+                // 點到熱點(hotspot)/列印卡片時，由專屬邏輯處理 (打開子燈箱或拖曳)；
+                // 但按住空白鍵 / Alt / 滑鼠中鍵時優先平移底圖
+                if (!isPanOverride(e)) {
+                    if (e.target.closest('.fp-hotspot')) return;
+                    if (e.target.closest('.fp-hotspot-rect')) return;
+                    if (e.target.closest('.fp-print-el')) return;
+                }
 
                 e.preventDefault(); // 防止圖片的原生拖曳行為
                 lbDragging = true;
@@ -1258,6 +1506,20 @@
                 lbStartX = e.clientX; lbStartY = e.clientY;
             });
             window.addEventListener('mousemove', (e) => {
+                // Ctrl+拖曳中：更新列印底圖位移（% 相對圖框，含檢視縮放補償）
+                if (baseImgDragging) {
+                    const b = printLayout415F.baseImage;
+                    const w = lightboxImg.offsetWidth * lbScale;
+                    const h = lightboxImg.offsetHeight * lbScale;
+                    if (b && w && h) {
+                        b.x += ((e.clientX - lbStartX) / w) * 100;
+                        b.y += ((e.clientY - lbStartY) / h) * 100;
+                        lbStartX = e.clientX; lbStartY = e.clientY;
+                        applyPrintBaseTransform();
+                        scheduleDebugListUpdate();
+                    }
+                    return;
+                }
                 if (!lbDragging) return;
                 const dx = e.clientX - lbStartX;
                 const dy = e.clientY - lbStartY;
@@ -1272,6 +1534,7 @@
             });
             window.addEventListener('mouseup', () => {
                 lbDragging = false;
+                baseImgDragging = false;
                 // 延遲重設 lbDragMoved，讓 click 事件先判斷完
                 setTimeout(() => { lbDragMoved = false; }, 50);
             });
@@ -1279,6 +1542,16 @@
             // 滾輪縮放
             lightbox.addEventListener('wheel', (e) => {
                 e.preventDefault();
+                // Debug 模式 Ctrl+滾輪：縮放 4-15F「列印底圖」（而非檢視縮放）
+                if (e.ctrlKey && hotspotDebugMode && currentHotspotFloor === '4-15F') {
+                    const b = printLayout415F.baseImage;
+                    if (b) {
+                        b.scale = Math.max(0.4, Math.min(1.5, b.scale * (e.deltaY < 0 ? 1.04 : 0.96)));
+                        applyPrintBaseTransform();
+                        scheduleDebugListUpdate();
+                    }
+                    return;
+                }
                 const dir = e.deltaY < 0 ? 1 : -1;
                 let newScale = lbScale * Math.exp(dir * 0.1);
                 if (newScale < 1) newScale = 1;
@@ -1297,6 +1570,13 @@
             lightbox.addEventListener('dblclick', (e) => {
                 if (measureActive) return; // 丈量模式時禁用雙擊還原
                 if (e.target.closest('.fp-lightbox-close')) return;
+                // Debug 模式 Ctrl+雙擊：重設 4-15F 列印底圖縮放/位移
+                if (e.ctrlKey && hotspotDebugMode && currentHotspotFloor === '4-15F') {
+                    Object.assign(printLayout415F.baseImage, { scale: 1, x: 0, y: 0 });
+                    applyPrintBaseTransform();
+                    updateHotspotDebugList();
+                    return;
+                }
                 lbScale = 1; lbTx = 0; lbTy = 0;
                 updateLightboxTransform();
             });
@@ -2033,6 +2313,10 @@
             let rectResizeTarget = null;
             let rectDragOffsetX = 0;
             let rectDragOffsetY = 0;
+            // 4-15F 列印卡片（Debug 拖曳）狀態
+            let printDragTarget = null;
+            let printDragOffX = 0;
+            let printDragOffY = 0;
 
             // 依當前燈箱圖面切換 1F / RF / 2F / 3F / 4-15F 熱點資料
             let currentHotspotFloor = '1F';
@@ -2045,6 +2329,19 @@
                 if (currentHotspotFloor === 'RF') return rfLegendHotspotsData;
                 if (unitHotspotsByFloor[currentHotspotFloor]) return unitHotspotsByFloor[currentHotspotFloor];
                 return legendHotspotsData;
+            }
+
+            // 4-15F 列印底圖預覽：Debug 模式下把 baseImage 縮放/位移即時套用到燈箱圖片。
+            // 圖框（= 列印圖框）與卡片座標不動，只縮放圖面本身，畫面所見即列印結果。
+            function applyPrintBaseTransform() {
+                const b = printLayout415F.baseImage || { scale: 1, x: 0, y: 0 };
+                const active = hotspotDebugMode
+                    && currentHotspotFloor === '4-15F'
+                    && hotspotLayer.classList.contains('active');
+                lightboxImg.style.transformOrigin = 'center center';
+                lightboxImg.style.transform = active
+                    ? `translate(${b.x}%, ${b.y}%) scale(${b.scale})`
+                    : '';
             }
 
             function buildHotspots() {
@@ -2112,6 +2409,44 @@
                     });
                     hotspotLayer.appendChild(el);
                 });
+
+                // 4-15F 列印卡片預覽（藍色虛線框；僅 Debug 模式顯示，可拖曳調整列印位置）
+                if (currentHotspotFloor === '4-15F') {
+                    printLayout415F.unitLabels.forEach(pl => {
+                        const d = floorAreaData['4-15F'].find(r => r.unit === pl.unit);
+                        if (!d) return;
+                        const el = document.createElement('div');
+                        el.className = 'fp-print-el';
+                        el.dataset.printKey = 'unit-' + pl.unit;
+                        el.style.left = `${pl.x}%`;
+                        el.style.top = `${pl.y}%`;
+                        el.style.width = `${pl.w || 9}cqw`;
+                        el.style.fontSize = `${(PU_CARD_BASE_FONT * (pl.fs || 1)).toFixed(3)}cqw`;
+                        el.innerHTML = `
+                            <div class="ppv-head">${pl.unit}</div>
+                            <div class="ppv-rows">
+                                <div class="ppv-row"><span>主建物</span><span>${d.main.toFixed(2)} 坪</span></div>
+                                <div class="ppv-row"><span>陽台</span><span>${d.balc.toFixed(2)} 坪</span></div>
+                                <div class="ppv-row"><span>公設</span><span>${d.pub.toFixed(2)} 坪</span></div>
+                                <div class="ppv-row ppv-total"><span>總建坪</span><span>${d.total.toFixed(2)} 坪</span></div>
+                            </div>`;
+                        hotspotLayer.appendChild(el);
+                    });
+                    const ib = printLayout415F.infoBlock;
+                    const infoEl = document.createElement('div');
+                    infoEl.className = 'fp-print-el fp-print-el-info';
+                    infoEl.dataset.printKey = 'info';
+                    infoEl.style.left = `${ib.x}%`;
+                    infoEl.style.top = `${ib.y}%`;
+                    infoEl.style.width = `${ib.w || 17.5}cqw`;
+                    infoEl.style.fontSize = `${(PI_CARD_BASE_FONT * (ib.fs || 1)).toFixed(3)}cqw`;
+                    let infoRows = '';
+                    basicInfoData.forEach(r => {
+                        infoRows += `<div class="ppv-row"><span class="ppv-lb">${r.label}</span><span class="ppv-val">${r.value}</span></div>`;
+                    });
+                    infoEl.innerHTML = `<div class="ppv-head">基本資料</div><div class="ppv-rows">${infoRows}</div>`;
+                    hotspotLayer.appendChild(infoEl);
+                }
             }
 
             // 於燈箱中直接切換至指定戶別的傢俱配置圖（淡出淡入 + 完整開圖流程）
@@ -2139,6 +2474,7 @@
                 } else {
                     hotspotLayer.classList.remove('active');
                 }
+                applyPrintBaseTransform(); // 依當前圖面/模式套用或還原列印底圖預覽
             }
 
             // ===== 子燈箱輪播 (公設 3D 風格) =====
@@ -2277,6 +2613,7 @@
                 hotspotDebugMode = on;
                 hotspotDebugPanel.classList.toggle('active', on);
                 document.body.classList.toggle('fp-hotspot-debug', on);
+                applyPrintBaseTransform(); // 進出 Debug 時套用/還原列印底圖預覽
                 updateHotspotDebugList();
                 showHotspotDebugToast(on ? `🔧 ${currentHotspotFloor} Hotspot Debug 已啟用` : '🔒 Hotspot Debug 已關閉');
             }
@@ -2343,6 +2680,17 @@
                 }, 2500);
             }
 
+            // 拖曳中以 rAF 批次更新座標清單，避免每次 mousemove 重建清單 DOM 造成卡頓
+            let debugListRafPending = false;
+            function scheduleDebugListUpdate() {
+                if (debugListRafPending) return;
+                debugListRafPending = true;
+                requestAnimationFrame(() => {
+                    debugListRafPending = false;
+                    updateHotspotDebugList();
+                });
+            }
+
             function updateHotspotDebugList() {
                 hotspotDebugList.innerHTML = '';
                 activeHotspots().forEach(hs => {
@@ -2363,6 +2711,35 @@
                     `;
                     hotspotDebugList.appendChild(item);
                 });
+
+                // 4-15F 列印卡片位置（藍色虛線框；拖曳後更新）
+                if (currentHotspotFloor === '4-15F') {
+                    printLayout415F.unitLabels.forEach(pl => {
+                        const item = document.createElement('div');
+                        item.className = 'fp-hotspot-debug-item';
+                        item.innerHTML = `
+                            <span class="debug-name">🖨️ ${pl.unit} 面積卡</span>
+                            <span class="debug-pos">x: ${pl.x.toFixed(1)}% y: ${pl.y.toFixed(1)}% w: ${(pl.w || 9).toFixed(1)} fs: ${(pl.fs || 1).toFixed(2)}</span>
+                        `;
+                        hotspotDebugList.appendChild(item);
+                    });
+                    const ibRow = printLayout415F.infoBlock;
+                    const infoItem = document.createElement('div');
+                    infoItem.className = 'fp-hotspot-debug-item';
+                    infoItem.innerHTML = `
+                        <span class="debug-name">🖨️ 基本資料卡</span>
+                        <span class="debug-pos">x: ${ibRow.x.toFixed(1)}% y: ${ibRow.y.toFixed(1)}% w: ${(ibRow.w || 17.5).toFixed(1)} fs: ${(ibRow.fs || 1).toFixed(2)}</span>
+                    `;
+                    hotspotDebugList.appendChild(infoItem);
+                    const bi = printLayout415F.baseImage || { scale: 1, x: 0, y: 0 };
+                    const biItem = document.createElement('div');
+                    biItem.className = 'fp-hotspot-debug-item';
+                    biItem.innerHTML = `
+                        <span class="debug-name">🖨️ 列印底圖</span>
+                        <span class="debug-pos">scale: ${bi.scale.toFixed(2)} x: ${bi.x.toFixed(1)}% y: ${bi.y.toFixed(1)}%</span>
+                    `;
+                    hotspotDebugList.appendChild(biItem);
+                }
 
                 // 「4-15F平面圖」按鈕位置（視窗百分比；拖曳後更新）
                 const btnItem = document.createElement('div');
@@ -2398,7 +2775,28 @@
                         left: parseFloat(backBtnDebugPos.left.toFixed(1)),
                         top: parseFloat(backBtnDebugPos.top.toFixed(1)),
                         unit: '%viewport'
-                    } : null
+                    } : null,
+                    // 4-15F 列印卡片座標（貼回 printLayout415F 即可套用）
+                    printLayout: currentHotspotFloor === '4-15F' ? {
+                        unitLabels: printLayout415F.unitLabels.map(u => ({
+                            unit: u.unit,
+                            x: parseFloat(u.x.toFixed(1)),
+                            y: parseFloat(u.y.toFixed(1)),
+                            w: parseFloat((u.w || 9).toFixed(1)),
+                            fs: parseFloat((u.fs || 1).toFixed(2))
+                        })),
+                        infoBlock: {
+                            x: parseFloat(printLayout415F.infoBlock.x.toFixed(1)),
+                            y: parseFloat(printLayout415F.infoBlock.y.toFixed(1)),
+                            w: parseFloat((printLayout415F.infoBlock.w || 17.5).toFixed(1)),
+                            fs: parseFloat((printLayout415F.infoBlock.fs || 1).toFixed(2))
+                        },
+                        baseImage: printLayout415F.baseImage ? {
+                            scale: parseFloat(printLayout415F.baseImage.scale.toFixed(2)),
+                            x: parseFloat(printLayout415F.baseImage.x.toFixed(1)),
+                            y: parseFloat(printLayout415F.baseImage.y.toFixed(1))
+                        } : undefined
+                    } : undefined
                 };
                 const jsonStr = JSON.stringify(exportData, null, 2);
                 navigator.clipboard.writeText(jsonStr).then(() => {
@@ -2411,9 +2809,229 @@
                 });
             });
 
+            // ===== Debug：A3 橫式列印排版檢視器 =====
+            // 以 iframe 載入與實際列印完全相同的頁面 HTML（buildPrintPageHtml）並等比縮放，
+            // 直接在紙面上拖曳卡片 / 底圖排版，即時寫回 printLayout415F（所見即所得）。
+            const printPreview = document.getElementById('fpPrintPreview');
+            const printPreviewBody = document.getElementById('fpPrintPreviewBody');
+            const printPreviewFrame = document.getElementById('fpPrintPreviewFrame');
+            const printPreviewClose = document.getElementById('fpPrintPreviewClose');
+            const printPreviewBtn = document.getElementById('fpHotspotDebugPreviewBtn');
+            // A3 橫式 420mm × 297mm 換算 CSS 像素 (96dpi)
+            const PP_PAGE_W = 1587, PP_PAGE_H = 1123;
+
+            function fitPrintPreview() {
+                if (!printPreview.classList.contains('active')) return;
+                const s = Math.min(
+                    printPreviewBody.clientWidth / PP_PAGE_W,
+                    printPreviewBody.clientHeight / PP_PAGE_H
+                ) * 0.96;
+                printPreviewFrame.style.transform = `scale(${s})`;
+            }
+            window.addEventListener('resize', fitPrintPreview);
+
+            function openPrintPreview() {
+                if (currentHotspotFloor !== '4-15F' || !hotspotLayer.classList.contains('active')) {
+                    showHotspotDebugToast('請先開啟 4-15F 平面圖燈箱再使用排版檢視器');
+                    return;
+                }
+                const mgrSel = document.getElementById('fpPrintManagerSelect');
+                const manager = (mgrSel && mgrSel.value !== '') ? salesManagers[parseInt(mgrSel.value, 10)] : null;
+                printPreviewFrame.onload = () => attachPrintPreviewInteractions();
+                printPreviewFrame.srcdoc = buildPrintPageHtml({
+                    imgAlt: lightboxImg.alt || '4-15F 平面配置參考圖',
+                    imgSrc: lightboxImg.src,
+                    managerHtml: buildManagerHtml(manager),
+                    overlayHtml: buildPrint415FOverlayHtml(),
+                    panelHtml: '',
+                    baseImgStyle: buildPrintBaseImgStyle(),
+                    autoPrint: false
+                });
+                printPreview.classList.add('active');
+                fitPrintPreview();
+            }
+
+            function closePrintPreview() {
+                printPreview.classList.remove('active');
+                printPreviewFrame.onload = null;
+                printPreviewFrame.srcdoc = '';
+                buildHotspots();              // 同步燈箱內藍色預覽卡位置
+                applyPrintBaseTransform();    // 同步燈箱底圖預覽
+                updateHotspotDebugList();
+            }
+
+            // 檢視器內互動：拖曳卡片 / 拖曳圖面移動底圖 / 滾輪縮放底圖 / 雙擊圖面重設
+            function attachPrintPreviewInteractions() {
+                const doc = printPreviewFrame.contentDocument;
+                if (!doc) return;
+                const overlay = doc.querySelector('.print-overlay');
+                const stage = doc.querySelector('.print-stage');
+                const pageImg = doc.querySelector('.print-image-wrap img');
+                if (!overlay || !stage || !pageImg) return;
+
+                // 每張卡片加上右下角「調整寬度」手把（僅檢視器有，不影響實際列印）
+                doc.querySelectorAll('.pu-card, .pi-card').forEach(c => {
+                    const h = doc.createElement('div');
+                    h.className = 'pp-resize';
+                    h.title = '拖曳調整卡片寬度';
+                    c.appendChild(h);
+                });
+
+                // 由卡片元素找到對應的 printLayout415F 資料
+                function cardTarget(card) {
+                    const key = card.dataset.printKey;
+                    return key === 'info'
+                        ? printLayout415F.infoBlock
+                        : printLayout415F.unitLabels.find(u => 'unit-' + u.unit === key);
+                }
+
+                let dragCard = null, cardOffX = 0, cardOffY = 0;
+                let resizeCard = null;
+                let dragBase = false, baseSX = 0, baseSY = 0;
+
+                function applyBaseToImg() {
+                    pageImg.style.cssText = buildPrintBaseImgStyle();
+                    applyPrintBaseTransform(); // 燈箱預覽同步
+                    scheduleDebugListUpdate();
+                }
+
+                doc.addEventListener('mousedown', (e) => {
+                    // 右下角手把：調整卡片寬度
+                    const rz = e.target.closest('.pp-resize');
+                    if (rz) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        resizeCard = rz.closest('.pu-card, .pi-card');
+                        return;
+                    }
+                    const card = e.target.closest('.pu-card, .pi-card');
+                    if (card) {
+                        e.preventDefault();
+                        dragCard = card;
+                        const r = card.getBoundingClientRect();
+                        cardOffX = e.clientX - r.left;
+                        cardOffY = e.clientY - r.top;
+                        return;
+                    }
+                    if (e.target.closest('.print-stage')) {
+                        e.preventDefault();
+                        dragBase = true;
+                        baseSX = e.clientX; baseSY = e.clientY;
+                    }
+                });
+
+                doc.addEventListener('mousemove', (e) => {
+                    if (!dragCard && !dragBase && !resizeCard) return;
+                    const oRect = overlay.getBoundingClientRect(); // 圖框（不受底圖 transform 影響）
+                    if (!oRect.width || !oRect.height) return;
+
+                    // 調整卡片寬度（w 單位 = % 圖框寬 = cqw；高度隨內容自動）
+                    if (resizeCard) {
+                        const target = cardTarget(resizeCard);
+                        if (!target) return;
+                        const cr = resizeCard.getBoundingClientRect();
+                        let w = ((e.clientX - cr.left) / oRect.width) * 100;
+                        w = Math.max(4, Math.min(60, w));
+                        target.w = w;
+                        resizeCard.style.width = `${w}cqw`;
+                        scheduleDebugListUpdate();
+                        return;
+                    }
+
+                    if (dragCard) {
+                        const target = cardTarget(dragCard);
+                        if (!target) return;
+                        const cr = dragCard.getBoundingClientRect();
+                        const pageRect = doc.body.getBoundingClientRect(); // A3 紙面
+                        // 先以像素夾在 A3 紙面範圍內，再換算成圖框百分比
+                        // （允許負值 / 超過 100 → 卡片可放到圖框外的紙面空白處）
+                        let leftPx = e.clientX - cardOffX;
+                        let topPx = e.clientY - cardOffY;
+                        leftPx = Math.max(pageRect.left, Math.min(pageRect.right - cr.width, leftPx));
+                        topPx = Math.max(pageRect.top, Math.min(pageRect.bottom - cr.height, topPx));
+                        const x = ((leftPx - oRect.left) / oRect.width) * 100;
+                        const y = ((topPx - oRect.top) / oRect.height) * 100;
+                        dragCard.style.left = `${x}%`;
+                        dragCard.style.top = `${y}%`;
+                        target.x = x;
+                        target.y = y;
+                        scheduleDebugListUpdate();
+                        return;
+                    }
+
+                    // 拖曳圖面：移動列印底圖
+                    const b = printLayout415F.baseImage;
+                    b.x += ((e.clientX - baseSX) / oRect.width) * 100;
+                    b.y += ((e.clientY - baseSY) / oRect.height) * 100;
+                    baseSX = e.clientX; baseSY = e.clientY;
+                    applyBaseToImg();
+                });
+
+                const endPreviewDrag = () => { dragCard = null; dragBase = false; resizeCard = null; };
+                doc.addEventListener('mouseup', endPreviewDrag);
+                doc.addEventListener('mouseleave', endPreviewDrag);
+
+                // 滾輪：在卡片上 = 調整該卡片字級；在其他區域 = 縮放底圖
+                doc.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const card = e.target.closest('.pu-card, .pi-card');
+                    if (card) {
+                        const target = cardTarget(card);
+                        if (!target) return;
+                        const base = card.classList.contains('pi-card') ? PI_CARD_BASE_FONT : PU_CARD_BASE_FONT;
+                        target.fs = Math.max(0.5, Math.min(2, (target.fs || 1) * (e.deltaY < 0 ? 1.05 : 0.95)));
+                        card.style.fontSize = `${(base * target.fs).toFixed(3)}cqw`;
+                        scheduleDebugListUpdate();
+                        return;
+                    }
+                    const b = printLayout415F.baseImage;
+                    b.scale = Math.max(0.4, Math.min(1.5, b.scale * (e.deltaY < 0 ? 1.04 : 0.96)));
+                    applyBaseToImg();
+                }, { passive: false });
+
+                // 雙擊圖面：重設底圖
+                doc.addEventListener('dblclick', (e) => {
+                    if (!e.target.closest('.print-stage')) return;
+                    Object.assign(printLayout415F.baseImage, { scale: 1, x: 0, y: 0 });
+                    applyBaseToImg();
+                });
+
+                // 檢視器（iframe）內按 ESC 也能關閉
+                doc.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') closePrintPreview();
+                });
+            }
+
+            printPreviewBtn.addEventListener('click', openPrintPreview);
+            printPreviewClose.addEventListener('click', closePrintPreview);
+            // 捕獲階段攔截 ESC：先關閉檢視器，不觸發關閉 Debug / 燈箱
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && printPreview.classList.contains('active')) {
+                    closePrintPreview();
+                    e.stopImmediatePropagation();
+                }
+            }, true);
+
             // ===== Debug 模式下：拖曳熱點 =====
             hotspotLayer.addEventListener('mousedown', (e) => {
                 if (!hotspotDebugMode) return;
+
+                // 按住空白鍵 / Alt / 滑鼠中鍵：交給燈箱平移檢視；
+                // Ctrl：交給燈箱移動「列印底圖」— 皆不啟動元素拖曳
+                if (isPanOverride(e) || e.ctrlKey) return;
+
+                // 4-15F 列印卡片：拖曳調整列印位置
+                const printEl = e.target.closest('.fp-print-el');
+                if (printEl) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    printDragTarget = printEl;
+                    hotspotDragMoved = false;
+                    const r = printEl.getBoundingClientRect();
+                    printDragOffX = e.clientX - r.left;
+                    printDragOffY = e.clientY - r.top;
+                    return;
+                }
 
                 // 圖例矩形：右下角手把 = 縮放，其餘區域 = 移動
                 const resizeHandle = e.target.closest('.rect-resize-handle');
@@ -2448,9 +3066,35 @@
             });
 
             window.addEventListener('mousemove', (e) => {
-                if (!hotspotDragTarget && !rectDragTarget && !rectResizeTarget) return;
-                const imgRect = lightboxImg.getBoundingClientRect();
+                if (!hotspotDragTarget && !rectDragTarget && !rectResizeTarget && !printDragTarget) return;
+                // 以熱點圖層當座標框：底圖套用列印縮放預覽 (transform) 時，
+                // lightboxImg 的 rect 會縮小偏移，改用圖層 rect 才不會拖曳時跳動卡頓
+                const imgRect = hotspotLayer.getBoundingClientRect();
                 if (!imgRect.width || !imgRect.height) return;
+
+                // 4-15F 列印卡片：移動（座標 = 卡片左上角相對圖片百分比）
+                if (printDragTarget) {
+                    const key = printDragTarget.dataset.printKey;
+                    const target = key === 'info'
+                        ? printLayout415F.infoBlock
+                        : printLayout415F.unitLabels.find(u => 'unit-' + u.unit === key);
+                    if (!target) return;
+                    const elRect = printDragTarget.getBoundingClientRect();
+                    const wPct = (elRect.width / imgRect.width) * 100;
+                    const hPct = (elRect.height / imgRect.height) * 100;
+                    let x = ((e.clientX - printDragOffX - imgRect.left) / imgRect.width) * 100;
+                    let y = ((e.clientY - printDragOffY - imgRect.top) / imgRect.height) * 100;
+                    // 允許拖出圖框（列印卡可放在 A3 紙面空白處）；僅寬鬆夾限避免拖丟
+                    x = Math.max(-60, Math.min(160 - wPct, x));
+                    y = Math.max(-60, Math.min(160 - hPct, y));
+                    printDragTarget.style.left = `${x}%`;
+                    printDragTarget.style.top = `${y}%`;
+                    target.x = x;
+                    target.y = y;
+                    hotspotDragMoved = true;
+                    scheduleDebugListUpdate();
+                    return;
+                }
 
                 // 圖例矩形：移動
                 if (rectDragTarget) {
@@ -2465,7 +3109,7 @@
                     hs.x = x;
                     hs.y = y;
                     hotspotDragMoved = true;
-                    updateHotspotDebugList();
+                    scheduleDebugListUpdate();
                     return;
                 }
 
@@ -2482,7 +3126,7 @@
                     hs.w = w;
                     hs.h = h;
                     hotspotDragMoved = true;
-                    updateHotspotDebugList();
+                    scheduleDebugListUpdate();
                     return;
                 }
 
@@ -2499,14 +3143,15 @@
                     hs.x = cx;
                     hs.y = cy;
                 }
-                updateHotspotDebugList();
+                scheduleDebugListUpdate();
             });
 
             window.addEventListener('mouseup', () => {
-                if (hotspotDragTarget || rectDragTarget || rectResizeTarget) {
+                if (hotspotDragTarget || rectDragTarget || rectResizeTarget || printDragTarget) {
                     hotspotDragTarget = null;
                     rectDragTarget = null;
                     rectResizeTarget = null;
+                    printDragTarget = null;
                     // 延遲清旗標讓接續 click 知道剛剛是拖曳
                     setTimeout(() => { hotspotDragMoved = false; }, 50);
                 }

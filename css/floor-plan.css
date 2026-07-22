@@ -1240,6 +1240,209 @@ body.fp-hotspot-debug.lightbox-active .fp-back-floor-btn {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* ===== 列印設定 Modal — 銷售經理下拉選單 ===== */
+.fp-print-modal-manager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 0 22px;
+}
+
+.fp-print-modal-manager label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
+}
+
+.fp-print-modal-manager select {
+    flex: 0 1 220px;
+    padding: 9px 12px;
+    border: 1.5px solid #d8cfba;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    background: #fff;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.25s ease;
+}
+
+.fp-print-modal-manager select:focus {
+    border-color: #8b6914;
+}
+
+/* ===== Debug：A3 橫式列印排版檢視器 ===== */
+.fp-print-preview {
+    position: fixed;
+    inset: 0;
+    z-index: 1000000; /* 低於 Debug 面板 (1000001)，排版時可同時檢視座標清單 */
+    display: none;
+    flex-direction: column;
+    background: rgba(18, 20, 24, 0.94);
+}
+
+.fp-print-preview.active {
+    display: flex;
+}
+
+.fp-print-preview-toolbar {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 18px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #eee;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+}
+
+.fp-print-preview-toolbar button {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.fp-print-preview-toolbar button:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.fp-print-preview-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#fpPrintPreviewFrame {
+    flex: 0 0 auto;
+    width: 1587px;   /* A3 橫式 420mm × 297mm 換算 96dpi 像素 */
+    height: 1123px;
+    border: none;
+    background: #fff;
+    box-shadow: 0 12px 60px rgba(0, 0, 0, 0.65);
+    transform-origin: center center;
+}
+
+/* ===== Debug 模式底圖平移（按住空白鍵 / Alt / 滑鼠中鍵拖曳） ===== */
+body.fp-space-pan .fp-lightbox,
+body.fp-space-pan .fp-lightbox * {
+    cursor: grab !important;
+}
+
+/* ===== 4-15F 列印卡片預覽（Debug 模式；可拖曳調整列印位置） =====
+   卡片尺寸/字級以圖寬為基準 (cqw 容器單位 + em)，數值與列印視窗內的
+   .pu-card / .pi-card 完全一致 → 螢幕上看到的比例即為列印結果。
+   藍色虛線改用 outline（不佔尺寸），字太小時可用滾輪放大檢視。 */
+.fp-hotspot-layer {
+    container-type: inline-size;
+}
+
+.fp-print-el {
+    position: absolute;
+    display: none;
+    z-index: 11;
+    width: 137px; width: 9cqw;
+    font-size: 11.5px; font-size: 0.75cqw;
+    line-height: 1.35;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 0.6em;
+    outline: 2px dashed #2f7fe0;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    color: #333;
+    cursor: grab;
+    pointer-events: auto;
+}
+
+body.fp-hotspot-debug .fp-print-el {
+    display: block;
+}
+
+.fp-print-el:active {
+    cursor: grabbing;
+}
+
+.fp-print-el .ppv-head {
+    background: #2f7fe0;
+    color: #fff;
+    text-align: center;
+    font-size: 1.13em;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    padding: 0.22em 0 0.26em;
+}
+
+.fp-print-el .ppv-rows {
+    padding: 0.35em 0.7em 0.43em;
+}
+
+.fp-print-el .ppv-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.13em 0;
+    border-bottom: 1px dashed #e6dcc4;
+    white-space: nowrap;
+}
+
+.fp-print-el .ppv-row:last-child {
+    border-bottom: none;
+}
+
+.fp-print-el .ppv-total {
+    margin-top: 0.17em;
+    border-top: 1.5px solid #2f7fe0;
+    padding-top: 0.26em;
+    font-weight: 700;
+    color: #1d5fb0;
+}
+
+/* 基本資料卡預覽（較寬，內容可換行；比例同列印 .pi-card） */
+.fp-print-el-info {
+    width: 267px; width: 17.5cqw;
+    font-size: 12px; font-size: 0.78cqw;
+    line-height: 1.45;
+}
+
+.fp-print-el-info .ppv-rows {
+    padding: 0.42em 0.83em 0.58em;
+}
+
+.fp-print-el-info .ppv-row {
+    justify-content: flex-start;
+    gap: 0.67em;
+    padding: 0.17em 0;
+    white-space: normal;
+}
+
+.fp-print-el-info .ppv-lb {
+    flex: 0 0 5em;
+    color: #1d5fb0;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.fp-print-el-info .ppv-val {
+    flex: 1;
+    text-align: left;
+}
+
 /* ===== 1F 燈箱熱點 (Hotspots) ===== */
 /* 熱點容器 — 疊在 1F 圖片上層，依百分比座標放置 */
 .fp-hotspot-layer {
