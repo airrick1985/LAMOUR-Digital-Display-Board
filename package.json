@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "npx serve .",
     "generate-manifest": "node scripts/generate-manifest.js",
+    "generate-icons": "node scripts/generate-pwa-icons.js",
     "build": "npm run generate-manifest",
     "deploy": "npm run build && git add . && git commit -m \"更新資源及清單\" && git push origin main",
     "electron": "electron electron/main.js",

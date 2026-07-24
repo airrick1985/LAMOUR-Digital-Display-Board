@@ -1,8 +1,38 @@
 {
-  "version": "1.0.109",
-  "timestamp": 1784721463645,
-  "generatedAt": "2026-07-22T11:57:43.645Z",
+  "version": "1.0.110",
+  "timestamp": 1784894428296,
+  "generatedAt": "2026-07-24T12:00:28.296Z",
   "assets": {
+    "assets/icons/apple-touch-icon.png": {
+      "hash": "f3be465a8381",
+      "size": 33659,
+      "mtime": 1784894420183.697
+    },
+    "assets/icons/icon-192.png": {
+      "hash": "d851dc0887a6",
+      "size": 51655,
+      "mtime": 1784894420073.729
+    },
+    "assets/icons/icon-512.png": {
+      "hash": "bda0fbfa00b0",
+      "size": 304512,
+      "mtime": 1784894420107.1624
+    },
+    "assets/icons/icon-maskable-192.png": {
+      "hash": "59616b6357f7",
+      "size": 32025,
+      "mtime": 1784894420129.3918
+    },
+    "assets/icons/icon-maskable-512.png": {
+      "hash": "4bf4cc3cbfe0",
+      "size": 200244,
+      "mtime": 1784894420164.5066
+    },
+    "assets/icons/source.png": {
+      "hash": "a84c628e0ef3",
+      "size": 240252,
+      "mtime": 1784894377543.8755
+    },
     "assets/images/360pano.webp": {
       "hash": "0e12af019775",
       "size": 21632316,
@@ -709,9 +739,9 @@
       "mtime": 1783936766261.57
     },
     "assets/images/layout/B2.webp": {
-      "hash": "b92048d76917",
-      "size": 237678,
-      "mtime": 1783936398506.0364
+      "hash": "a2d65c385345",
+      "size": 333474,
+      "mtime": 1784884918392.6719
     },
     "assets/images/layout/B3.webp": {
       "hash": "1e451854f34c",
@@ -719,9 +749,9 @@
       "mtime": 1783936378258.9062
     },
     "assets/images/layout/B4.webp": {
-      "hash": "4162189dcd53",
-      "size": 231884,
-      "mtime": 1783935561437.4463
+      "hash": "2edecedac4b0",
+      "size": 341160,
+      "mtime": 1784885001151.7017
     },
     "assets/images/layout/background.webp": {
       "hash": "15a9db011b4e",
