@@ -752,6 +752,7 @@
                 { label: '停車位',   value: '汽車位 118個　機車位 117個' },
                 { label: '公設比',   value: '34.8%' },
                 { label: '樓高',     value: '住家 3.1米　一樓大廳挑高 8.5米' },
+                { label: '電梯',     value: '15人份　速率 120 公尺/分鐘' },
                 { label: '車位售價', value: 'B1-325　B2-300　B3-275　B4-250' },
                 { label: '管理費',   value: '住家 90/坪　車位 300/個' },
                 { label: '學區',     value: '關東國小、新科國中、竹科實中、康橋國際學校(規劃中)' }
@@ -1356,17 +1357,18 @@
                                         color: #8b6914;
                                         white-space: nowrap;
                                     }
-                                    .ph-manager { display: flex; align-items: baseline; gap: 10px; font-size: 13px; color: #4A5759; white-space: nowrap; }
+                                    .ph-manager { display: flex; align-items: baseline; gap: 12px; font-size: 13px; color: #4A5759; white-space: nowrap; }
                                     .ph-manager .mg-role {
-                                        font-size: 11px;
+                                        font-size: 13px;
                                         letter-spacing: 2px;
                                         color: #fff;
                                         background: #8b6914;
                                         border-radius: 999px;
-                                        padding: 2px 10px;
+                                        padding: 3px 12px;
                                     }
-                                    .ph-manager b { font-size: 17px; letter-spacing: 2px; }
-                                    .ph-manager .mg-phone { font-size: 17px; font-weight: 700; color: #8b6914; letter-spacing: 1px; }
+                                    /* 姓名 / 電話放大至與左上建案名稱（.ph-brand .zh = 24px）同級 */
+                                    .ph-manager b { font-size: 24px; font-weight: 700; letter-spacing: 3px; color: #4A5759; }
+                                    .ph-manager .mg-phone { font-size: 24px; font-weight: 700; color: #8b6914; letter-spacing: 1px; }
                                     /* ── 圖面區 ── */
                                     .print-stage {
                                         flex: 1 1 auto;
