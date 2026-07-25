@@ -1085,6 +1085,260 @@ body.fp-hotspot-debug.lightbox-active .fp-back-floor-btn {
     color: #8b6914;
 }
 
+/* ===== 基本資料（開啟鈕 + 畫面中央燈箱；資料同列印 basicInfoData，維護統一）===== */
+/* 右緣垂直開啟鈕：所有平面／單元圖顯示，點擊彈出中央燈箱 */
+.fp-basicinfo-open {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 12;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 46px;
+    padding: 20px 0;
+    border: none;
+    border-radius: 15px 0 0 15px;
+    background: linear-gradient(160deg, #dcc78f 0%, #bd984c 55%, #a8863f 100%);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: -7px 0 22px rgba(60, 50, 30, 0.3);
+    font-family: var(--font-sans, system-ui);
+    transition: filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.fp-basicinfo-open.available {
+    display: flex;
+}
+
+.fp-basicinfo-open:hover {
+    filter: brightness(1.07);
+    box-shadow: -10px 0 28px rgba(60, 50, 30, 0.4);
+}
+
+.fp-basicinfo-open .tab-icon {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.28);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+}
+
+.fp-basicinfo-open .tab-label {
+    writing-mode: vertical-rl;
+    letter-spacing: 6px;
+    font-size: 17px;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== 中央燈箱遮罩 ===== */
+.fp-basicinfo-modal {
+    position: absolute;
+    inset: 0;
+    z-index: 100004;
+    /* 蓋過右上關閉/列印鈕 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: rgba(28, 24, 18, 0.5);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    pointer-events: none;
+}
+
+.fp-basicinfo-modal.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* ===== 對話框（縮放淡入） ===== */
+.fp-basicinfo-dialog {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(680px, 94vw);
+    max-height: 86vh;
+    background: #fdfbf5;
+    border: 1px solid rgba(180, 165, 130, 0.5);
+    border-radius: 22px;
+    box-shadow: 0 30px 90px rgba(28, 22, 12, 0.5);
+    overflow: hidden;
+    transform: translateY(18px) scale(0.94);
+    opacity: 0;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+}
+
+.fp-basicinfo-modal.open .fp-basicinfo-dialog {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.fp-basicinfo-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(180, 165, 130, 0.5);
+    background: rgba(255, 255, 255, 0.7);
+    color: #8b6914;
+    font-size: 19px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.35s ease;
+}
+
+.fp-basicinfo-close:hover {
+    background: #8b6914;
+    color: #fff;
+    transform: rotate(90deg);
+}
+
+/* ===== 標題區（置中、優雅） ===== */
+.fp-basicinfo-dialog .bi-head {
+    flex: 0 0 auto;
+    padding: 38px 44px 24px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(139, 105, 20, 0.09), rgba(139, 105, 20, 0));
+}
+
+.bi-eyebrow {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 8px;
+    color: #b3924b;
+    margin-bottom: 12px;
+    font-family: var(--font-sans, system-ui);
+}
+
+.fp-basicinfo-dialog .bi-title {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 12px;
+    /* 置中時右側多留一格字距以視覺置中 */
+    text-indent: 12px;
+    color: #6f5410;
+    font-family: var(--font-sans, system-ui);
+}
+
+.bi-title-en {
+    display: block;
+    margin-top: 9px;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: rgba(139, 105, 20, 0.55);
+    font-family: var(--font-english-sans, 'Arial', sans-serif);
+}
+
+.bi-head-rule {
+    display: block;
+    width: 56px;
+    height: 2px;
+    margin: 20px auto 0;
+    background: linear-gradient(90deg, transparent, #c8a05a, transparent);
+}
+
+/* ===== 內容區（可捲動） ===== */
+.fp-basicinfo-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(180, 165, 130, 0.6) transparent;
+}
+
+.fp-basicinfo-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.fp-basicinfo-body::-webkit-scrollbar-thumb {
+    background: rgba(180, 165, 130, 0.5);
+    border-radius: 4px;
+}
+
+.fp-basicinfo-body .bi-rows {
+    padding: 4px 48px 26px;
+}
+
+/* label 固定一欄、value 一欄；value 可換行且以 text-wrap:pretty 避免孤字 */
+.fp-basicinfo-body .bi-row {
+    display: grid;
+    grid-template-columns: 5em 1fr;
+    align-items: baseline;
+    column-gap: 24px;
+    padding: 8px 4px;
+    border-bottom: 1px solid rgba(180, 165, 130, 0.28);
+}
+
+.fp-basicinfo-body .bi-row:last-child {
+    border-bottom: none;
+}
+
+.fp-basicinfo-body .bi-lb {
+    position: relative;
+    color: #8b6914;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 3px;
+    white-space: nowrap;
+    padding-left: 14px;
+}
+
+.fp-basicinfo-body .bi-lb::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.35em;
+    bottom: 0.2em;
+    width: 3px;
+    border-radius: 2px;
+    background: #c8a05a;
+}
+
+.fp-basicinfo-body .bi-val {
+    color: #3a3a3a;
+    font-size: 17px;
+    line-height: 1.55;
+    letter-spacing: 0.5px;
+    overflow-wrap: break-word;
+    text-wrap: pretty;
+    /* 段落換行避免最後一行只剩一個字（孤字）*/
+}
+
+/* Debug 模式：坪數卡整塊可拖曳、基本資料開啟鈕可上下拖曳 → 游標與虛線提示 */
+body.fp-hotspot-debug .fp-lightbox-info .info-content-wrap,
+body.fp-hotspot-debug .fp-lightbox-info .info-toggle-btn {
+    cursor: grab;
+}
+
+body.fp-hotspot-debug .fp-lightbox-info.visible .info-content-wrap {
+    outline: 2px dashed rgba(47, 127, 224, 0.75);
+    outline-offset: 4px;
+}
+
+body.fp-hotspot-debug .fp-basicinfo-open {
+    cursor: ns-resize;
+    outline: 2px dashed rgba(47, 127, 224, 0.9);
+    outline-offset: 3px;
+}
+
 /* ===== 常駐免責聲明 ===== */
 .fp-disclaimer {
     position: fixed;

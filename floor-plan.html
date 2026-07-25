@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="css/variables.css?v=1.0.3">
     <link rel="stylesheet" href="css/global.css?v=1.0.3">
     <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
-    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.18">
+    <link rel="stylesheet" href="css/floor-plan.css?v=1.0.23">
     <!-- Pannellum 360 全景套件（本地版本） -->
     <link rel="stylesheet" href="assets/pannellum/pannellum.min.css">
     <!-- PWA Update Loading Screen -->
@@ -295,6 +295,24 @@
         <div class="fp-lightbox-hint">滾輪縮放 · 拖曳移動 · ESC 關閉</div>
         <!-- 坪數資訊面板 -->
         <div class="fp-lightbox-info" id="fpLightboxInfo"></div>
+        <!-- 基本資料開啟鈕（所有平面／單元圖顯示；Debug 可上下拖曳） -->
+        <button class="fp-basicinfo-open" id="fpBasicInfoTab" type="button" title="檢視基本資料" aria-haspopup="dialog">
+            <span class="tab-icon" aria-hidden="true">ℹ</span>
+            <span class="tab-label">基本資料</span>
+        </button>
+        <!-- 基本資料燈箱（畫面中央彈出；內容同列印 basicInfoData） -->
+        <div class="fp-basicinfo-modal" id="fpBasicInfoCard" role="dialog" aria-modal="true" aria-label="基本資料">
+            <div class="fp-basicinfo-dialog">
+                <button class="fp-basicinfo-close" id="fpBasicInfoClose" type="button" title="關閉">✕</button>
+                <div class="bi-head">
+                    <span class="bi-eyebrow">富宇樂慕</span>
+                    <h3 class="bi-title">基本資料</h3>
+                    <span class="bi-title-en">PROJECT INFORMATION</span>
+                    <span class="bi-head-rule" aria-hidden="true"></span>
+                </div>
+                <div class="fp-basicinfo-body" id="fpBasicInfoPanel"></div>
+            </div>
+        </div>
     </div>
 
     <!-- 傢俱配置圖 → 返回 4-15F 樓層平面（置於頂部凍結導覽列左上角；
@@ -493,7 +511,7 @@
         <div class="fp-hotspot-debug-list" id="fpHotspotDebugList"></div>
         <button class="fp-hotspot-debug-export" id="fpHotspotDebugPreviewBtn">🖨️ A3 列印排版檢視器 (4-15F)</button>
         <button class="fp-hotspot-debug-export" id="fpHotspotDebugExport">📋 匯出座標 (複製到剪貼簿)</button>
-        <div class="fp-hotspot-debug-hint">先點開 1F / 2F / 3F / 4-15F / RF 平面圖後，於燈箱中拖曳紅點調整位置；<br>矩形熱點可整塊拖曳移動、右下角紅色手把調整大小。<br>4-15F 圖面另有藍色虛線「列印卡片」（各戶面積 / 基本資料），拖曳即可調整列印時的位置。<br>檢視：滾輪縮放；按住「空白鍵」（或 Alt / 滑鼠中鍵）再拖曳可平移畫面，即使壓在熱點或卡片上也優先平移。<br>列印底圖（4-15F）：Ctrl+滾輪 = 縮放底圖、Ctrl+拖曳 = 移動底圖、Ctrl+雙擊 = 重設，縮小底圖可避免資訊卡遮到圖面，列印會套用相同設定。<br>建議改用上方「🖨️ A3 列印排版檢視器」：以真實 A3 橫式紙面（含表頭）排版底圖與卡片，所見即所得。<br>標題列可拖曳移動面板、⇄ 快速換邊、— 收合。<br>連按 5 次 D 鍵或 ESC 可關閉本面板。</div>
+        <div class="fp-hotspot-debug-hint">先點開 1F / 2F / 3F / 4-15F / RF 平面圖後，於燈箱中拖曳紅點調整位置；<br>矩形熱點可整塊拖曳移動、右下角紅色手把調整大小。<br>4-15F 圖面另有藍色虛線「列印卡片」（各戶面積 / 基本資料），拖曳即可調整列印時的位置。<br>4-15F 瀏覽模式「坪數卡」可直接拖曳移動；「基本資料開啟鈕」拖曳可上下調整位置（非 Debug 時點按＝開啟中央燈箱）。<br>檢視：滾輪縮放；按住「空白鍵」（或 Alt / 滑鼠中鍵）再拖曳可平移畫面，即使壓在熱點或卡片上也優先平移。<br>列印底圖（4-15F）：Ctrl+滾輪 = 縮放底圖、Ctrl+拖曳 = 移動底圖、Ctrl+雙擊 = 重設，縮小底圖可避免資訊卡遮到圖面，列印會套用相同設定。<br>建議改用上方「🖨️ A3 列印排版檢視器」：以真實 A3 橫式紙面（含表頭）排版底圖與卡片，所見即所得。<br>標題列可拖曳移動面板、⇄ 快速換邊、— 收合。<br>連按 5 次 D 鍵或 ESC 可關閉本面板。</div>
     </div>
 
     <!-- Debug：A3 橫式列印排版檢視器（與實際列印共用同一份頁面 HTML/CSS，所見即所得） -->
@@ -760,6 +778,16 @@
                 // Debug 模式下 Ctrl+滾輪 = 縮放底圖、Ctrl+拖曳 = 移動底圖、Ctrl+雙擊 = 重設。
                 baseImage: { scale: 0.87, x: 0, y: 0 }
             };
+
+            // 4-15F 瀏覽模式資訊卡位置（螢幕顯示用，與列印座標無關）。
+            // x / y = 卡片左上角相對燈箱視窗的百分比；null = 沿用 CSS 預設位置
+            //（坪數卡＝左下角、基本資料卡＝右上角）。
+            // 調整方式：連按 5 次 D 進入 Debug → 開啟 4-15F 平面圖 → 直接拖曳卡片 →
+            // 按「匯出座標」複製 JSON，將 browseCards 內容貼回此處即可固定位置。
+            const browseLayout415F = {
+                areaCard: null,   // 坪數資訊卡（預設左下角）
+                infoCard: null    // 基本資料資訊卡（預設右上角）
+            };
             // ========================= ★ 維護區結束 ★ =========================
 
             // ===== 列印排版共用產生器（列印視窗與 Debug「A3 排版檢視器」共用）=====
@@ -853,6 +881,82 @@
                 return html;
             }
 
+            // ===== 基本資料燈箱（畫面中央彈出；資料同列印 basicInfoData，維護統一）=====
+            const basicInfoCard = document.getElementById('fpBasicInfoCard');    // 燈箱遮罩層
+            const basicInfoTab = document.getElementById('fpBasicInfoTab');      // 開啟鈕
+            const basicInfoPanel = document.getElementById('fpBasicInfoPanel');  // 內容容器
+            const basicInfoClose = document.getElementById('fpBasicInfoClose');  // 關閉鈕
+            let basicInfoOpen = false; // 燈箱開啟狀態
+            // 開啟鈕 Debug 拖曳狀態（垂直移動按鈕）
+            let tabDragging = false, tabDragMoved = false, tabStartY = 0, tabStartTop = 0, tabRectH = 0;
+
+            // 產生基本資料內容列（label / value 分欄，value 可換行且避免孤字）
+            function buildBasicInfoCardHtml() {
+                let rows = '';
+                basicInfoData.forEach(r => {
+                    rows += `<div class="bi-row"><span class="bi-lb">${r.label}</span><span class="bi-val">${r.value}</span></div>`;
+                });
+                return `<div class="bi-rows">${rows}</div>`;
+            }
+
+            // 依 browseLayout415F 套用坪數卡位置（有座標＝套用 inline left/top，否則沿用 CSS 預設）
+            function applyBrowseCardPos(el, pos) {
+                if (!el) return;
+                if (pos && typeof pos.x === 'number') {
+                    el.style.left = `${pos.x}%`;
+                    el.style.top = `${pos.y}%`;
+                    el.style.right = 'auto';
+                    el.style.bottom = 'auto';
+                    el.style.transformOrigin = 'top left';
+                } else {
+                    el.style.left = '';
+                    el.style.top = '';
+                    el.style.right = '';
+                    el.style.bottom = '';
+                    el.style.transformOrigin = '';
+                }
+            }
+
+            // 開啟鈕垂直位置（Debug 拖曳可調整；top = % 相對燈箱視窗）
+            function applyDrawerTop() {
+                const p = browseLayout415F.infoCard;
+                basicInfoTab.style.top = (p && typeof p.top === 'number') ? `${p.top}%` : '';
+            }
+
+            // 開啟／關閉基本資料燈箱（縮放淡入特效由 CSS transition 處理）
+            function setBasicInfoOpen(open) {
+                basicInfoOpen = open;
+                basicInfoCard.classList.toggle('open', open);
+                basicInfoTab.setAttribute('aria-expanded', String(open));
+            }
+            basicInfoTab.addEventListener('click', () => {
+                if (tabDragMoved) return;         // 剛在 Debug 拖曳過按鈕，不觸發開啟
+                setBasicInfoOpen(true);
+            });
+            basicInfoClose.addEventListener('click', () => setBasicInfoOpen(false));
+            // 點遮罩空白處關閉
+            basicInfoCard.addEventListener('click', (e) => {
+                if (e.target === basicInfoCard) setBasicInfoOpen(false);
+            });
+            // ESC 先關閉基本資料燈箱（不連帶關閉整個平面圖燈箱）
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && basicInfoOpen) {
+                    setBasicInfoOpen(false);
+                    e.stopImmediatePropagation();
+                }
+            }, true);
+
+            // 顯示開啟鈕（基地資料屬全案資訊 → 所有平面規劃單元皆顯示；換圖時燈箱先關閉）
+            function updateBasicInfoCard() {
+                if (!basicInfoPanel.dataset.filled) {
+                    basicInfoPanel.innerHTML = buildBasicInfoCardHtml();
+                    basicInfoPanel.dataset.filled = '1';
+                }
+                applyDrawerTop();
+                setBasicInfoOpen(false);          // 每次換圖預設收合，避免遮住圖面
+                basicInfoTab.classList.add('available');
+            }
+
             let lbScale = 1, lbTx = 0, lbTy = 0;
             let lbDragging = false, lbStartX = 0, lbStartY = 0;
             let lbDragMoved = false; // 用來區分「點擊」與「拖曳」
@@ -921,6 +1025,9 @@
                         lightboxInfo.innerHTML = '';
                         lightboxInfo.classList.remove('visible');
                     }
+                    // 基本資料側邊欄（全案資訊，所有單元皆顯示）＋ 套用坪數卡位置
+                    updateBasicInfoCard();
+                    applyBrowseCardPos(lightboxInfo, browseLayout415F.areaCard);
 
                     lbScale = 1; lbTx = 0; lbTy = 0;
                     updateLightboxTransform();
@@ -1039,6 +1146,8 @@
                 document.body.classList.remove('lightbox-active');
                 document.body.style.overflow = '';
                 backFloorBtn.classList.remove('visible');
+                basicInfoTab.classList.remove('available');
+                setBasicInfoOpen(false);
 
                 // 退出燈箱時，清除所有測量標記與比例尺狀態
                 const clearBtn = document.getElementById('btnMeasureClear');
@@ -1486,6 +1595,8 @@
                 if (e.target.closest('.fp-measure-tools')) return; // 防止點擊工具列拖曳
                 // 防止點擊到彈出資訊框也觸發背景圖案的拖曳
                 if (e.target.closest('.fp-lightbox-info')) return;
+                if (e.target.closest('.fp-basicinfo-open')) return;
+                if (e.target.closest('.fp-basicinfo-modal')) return;
                 // Debug 模式 Ctrl+拖曳：移動 4-15F 列印底圖（畫面即時預覽，列印同步套用）
                 if (e.ctrlKey && hotspotDebugMode && currentHotspotFloor === '4-15F') {
                     e.preventDefault();
@@ -1542,6 +1653,8 @@
 
             // 滾輪縮放
             lightbox.addEventListener('wheel', (e) => {
+                // 滑鼠在基本資料燈箱上 → 讓內容原生捲動（不縮放、不攔截）
+                if (e.target.closest('.fp-basicinfo-modal')) return;
                 e.preventDefault();
                 // Debug 模式 Ctrl+滾輪：縮放 4-15F「列印底圖」（而非檢視縮放）
                 if (e.ctrlKey && hotspotDebugMode && currentHotspotFloor === '4-15F') {
@@ -2740,6 +2853,23 @@
                         <span class="debug-pos">scale: ${bi.scale.toFixed(2)} x: ${bi.x.toFixed(1)}% y: ${bi.y.toFixed(1)}%</span>
                     `;
                     hotspotDebugList.appendChild(biItem);
+
+                    // 瀏覽模式資訊卡位置（螢幕顯示；拖曳後更新）
+                    const areaPos = browseLayout415F.areaCard;
+                    const infoPos = browseLayout415F.infoCard;
+                    const browseRows = [
+                        { name: '🖥️ 坪數卡(瀏覽)', text: areaPos ? `x: ${areaPos.x.toFixed(1)}% y: ${areaPos.y.toFixed(1)}% (viewport)` : '預設左下角' },
+                        { name: '🖥️ 基本資料開啟鈕(瀏覽)', text: `${infoPos && typeof infoPos.top === 'number' ? `top: ${infoPos.top.toFixed(1)}%` : '預設垂直置中'}` }
+                    ];
+                    browseRows.forEach(c => {
+                        const el = document.createElement('div');
+                        el.className = 'fp-hotspot-debug-item';
+                        el.innerHTML = `
+                            <span class="debug-name">${c.name}</span>
+                            <span class="debug-pos">${c.text}</span>
+                        `;
+                        hotspotDebugList.appendChild(el);
+                    });
                 }
 
                 // 「4-15F平面圖」按鈕位置（視窗百分比；拖曳後更新）
@@ -2797,6 +2927,11 @@
                             x: parseFloat(printLayout415F.baseImage.x.toFixed(1)),
                             y: parseFloat(printLayout415F.baseImage.y.toFixed(1))
                         } : undefined
+                    } : undefined,
+                    // 4-15F 瀏覽模式資訊卡座標（貼回 browseLayout415F 即可固定位置）
+                    browseCards: currentHotspotFloor === '4-15F' ? {
+                        areaCard: browseLayout415F.areaCard,
+                        infoCard: browseLayout415F.infoCard
                     } : undefined
                 };
                 const jsonStr = JSON.stringify(exportData, null, 2);
@@ -3155,6 +3290,79 @@
                     printDragTarget = null;
                     // 延遲清旗標讓接續 click 知道剛剛是拖曳
                     setTimeout(() => { hotspotDragMoved = false; }, 50);
+                }
+            });
+
+            // ===== Debug 模式：拖曳瀏覽模式資訊卡 =====
+            // 坪數卡：整塊自由拖曳；基本資料側邊欄：拖曳側邊標籤調整垂直位置。
+            let browseDragTarget = null, browseDragKey = null;
+            let browseDragOffX = 0, browseDragOffY = 0, browseDragMoved = false;
+
+            function startBrowseCardDrag(e, el, key) {
+                if (!hotspotDebugMode) return;      // 僅 Debug 模式可拖曳
+                if (isPanOverride(e) || e.ctrlKey) return; // 平移/移動底圖時不搶事件
+                e.preventDefault();
+                e.stopPropagation();
+                browseDragTarget = el;
+                browseDragKey = key;
+                browseDragMoved = false;
+                el.style.transition = 'none';       // 拖曳時關閉緩動，貼齊游標
+                const r = el.getBoundingClientRect();
+                browseDragOffX = e.clientX - r.left;
+                browseDragOffY = e.clientY - r.top;
+            }
+
+            // 坪數卡：Debug 下整塊拖曳（捕獲階段搶在收合按鈕 / 明細列之前）
+            lightboxInfo.addEventListener('mousedown', (e) => startBrowseCardDrag(e, lightboxInfo, 'areaCard'), true);
+            lightboxInfo.addEventListener('click', (e) => {
+                if (browseDragMoved) { e.preventDefault(); e.stopImmediatePropagation(); }
+            }, true);
+
+            // 基本資料側邊欄：Debug 下拖曳標籤上下移動（非 Debug 時標籤＝開合按鈕）
+            basicInfoTab.addEventListener('mousedown', (e) => {
+                if (!hotspotDebugMode || isPanOverride(e) || e.ctrlKey) return;
+                e.preventDefault();
+                e.stopPropagation();
+                tabDragging = true;
+                tabDragMoved = false;
+                tabStartY = e.clientY;
+                const p = browseLayout415F.infoCard;
+                tabStartTop = (p && typeof p.top === 'number') ? p.top : 50;
+                tabRectH = lightbox.getBoundingClientRect().height || 1;
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                // 基本資料側邊欄：垂直拖曳標籤
+                if (tabDragging) {
+                    const dy = ((e.clientY - tabStartY) / tabRectH) * 100;
+                    const top = Math.max(12, Math.min(88, tabStartTop + dy));
+                    browseLayout415F.infoCard = { top: +top.toFixed(2) };
+                    applyDrawerTop();
+                    tabDragMoved = true;
+                    scheduleDebugListUpdate();
+                    return;
+                }
+                if (!browseDragTarget) return;
+                const rect = lightbox.getBoundingClientRect();
+                if (!rect.width || !rect.height) return;
+                let x = ((e.clientX - browseDragOffX - rect.left) / rect.width) * 100;
+                let y = ((e.clientY - browseDragOffY - rect.top) / rect.height) * 100;
+                x = Math.max(0, Math.min(97, x));
+                y = Math.max(0, Math.min(97, y));
+                browseLayout415F[browseDragKey] = { x: +x.toFixed(2), y: +y.toFixed(2) };
+                applyBrowseCardPos(browseDragTarget, browseLayout415F[browseDragKey]);
+                browseDragMoved = true;
+                scheduleDebugListUpdate();
+            });
+            window.addEventListener('mouseup', () => {
+                if (tabDragging) {
+                    tabDragging = false;
+                    setTimeout(() => { tabDragMoved = false; }, 50);
+                }
+                if (browseDragTarget) {
+                    browseDragTarget.style.transition = '';
+                    browseDragTarget = null;
+                    setTimeout(() => { browseDragMoved = false; }, 50);
                 }
             });
 

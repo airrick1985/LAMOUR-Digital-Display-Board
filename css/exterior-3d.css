@@ -331,3 +331,104 @@
     color: #F7E1D7;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(237, 175, 184, 0.35);
 }
+
+/* ===== 底部外觀介紹文字（日／夜景不同版本；黑色漸層透明底、白字） ===== */
+.ext3d-intro {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 11;
+    width: min(760px, 64vw);
+    padding: 96px 52px 46px;
+    pointer-events: none;
+    color: #fff;
+    background: linear-gradient(to top right,
+            rgba(0, 0, 0, 0.8) 0%,
+            rgba(0, 0, 0, 0.5) 40%,
+            rgba(0, 0, 0, 0) 100%);
+}
+
+/* 日／夜文字疊在同一格，切換時交叉淡化（grid 讓容器高度取較高者） */
+.ext3d-intro-stack {
+    display: grid;
+}
+
+.ext3d-intro-text {
+    grid-area: 1 / 1;
+    transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+/* 預設顯示日景文字；夜景文字疊在上層、預設隱藏 */
+.ext3d-intro-text.is-night {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.ext3d-intro.night .ext3d-intro-text.is-day {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.ext3d-intro.night .ext3d-intro-text.is-night {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ext3d-intro-eyebrow {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 14px;
+    padding-left: 36px;
+    font-size: 0.82rem;
+    letter-spacing: 4px;
+    color: #EDAFB8;
+    font-family: var(--font-english-serif, serif);
+}
+
+.ext3d-intro-eyebrow::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 28px;
+    height: 1px;
+    background: #EDAFB8;
+}
+
+.ext3d-intro-text h3 {
+    margin: 0 0 14px;
+    font-size: 1.95rem;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: #fff;
+    font-family: var(--font-serif, serif);
+}
+
+.ext3d-intro-text p {
+    margin: 0;
+    max-width: 620px;
+    font-size: 1.02rem;
+    line-height: 1.95;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.9);
+    text-wrap: pretty;
+}
+
+/* 窄螢幕：縮小字級與寬度，避免壓到右下切換鈕 / 免責聲明 */
+@media (max-width: 900px) {
+    .ext3d-intro {
+        width: 82vw;
+        padding: 72px 32px 40px;
+    }
+
+    .ext3d-intro-text h3 {
+        font-size: 1.5rem;
+        letter-spacing: 4px;
+    }
+
+    .ext3d-intro-text p {
+        font-size: 0.92rem;
+        line-height: 1.8;
+    }
+}

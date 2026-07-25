@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="css/variables.css?v=1.0.3">
     <link rel="stylesheet" href="css/global.css?v=1.0.3">
     <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
-    <link rel="stylesheet" href="css/exterior-3d.css?v=1.0.5">
+    <link rel="stylesheet" href="css/exterior-3d.css?v=1.0.6">
     <!-- PWA Update Loading Screen -->
     <style id="pwa-loading-style">
       #pwa-loading-overlay {
@@ -109,6 +109,22 @@
             <div class="ext3d-dots" id="ext3dDots"></div>
         </div>
 
+        <!-- 底部外觀介紹文字（日／夜景不同版本；黑色漸層透明底、白字） -->
+        <div class="ext3d-intro" id="ext3dIntro">
+            <div class="ext3d-intro-stack">
+                <article class="ext3d-intro-text is-day">
+                    <span class="ext3d-intro-eyebrow">日景 · DAYLIGHT</span>
+                    <h3>日光 典雅立面</h3>
+                    <p>優雅風範勾勒的建築量體，石材與線板層層堆疊，於日光下顯現溫潤質感與細膩比例；退縮綠廊與挑高門廳，讓每一次歸家都從容而優雅。</p>
+                </article>
+                <article class="ext3d-intro-text is-night">
+                    <span class="ext3d-intro-eyebrow">夜景 · NIGHT VIEW</span>
+                    <h3>夜幕 暖光流動</h3>
+                    <p>暮色低垂，暖光自窗櫺與門廳緩緩漫溢，勾勒建築優雅輪廓；光影如香檳流轉，為城市夜色譜寫一場靜謐而浪漫的歸家序曲。</p>
+                </article>
+            </div>
+        </div>
+
         <!-- 頁面標題 -->
         <div class="ext3d-title-overlay">
             <h2>外觀3D</h2>
@@ -185,8 +201,9 @@
                 dotsContainer.children[currentIndex].classList.add('active');
                 counter.textContent = `${currentIndex + 1} / ${totalSlides}`;
 
-                // 只有第一張（有日夜景圖層）顯示切換按鈕
+                // 只有第一張（有日夜景圖層）顯示切換按鈕與外觀介紹文字
                 dayNightToggle.style.display = currentIndex === 0 ? 'flex' : 'none';
+                if (ext3dIntro) ext3dIntro.style.display = currentIndex === 0 ? 'block' : 'none';
 
                 // 確保新圖片的縮放也已重設
                 resetSlideTransform(currentIndex);
@@ -216,6 +233,7 @@
             const dayNightSlide = document.getElementById('dayNightSlide');
             const dnDay = document.getElementById('dnDay');
             const dnNight = document.getElementById('dnNight');
+            const ext3dIntro = document.getElementById('ext3dIntro');
 
             let dnSwitchTimer = null;
             function setNightMode(on) {
@@ -225,6 +243,7 @@
                 dayNightSlide.classList.toggle('night', on);
                 dnDay.classList.toggle('active', !on);
                 dnNight.classList.toggle('active', on);
+                if (ext3dIntro) ext3dIntro.classList.toggle('night', on); // 同步切換介紹文字版本
 
                 // 觸發暮色「漸出→漸入」轉場：移除後強制 reflow 讓動畫重頭播放
                 dayNightSlide.classList.remove('switching');
