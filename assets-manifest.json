@@ -1,7 +1,7 @@
 {
-  "version": "1.0.110",
-  "timestamp": 1784894428296,
-  "generatedAt": "2026-07-24T12:00:28.296Z",
+  "version": "1.0.111",
+  "timestamp": 1785580935745,
+  "generatedAt": "2026-08-01T10:42:15.745Z",
   "assets": {
     "assets/icons/apple-touch-icon.png": {
       "hash": "f3be465a8381",
@@ -54,9 +54,9 @@
       "mtime": 1784112122153.8557
     },
     "assets/images/3D-03.webp": {
-      "hash": "da3d3ba3a086",
-      "size": 1154332,
-      "mtime": 1784112137292.422
+      "hash": "dd18ab648b57",
+      "size": 543364,
+      "mtime": 1784954035377.7852
     },
     "assets/images/3D-04.webp": {
       "hash": "21f3693436f9",
@@ -604,9 +604,9 @@
       "mtime": 1784291028364.2102
     },
     "assets/images/layout/14-15F.webp": {
-      "hash": "fa7e15c7c0d6",
-      "size": 7196188,
-      "mtime": 1784291087789.5964
+      "hash": "43f3bab60ef1",
+      "size": 18066680,
+      "mtime": 1785580851612.7275
     },
     "assets/images/layout/1F-L.webp": {
       "hash": "7a9df2d1114b",
@@ -629,9 +629,9 @@
       "mtime": 1784700614846.043
     },
     "assets/images/layout/2F.webp": {
-      "hash": "1b714ccbd3f3",
-      "size": 372336,
-      "mtime": 1784286857445.4482
+      "hash": "2e8c7552c803",
+      "size": 374078,
+      "mtime": 1784966477061.6433
     },
     "assets/images/layout/3F-L.webp": {
       "hash": "b99b1e176b5c",
@@ -639,9 +639,9 @@
       "mtime": 1784700675163.6416
     },
     "assets/images/layout/3F.webp": {
-      "hash": "b79cc24654c5",
-      "size": 287928,
-      "mtime": 1784287470266.5527
+      "hash": "986f6f318fa6",
+      "size": 287944,
+      "mtime": 1784966510810.0503
     },
     "assets/images/layout/4-15F-L.webp": {
       "hash": "66639abd457c",
@@ -843,6 +843,11 @@
       "size": 3866150,
       "mtime": 1783320018153.0667
     },
+    "css/basic-info.css": {
+      "hash": "2b60bc5701b9",
+      "size": 5456,
+      "mtime": 1785565238361.1743
+    },
     "css/brand.css": {
       "hash": "dc6d8e759778",
       "size": 6314,
@@ -859,14 +864,14 @@
       "mtime": 1783318889790.3625
     },
     "css/exterior-3d.css": {
-      "hash": "4a433487f9ee",
-      "size": 7740,
-      "mtime": 1784293074042.092
+      "hash": "29f972dca4cd",
+      "size": 10009,
+      "mtime": 1784950615106.091
     },
     "css/floor-plan.css": {
-      "hash": "b22dcf8edcc1",
-      "size": 55547,
-      "mtime": 1784719641160.5332
+      "hash": "3b943dfe2def",
+      "size": 61769,
+      "mtime": 1784950211105.6829
     },
     "css/global.css": {
       "hash": "84eff3d0f883",
@@ -923,6 +928,11 @@
       "size": 13767,
       "mtime": 1783318889967.411
     },
+    "js/basic-info-data.js": {
+      "hash": "4a0c01442f4a",
+      "size": 2973,
+      "mtime": 1785564702283.207
+    },
     "js/birds.js": {
       "hash": "f1c71a250b13",
       "size": 3560,
@@ -949,14 +959,14 @@
       "mtime": 1783318890014.4111
     },
     "js/spa-router.js": {
-      "hash": "e3b6372495d5",
-      "size": 14574,
-      "mtime": 1783338331067.7817
+      "hash": "1e73bbf776e9",
+      "size": 14854,
+      "mtime": 1785568987277.4473
     },
     "js/topbar.js": {
-      "hash": "508b4865c2e5",
-      "size": 19222,
-      "mtime": 1784112076136.1113
+      "hash": "73887d8ad858",
+      "size": 19417,
+      "mtime": 1785563914233.6948
     }
   }
 }
