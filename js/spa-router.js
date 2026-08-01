@@ -211,7 +211,9 @@ if (!window._spaRouterInitialized) {
             const loadedScripts = Array.from(document.querySelectorAll('script[src]')).map(s => s.src);
 
             // 需要每次都重新加載的關鍵腳本（特定頁面的初始化庫或全局工具）
-            const alwaysReloadScripts = ['topbar.js', 'pannellum.min.js', 'maps.googleapis.com', 'fireflies.js'];
+            // basic-info-data.js：body 已被 innerHTML 替換後才收集 loadedScripts，
+            // 新頁面自己未執行的 script 標籤會被誤判為「已加載」而跳過，故強制重載（IIFE 重複執行安全）。
+            const alwaysReloadScripts = ['topbar.js', 'pannellum.min.js', 'maps.googleapis.com', 'fireflies.js', 'basic-info-data.js'];
 
             const scripts = Array.from(document.body.querySelectorAll('script'));
             for (const oldScript of scripts) {

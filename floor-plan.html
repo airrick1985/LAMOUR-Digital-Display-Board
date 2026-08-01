@@ -748,7 +748,8 @@
             // 基本資料（列印 4-15F 卡片與基本資料燈箱共用，一行一筆）。
             // ※ 內容維護已移至全站共用檔 js/basic-info-data.js（與「基本資料」頁同步），
             //    修改文字請改該檔案，此處僅取用列印版一維清單。
-            const basicInfoData = window.LAMOUR_BASIC_INFO.flatList;
+            // ※ 防呆：資料檔載入失敗（如快取問題）時退回空清單，避免中斷後續腳本（360環景等）。
+            const basicInfoData = (window.LAMOUR_BASIC_INFO && window.LAMOUR_BASIC_INFO.flatList) || [];
 
             // 4-15F 列印版面座標。
             // x / y = 卡片「左上角」相對圖框的百分比（可為負值或超過 100，即排到圖框外的紙面空白處）；
@@ -3368,7 +3369,7 @@
     </script>
     <script src="js/fireflies.js?v=2"></script>
     <script src="js/cursor-petals.js?v=1.0.3"></script>
-    <script src="js/spa-router.js?v=1.0.2"></script>
+    <script src="js/spa-router.js?v=1.0.3"></script>
     <!-- Pannellum 360 必須在初始化前加載（同步加載，不用 defer）（本地版本） -->
     <script src="assets/pannellum/pannellum.min.js"></script>
     <!-- Asset Update Manager -->

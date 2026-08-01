@@ -118,7 +118,9 @@
             const rowsEl = document.getElementById('biRows');
             if (!rowsEl) return;
 
-            rowsEl.innerHTML = window.LAMOUR_BASIC_INFO.flatList.map(r => `
+            // 防呆：資料檔載入失敗（如快取問題）時退回空清單，避免拋錯
+            const biList = (window.LAMOUR_BASIC_INFO && window.LAMOUR_BASIC_INFO.flatList) || [];
+            rowsEl.innerHTML = biList.map(r => `
                 <div class="bi-row">
                     <span class="bi-lb">${r.label}</span>
                     <span class="bi-val">${r.value}</span>
@@ -127,7 +129,7 @@
         })();
     </script>
     <script src="js/cursor-petals.js?v=1.0.3"></script>
-    <script src="js/spa-router.js?v=1.0.2"></script>
+    <script src="js/spa-router.js?v=1.0.3"></script>
     <!-- Asset Update Manager -->
     <script src="js/asset-update-manager.js"></script>
     <script src="js/pwa-register.js?v=1.0.2" defer></script>
