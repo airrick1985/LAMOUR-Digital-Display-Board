@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="app-version" content="1.0.4">
+    <script>
+      if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
+        document.write('<base href="/LAMOUR-Digital-Display-Board/">');
+      }
+    </script>
+    <title>基本資料 - 富宇樂慕 LAMOUR</title>
+    <meta name="description" content="富宇樂慕建案基本資料，包括基地位置、地號、規劃戶數、公設比、投資興建、建照號碼等完整資訊。">
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4A5759">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="富宇樂慕">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css?v=1.0.3">
+    <link rel="stylesheet" href="css/global.css?v=1.0.3">
+    <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
+    <link rel="stylesheet" href="css/basic-info.css?v=1.0.0">
+    <!-- PWA Update Loading Screen -->
+    <style id="pwa-loading-style">
+      #pwa-loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #353F41 0%, #4A5759 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        opacity: 1;
+        transition: opacity 0.5s ease-out;
+      }
+      #pwa-loading-overlay.hidden {
+        pointer-events: none;
+        opacity: 0;
+      }
+      .pwa-loading-content {
+        text-align: center;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      .pwa-loading-spinner {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 20px;
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        border-top-color: #EDAFB8;
+        border-radius: 50%;
+        animation: pwa-spin 1s linear infinite;
+      }
+      @keyframes pwa-spin {
+        to { transform: rotate(360deg); }
+      }
+      .pwa-loading-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #ccc;
+      }
+    </style>
+</head>
+
+<body class="basic-info-page">
+    <!-- PWA Loading Overlay -->
+    <div id="pwa-loading-overlay">
+      <div class="pwa-loading-content">
+        <div class="pwa-loading-spinner"></div>
+        <div class="pwa-loading-text">正在檢查更新...</div>
+      </div>
+    </div>
+    <!-- 背景遮罩 -->
+    <div class="bi-bg-overlay"></div>
+
+    <!-- Top Bar -->
+    <div id="topbar-root"></div>
+
+    <!-- 主展示區（樣式與 floor-plan 基本資料燈箱一致） -->
+    <main class="bi-showcase">
+        <div class="bi-dialog">
+            <div class="bi-head">
+                <span class="bi-eyebrow">富宇樂慕</span>
+                <h1 class="bi-title">基本資料</h1>
+                <span class="bi-title-en">PROJECT INFORMATION</span>
+                <span class="bi-head-rule" aria-hidden="true"></span>
+            </div>
+            <div class="bi-body">
+                <div class="bi-rows" id="biRows"></div>
+            </div>
+        </div>
+
+        <!-- 免責備註 -->
+        <p class="bi-disclaimer">
+            <span class="bi-disclaimer-icon">※</span>
+            以上資料僅供參考，實際內容以買賣合約書及主管機關核准圖說為準。
+        </p>
+    </main>
+
+    <!-- JS -->
+    <script src="js/topbar.js"></script>
+    <!-- 全站共用基本資料（與 floor-plan.html 列印卡 / 燈箱同一份，修改內容請改 js/basic-info-data.js） -->
+    <script src="js/basic-info-data.js?v=1.0.0"></script>
+    <script>
+        (() => {
+            // 內容與 floor-plan 基本資料燈箱同一份清單（js/basic-info-data.js）
+            const rowsEl = document.getElementById('biRows');
+            if (!rowsEl) return;
+
+            rowsEl.innerHTML = window.LAMOUR_BASIC_INFO.flatList.map(r => `
+                <div class="bi-row">
+                    <span class="bi-lb">${r.label}</span>
+                    <span class="bi-val">${r.value}</span>
+                </div>
+            `).join('');
+        })();
+    </script>
+    <script src="js/cursor-petals.js?v=1.0.3"></script>
+    <script src="js/spa-router.js?v=1.0.2"></script>
+    <!-- Asset Update Manager -->
+    <script src="js/asset-update-manager.js"></script>
+    <script src="js/pwa-register.js?v=1.0.2" defer></script>
+</body>
+
+</html>

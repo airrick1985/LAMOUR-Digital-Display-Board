@@ -17,6 +17,9 @@
                 </div>
             </div>
             <div class="nav-item">
+                <a href="basic-info.html" class="nav-link">基本資料</a>
+            </div>
+            <div class="nav-item">
                 <a href="panorama.html" class="nav-link">地段環境</a>
                 <div class="submenu">
                     <div class="submenu-item"><a href="panorama.html">全景</a></div>
@@ -148,6 +151,7 @@
         // 非首頁（環景、全景、品牌、即將推出等）預設維持 scrolled 背景色
         const isNonHomePage = document.body.classList.contains('pano-page') ||
           document.body.classList.contains('brand-page') ||
+          document.body.classList.contains('basic-info-page') ||
           document.querySelector('.coming-soon-page');
         if (window.scrollY > 50 || isNonHomePage) {
           currentTopbar.classList.add('scrolled');

@@ -559,6 +559,7 @@
 
     <!-- JS -->
     <script src="js/topbar.js"></script>
+    <script src="js/basic-info-data.js?v=1.0.0"></script>
     <script>
         (() => {
             // ===== 導覽列折叠/展開功能 =====
@@ -744,21 +745,10 @@
                 return String(p).replace(/^(\d{4})(\d{3})(\d{3})$/, '$1-$2-$3');
             }
 
-            // 基本資料（列印 4-15F 時印在圖面空白處的「基本資料」卡片，一行一筆）
-            const basicInfoData = [
-                { label: '基地位置', value: '新竹市東區光復路一段335巷' },
-                { label: '基地面積', value: '約615坪　地上15F/B4' },
-                { label: '規劃戶數', value: '住家 97戶' },
-                { label: '停車位',   value: '汽車位 118個　機車位 117個' },
-                { label: '公設比',   value: '34.8%' },
-                { label: '樓高',     value: '住家 3.1米　一樓大廳挑高 8.5米' },
-                { label: '電梯',     value: '15人份　速率 120 公尺/分鐘' },
-                { label: '車位售價', value: 'B1-325　B2-300　B3-275　B4-250' },
-                { label: '管理費',   value: '住家 90/坪　車位 300/個' },
-                { label: '學區',     value: '關東國小、新科國中、竹科實中、康橋國際學校(規劃中)' },
-                { label: '開工日',   value: '2026年5月' },
-                { label: '交屋日',   value: '2034年第二季' }
-            ];
+            // 基本資料（列印 4-15F 卡片與基本資料燈箱共用，一行一筆）。
+            // ※ 內容維護已移至全站共用檔 js/basic-info-data.js（與「基本資料」頁同步），
+            //    修改文字請改該檔案，此處僅取用列印版一維清單。
+            const basicInfoData = window.LAMOUR_BASIC_INFO.flatList;
 
             // 4-15F 列印版面座標。
             // x / y = 卡片「左上角」相對圖框的百分比（可為負值或超過 100，即排到圖框外的紙面空白處）；
