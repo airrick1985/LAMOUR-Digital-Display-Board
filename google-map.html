@@ -183,6 +183,13 @@
                                 <div class="gmap-facility-detail">徒步17分鐘 | 約1.1km</div>
                             </div>
                         </div>
+                        <div class="gmap-facility-item" data-location="關東市場" data-lat="24.78231980987084" data-lng="121.02246560620567">
+                            <div class="gmap-facility-icon">🛒</div>
+                            <div class="gmap-facility-info">
+                                <div class="gmap-facility-name">關東市場</div>
+                                <div class="gmap-facility-detail">徒步8分鐘 | 約550m</div>
+                            </div>
+                        </div>
                         <div class="gmap-facility-item" data-location="金山街商圈" data-lat="24.7770978" data-lng="121.0235128">
                             <div class="gmap-facility-icon">🛒</div>
                             <div class="gmap-facility-info">
@@ -842,6 +849,11 @@
                 // 儲存目的地 CHIP，便於清除
                 let destinationGlow = null;
 
+                // 指定路線中途點（依目的地名稱）：強制 OSRM 路線先經過中途點再到目的地
+                const routeWaypoints = {
+                    '竹科園區': [{ lat: 24.780307, lng: 121.018423 }]
+                };
+
                 function calculateRoute(locationName, destLat, destLng) {
                     console.log(`[Google Map] 開始計算路線到 ${locationName}`);
 
@@ -882,7 +894,14 @@
                     // 使用 OSRM (Open Source Routing Machine) 獲取真實道路路線
                     // 注：自定義目的地使用 driving，周邊設施使用 walking（由調用方決定）
                     const routeMode = window.customDestMode ? 'driving' : 'walking';
-                    const osmUrl = `https://router.project-osrm.org/route/v1/${routeMode}/${locationData.lng},${locationData.lat};${destLng},${destLat}?overview=full&geometries=geojson`;
+                    // 若此目的地有指定中途點，將其插入起點與終點之間
+                    const viaPoints = routeWaypoints[locationName] || [];
+                    const routeCoords = [
+                        `${locationData.lng},${locationData.lat}`,
+                        ...viaPoints.map(p => `${p.lng},${p.lat}`),
+                        `${destLng},${destLat}`
+                    ].join(';');
+                    const osmUrl = `https://router.project-osrm.org/route/v1/${routeMode}/${routeCoords}?overview=full&geometries=geojson`;
 
                     console.log(`[Google Map] 從 OSRM 獲取路線: ${locationName}`);
                     console.log(`[Google Map] OSRM URL: ${osmUrl}`);
