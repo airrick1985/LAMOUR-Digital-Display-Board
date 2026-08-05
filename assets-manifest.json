@@ -1,7 +1,7 @@
 {
-  "version": "1.0.111",
-  "timestamp": 1785580935745,
-  "generatedAt": "2026-08-01T10:42:15.745Z",
+  "version": "1.0.112",
+  "timestamp": 1785936769188,
+  "generatedAt": "2026-08-05T13:32:49.188Z",
   "assets": {
     "assets/icons/apple-touch-icon.png": {
       "hash": "f3be465a8381",
@@ -113,6 +113,21 @@
       "size": 184444,
       "mtime": 1774585427210.1545
     },
+    "assets/images/construction method/EMS步驟1-電表.webp": {
+      "hash": "e3d2ee84efd6",
+      "size": 8188,
+      "mtime": 1785936612365.5908
+    },
+    "assets/images/construction method/EMS步驟2-匯流排槽.webp": {
+      "hash": "cc617868b045",
+      "size": 10764,
+      "mtime": 1785936612379.1472
+    },
+    "assets/images/construction method/EMS步驟3-充電樁.webp": {
+      "hash": "f0c58115feb9",
+      "size": 2160,
+      "mtime": 1785936612389.1895
+    },
     "assets/images/construction method/ETAG 感應門禁.md": {
       "hash": "365481c25102",
       "size": 283,
@@ -134,9 +149,9 @@
       "mtime": 1774697089427.9133
     },
     "assets/images/construction method/匯流排EMS.md": {
-      "hash": "a6e146f800b7",
-      "size": 190,
-      "mtime": 1774950538248.9146
+      "hash": "2315f39d403a",
+      "size": 1883,
+      "mtime": 1785936765500.773
     },
     "assets/images/construction method/匯流排EMS.webp": {
       "hash": "853e0e067a6e",
@@ -859,9 +874,9 @@
       "mtime": 1783318889768.3577
     },
     "css/construction.css": {
-      "hash": "141eb5527112",
-      "size": 22315,
-      "mtime": 1783318889790.3625
+      "hash": "1ada9a7e9be2",
+      "size": 30012,
+      "mtime": 1785936740461.905
     },
     "css/exterior-3d.css": {
       "hash": "29f972dca4cd",
