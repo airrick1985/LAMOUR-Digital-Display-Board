@@ -211,10 +211,15 @@
 }
 
 /* 分類色 dot */
+.con-nav-dot[data-cat="geology"]    { border-color: rgba(196, 168, 106, 0.5); }
 .con-nav-dot[data-cat="waterproof"] { border-color: rgba(74, 155, 217, 0.5); }
 .con-nav-dot[data-cat="structure"]  { border-color: rgba(212, 145, 92, 0.5);  }
 .con-nav-dot[data-cat="smart"]      { border-color: rgba(107, 201, 143, 0.5); }
 
+.con-nav-item.active .con-nav-dot[data-cat="geology"] {
+    border-color: #C4A86A; background: #C4A86A;
+    box-shadow: 0 0 10px rgba(196, 168, 106, 0.6);
+}
 .con-nav-item.active .con-nav-dot[data-cat="waterproof"] {
     border-color: #4A9BD9; background: #4A9BD9;
     box-shadow: 0 0 10px rgba(74, 155, 217, 0.6);
@@ -296,6 +301,42 @@
     border-radius: 8px;
     /* 微妙陰影增添圖片立體感 */
     filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+}
+
+/* 圖片尚未備妥時的佔位卡 */
+.con-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: min(420px, 78%);
+    aspect-ratio: 16 / 9;
+    border: 1px dashed rgba(196, 168, 106, 0.45);
+    border-radius: 10px;
+    background: rgba(196, 168, 106, 0.06);
+    text-align: center;
+    user-select: none;
+}
+
+.con-image-placeholder-icon {
+    font-size: 30px;
+    color: rgba(196, 168, 106, 0.7);
+    line-height: 1;
+}
+
+.con-image-placeholder-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: rgba(60, 60, 60, 0.78);
+}
+
+.con-image-placeholder-note {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: rgba(60, 60, 60, 0.45);
 }
 
 .con-image-front {
@@ -424,6 +465,12 @@
     border-radius: 20px;
     margin-bottom: 20px;
     transition: background 0.4s ease, color 0.4s ease;
+}
+
+.con-category-badge[data-cat="geology"] {
+    background: rgba(196, 168, 106, 0.15);
+    color: #D9C08A;
+    border: 1px solid rgba(196, 168, 106, 0.3);
 }
 
 .con-category-badge[data-cat="waterproof"] {

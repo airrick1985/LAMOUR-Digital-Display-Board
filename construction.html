@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="app-version" content="1.0.5">
+    <meta name="app-version" content="1.0.6">
     <script>
       if (!window.location.hostname.includes('localhost') && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('pages.dev')) {
         document.write('<base href="/LAMOUR-Digital-Display-Board/">');
       }
     </script>
     <title>工法介紹 - 富宇樂慕 LAMOUR</title>
-    <meta name="description" content="富宇樂慕工法介紹，包括衛浴防水、窗框防水、樑柱綁筋、智慧設備等精密施工工法展示。">
+    <meta name="description" content="富宇樂慕工法介紹，包括地質安心、衛浴防水、窗框防水、樑柱綁筋、智慧設備等精密施工工法展示。">
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="css/variables.css?v=1.0.3">
     <link rel="stylesheet" href="css/global.css?v=1.0.3">
     <link rel="stylesheet" href="css/topbar.css?v=1.0.3">
-    <link rel="stylesheet" href="css/construction.css?v=1.0.5">
+    <link rel="stylesheet" href="css/construction.css?v=1.0.6">
     <!-- PWA Update Loading Screen -->
     <style id="pwa-loading-style">
       #pwa-loading-overlay {
@@ -125,9 +125,9 @@
 
                 <!-- 可捲動內容區 -->
                 <div class="con-info-content entrance" id="conInfoContent">
-                    <div class="con-category-badge" id="conCategoryBadge" data-cat="waterproof">防水工法</div>
-                    <h1 class="con-info-title" id="conInfoTitle">衛浴防水</h1>
-                    <p class="con-info-subtitle" id="conInfoSubtitle">BATHROOM WATERPROOFING</p>
+                    <div class="con-category-badge" id="conCategoryBadge" data-cat="geology">地質安心</div>
+                    <h1 class="con-info-title" id="conInfoTitle">堅實岩盤地質</h1>
+                    <p class="con-info-subtitle" id="conInfoSubtitle">SOLID BEDROCK FOUNDATION</p>
                     <div class="con-info-divider"></div>
                     <div class="con-info-desc" id="conInfoDesc">載入中...</div>
                 </div>
@@ -136,7 +136,7 @@
             <!-- 免責聲明（限定於展示區，不遮擋左側功能列） -->
             <div class="con-disclaimer">
                 <span class="con-disclaimer-icon">※</span>
-                <span class="con-disclaimer-text">以上工法圖片為 <strong>3D 示意</strong>，僅供參考，實際依施工圖面為準。</span>
+                <span class="con-disclaimer-text">以上工法圖片為 <strong>3D 示意</strong>，僅供參考，實際依施工圖面為準；地質安心內容依據本基地地基調查報告書。</span>
             </div>
         </div>
     </main>
@@ -154,6 +154,66 @@
         (() => {
             // ===== 工法資料定義 =====
             const methods = [
+                {
+                    id: 'geo-bedrock',
+                    title: '堅實岩盤地質',
+                    subtitle: 'SOLID BEDROCK FOUNDATION',
+                    category: 'geology',
+                    categoryLabel: '地質安心',
+                    image: 'assets/images/geology/堅實岩盤地質.webp',
+                    description: '經 4 孔專業地質鑽探調查（每孔深 31 公尺），基地地表下約 18 公尺即為砂質泥岩岩盤，標準貫入試驗 N 值均大於 50；依耐震設計規範分析屬「第一類地盤（堅實地盤）」，為三類地盤中最穩固的等級。',
+                    isStepList: false
+                },
+                {
+                    id: 'geo-foundation',
+                    title: '建築坐落岩盤',
+                    subtitle: 'FOUNDATION ON BEDROCK',
+                    category: 'geology',
+                    categoryLabel: '地質安心',
+                    image: 'assets/images/geology/建築坐落岩盤.webp',
+                    description: '地下四層開挖 18.95 公尺，採筏式基礎設計，基礎直接坐落並深入砂質泥岩岩盤，基礎容許承載力經分析大於建築總載重，沉陷量符合建築法規要求，穩固紮實。',
+                    isStepList: false
+                },
+                {
+                    id: 'geo-liquefaction',
+                    title: '土壤液化低潛勢',
+                    subtitle: 'LOW LIQUEFACTION POTENTIAL',
+                    category: 'geology',
+                    categoryLabel: '地質安心',
+                    image: 'assets/images/geology/土壤液化低潛勢.webp',
+                    description: '經政府「土壤液化潛勢查詢系統」查詢，本基地屬低潛勢區；鑽探資料經液化評估分析，在中小度地震、設計地震及最大考量地震下，均無土壤液化情形。',
+                    isStepList: false
+                },
+                {
+                    id: 'geo-sensitive',
+                    title: '非地質敏感區',
+                    subtitle: 'NON-SENSITIVE GEOLOGICAL AREA',
+                    category: 'geology',
+                    categoryLabel: '地質安心',
+                    image: 'assets/images/geology/非地質敏感區.webp',
+                    description: '經查詢中央地質調查所公告資料，基地未坐落於任何地質敏感區範圍，土地條件單純安心。',
+                    isStepList: false
+                },
+                {
+                    id: 'geo-fault',
+                    title: '斷層未經過基地',
+                    subtitle: 'NO FAULT CROSSING SITE',
+                    category: 'geology',
+                    categoryLabel: '地質安心',
+                    image: 'assets/images/geology/斷層未經過基地.webp',
+                    description: '鄰近之新城斷層（基地南側約 1.4 公里）、新竹斷層（基地北側約 2.1 公里）與湖口斷層（基地北側約 10.1 公里）均未通過基地；且建築耐震設計已依最新規範納入近斷層效應加強，結構安全再升級。',
+                    isStepList: false
+                },
+                {
+                    id: 'geo-clear',
+                    title: '無其他地質疑慮',
+                    subtitle: 'CLEAR GEOLOGICAL CONDITIONS',
+                    category: 'geology',
+                    categoryLabel: '地質安心',
+                    image: 'assets/images/geology/無其他地質疑慮.webp',
+                    description: '基地地形平坦，無侵蝕、潛移、崩塌、滑動情形；位於店子湖層非產煤地層，無礦坑、礦渣堆與隧道；地下水位在地表下約 3.5～4.0 公尺，永久性設計並採更保守之水位條件分析，層層把關。',
+                    isStepList: false
+                },
                 {
                     id: 'bathroom-waterproof',
                     title: '衛浴防水',
@@ -360,6 +420,7 @@
             function buildNavList() {
                 let lastCategory = '';
                 const categoryNames = {
+                    geology: { zh: '地質安心', en: 'GEOLOGY' },
                     waterproof: { zh: '防水工法', en: 'WATERPROOF' },
                     structure: { zh: '結構工法', en: 'STRUCTURE' },
                     smart: { zh: '智慧設備', en: 'SMART SYSTEM' }
@@ -588,6 +649,18 @@
 
                 layer.innerHTML = '';
                 layer.appendChild(img);
+
+                // 圖片尚未備妥時，以佔位卡取代破圖
+                img.addEventListener('error', () => {
+                    layer.innerHTML = `
+                        <div class="con-image-placeholder">
+                            <div class="con-image-placeholder-icon">◈</div>
+                            <div class="con-image-placeholder-title">${method.title}</div>
+                            <div class="con-image-placeholder-note">3D 示意圖準備中</div>
+                        </div>
+                    `;
+                    zoomHint.style.display = 'none';
+                });
 
                 // 圖片點擊放大
                 img.style.cursor = 'zoom-in';
