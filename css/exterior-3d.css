@@ -155,7 +155,7 @@
 /* ===== 頁面標題浮層 ===== */
 .ext3d-title-overlay {
     position: absolute;
-    top: calc(var(--topbar-height, 70px) + 20px);
+    top: 90px; /* 避開左上角常駐 Logo（高約 74px） */
     left: 40px;
     z-index: 10;
     pointer-events: none;

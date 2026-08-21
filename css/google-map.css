@@ -534,15 +534,7 @@ body.google-map-page {
     background: rgba(237, 175, 184, 0.6);
 }
 
-/* Topbar 調整 */
-body.google-map-page .topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    width: 100%;
-}
+/* Topbar 已改為全域底部 Dock（見 topbar.css），此頁不再另行覆寫位置 */
 
 /* 導航資訊橫幅 */
 #route-info-banner,

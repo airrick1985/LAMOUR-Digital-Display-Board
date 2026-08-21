@@ -152,7 +152,7 @@
 /* ===== 頁面標題浮層 ===== */
 .pub3d-title-overlay {
     position: absolute;
-    top: calc(var(--topbar-height, 80px) + 20px);
+    top: 90px; /* 避開左上角常駐 Logo（高約 74px），公設3D/景觀3D 共用 */
     left: 40px;
     z-index: 10;
     pointer-events: none;
