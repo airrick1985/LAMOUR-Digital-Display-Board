@@ -55,7 +55,6 @@ Ctrl + Shift + I
 ```
 [electron] environment detected
 ✓ Local server running at http://localhost:3456
-[SW] Service Worker activated
 ```
 
 ❌ **不應該看到：**
@@ -88,16 +87,11 @@ Ctrl + Shift + I
 
 1. 點擊「Application」標籤
 2. 展開左側菜單
-3. 找「Service Workers」
+3. 找「Service Workers」與「Cache Storage」
 
-✅ **應該看到：**
-```
-Service Workers
-  └─ http://localhost:3456/
-      Status: activated and running
-```
+✅ **應該看到：** 兩者都是空的（本專案不使用 Service Worker / 離線快取）。
 
-如果看到 "unregistered" 或錯誤，告訴我。
+如果有殘留的 Service Worker，點 Unregister 後重新整理，並告訴我。
 
 ---
 
@@ -114,32 +108,15 @@ fetch('http://localhost:3456/')
   .catch(e => console.error('✗ 連接失敗:', e.message))
 ```
 
-### 檢查 2: 確認 Service Worker
+### 檢查 2: 確認沒有殘留的 Service Worker / 快取
 
 ```javascript
-navigator.serviceWorker.getRegistrations().then(regs => {
-  console.log('✓ Service Worker 數量:', regs.length)
-  regs.forEach(reg => {
-    console.log('  作用域:', reg.scope)
-    console.log('  狀態:', reg.active ? '已激活' : '未激活')
-  })
-})
+// 兩者都應為 0
+navigator.serviceWorker.getRegistrations().then(regs => console.log('Service Worker 數量:', regs.length))
+caches.keys().then(names => console.log('快取數量:', names.length, names))
 ```
 
-### 檢查 3: 檢查快取
-
-```javascript
-caches.keys().then(names => {
-  console.log('✓ 快取版本:', names)
-  names.forEach(async name => {
-    const cache = await caches.open(name)
-    const requests = await cache.keys()
-    console.log(`  ${name}: ${requests.length} 個文件`)
-  })
-})
-```
-
-### 檢查 4: 查看當前路由
+### 檢查 3: 查看當前路由
 
 ```javascript
 console.log('✓ 當前 URL:', window.location.href)
@@ -170,17 +147,6 @@ document.querySelectorAll('script[src]').forEach(s => {
 
 **解決：** 我們需要重新檢查打包配置
 
-### ❌ 錯誤: "Service Worker failed to register"
-
-**原因：** Service Worker 文件有語法錯誤
-
-**解決：**
-```javascript
-// 在 Console 執行
-navigator.serviceWorker.register('/sw.js')
-  .then(r => console.log('✓ 註冊成功'))
-  .catch(e => console.error('✗ 註冊失敗:', e))
-```
 
 ---
 
@@ -191,7 +157,7 @@ navigator.serviceWorker.register('/sw.js')
 ### 如果 DevTools 打開了：
 1. Console 標籤顯示的所有訊息（紅色和綠色）
 2. Network 標籤有沒有紅色的 404？
-3. Application 標籤的 Service Worker 狀態
+3. Application 標籤的 Service Workers / Cache Storage 是否為空
 
 ### 如果 DevTools 還是無法打開：
 1. ✓ 應用能正常啟動嗎？
@@ -208,7 +174,7 @@ navigator.serviceWorker.register('/sw.js')
 - [ ] F12 能打開
 - [ ] Console 無紅色錯誤
 - [ ] Network 無 404
-- [ ] Service Worker 已激活
+- [ ] Application → Service Workers 為空（無殘留）
 - [ ] 菜單和導航正常
 - [ ] 圖片和樣式完整
 

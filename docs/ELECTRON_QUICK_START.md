@@ -57,8 +57,7 @@ npm run electron-pack
 ```bash
 # 仍然正常工作
 npm run dev         # 開發伺服器
-npm run build       # 生成資源清單
-npm run deploy      # 推送到 GitHub Pages
+npm run deploy      # 提交並推送到 GitHub Pages（沒有 build 步驟）
 ```
 
 ### Git 提交

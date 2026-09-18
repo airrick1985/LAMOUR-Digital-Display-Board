@@ -55,7 +55,7 @@ fuyu-academic-forest/
 
 ## ✨ 功能
 
-- ✅ 保留所有原有 PWA 功能（Service Worker、離線支持等）
+- ✅ 與網站相同的頁面與功能（本地伺服器直接提供檔案，不使用 Service Worker / 離線快取）
 - ✅ 獨立 Windows 應用啟動
 - ✅ 完整的菜單和快捷鍵
 - ✅ 安全的 IPC 通訊
