@@ -172,7 +172,7 @@ async function main() {
   console.log(`  ✓ favicon.ico (${ICO_SIZES.join('/')}, ${(ico.length / 1024).toFixed(1)} KB)`);
 
   if (cleanup) fs.unlinkSync(cleanup);
-  console.log('\n完成。接著執行 npm run generate-manifest 更新資源清單與快取版本。');
+  console.log('\n完成。直接 commit + push 即可發布（瀏覽器 HTTP 快取最長 10 分鐘後更新）。');
 }
 
 main().catch(err => {
