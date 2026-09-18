@@ -1,11 +1,10 @@
+# Cloudflare Pages 快取規則（GitHub Pages 會忽略此檔）
+# HTML / JS / CSS / manifest：每次向 CDN 確認（未變更回 304），發布後現場立即更新
 /*
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
-/sw.js
-  Cache-Control: public, max-age=0
-
-/manifest.json
-  Cache-Control: public, max-age=0
-
-/index.html
-  Cache-Control: public, max-age=0
+# 圖片 / 影片 / 音樂：瀏覽器快取 1 天（原檔名覆蓋換圖時，最多 1 天後更新）
+# Cloudflare 會把多條命中規則的 Cache-Control 串接，故先移除上面 /* 給的值再設定
+/assets/*
+  ! Cache-Control
+  Cache-Control: public, max-age=86400
