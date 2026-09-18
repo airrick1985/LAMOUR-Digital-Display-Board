@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>安裝指南 - 富宇樂慕 LAMOUR</title>
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="stylesheet" href="css/variables.css?v=1.0.5">
+    <style>
+        /* 管理人員專用頁：無導覽列入口，直接以路徑進入 /install-guide */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            background: var(--color-bg-dark);
+            color: var(--color-text-primary);
+            line-height: 1.7;
+            padding: 0 16px 80px;
+        }
+        .wrap { max-width: 960px; margin: 0 auto; }
+        header { text-align: center; padding: 56px 0 32px; }
+        header img { width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+        header h1 { font-family: var(--font-serif); font-size: 2rem; font-weight: 600; margin-top: 18px; letter-spacing: .04em; }
+        header p { color: var(--color-text-secondary); margin-top: 8px; }
+        .url-box {
+            margin: 28px auto 0; max-width: 640px;
+            background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--card-radius);
+            padding: 18px 20px; text-align: center;
+        }
+        .url-box .label { font-size: .85rem; color: var(--color-secondary); letter-spacing: .12em; }
+        .url-box a {
+            display: block; font-family: var(--font-english-sans); font-size: 1.25rem; font-weight: 600;
+            color: var(--color-accent-soft); text-decoration: none; word-break: break-all; margin: 6px 0 12px;
+        }
+        .url-box button {
+            font: inherit; font-size: .9rem; padding: 8px 18px; border-radius: 999px; cursor: pointer;
+            background: var(--color-secondary); color: var(--color-bg-dark); border: none; font-weight: 600;
+        }
+        .url-box button:active { transform: scale(.97); }
+
+        .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 36px 0 8px; }
+        .tabs a {
+            padding: 10px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: .95rem;
+            color: var(--color-text-primary); background: rgba(255,255,255,.06); border: 1px solid var(--color-border);
+        }
+        .tabs a:hover { background: rgba(255,255,255,.12); }
+
+        section { margin-top: 56px; scroll-margin-top: 24px; }
+        section > h2 {
+            font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600;
+            padding-bottom: 12px; border-bottom: 1px solid var(--color-border); margin-bottom: 8px;
+        }
+        section > .hint { color: var(--color-text-secondary); font-size: .95rem; margin-bottom: 24px; }
+        .step {
+            display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start;
+            background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--card-radius);
+            padding: 22px; margin-bottom: 20px;
+        }
+        @media (min-width: 720px) { .step { grid-template-columns: 300px 1fr; gap: 28px; } .step.phone { grid-template-columns: 300px 1fr; } }
+        .step .text h3 { display: flex; align-items: center; gap: 12px; font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
+        .step .num {
+            flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; background: var(--color-accent); color: var(--color-bg-dark);
+            font-family: var(--font-english-sans); font-weight: 700; display: inline-flex; align-items: center; justify-content: center;
+        }
+        .step .text p { color: var(--color-text-secondary); font-size: .98rem; }
+        .step .text p b { color: var(--color-text-primary); }
+        .step img { width: 100%; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.35); display: block; }
+        .step.phone img { max-width: 300px; margin: 0 auto; }
+        .done {
+            background: rgba(176,196,177,.14); border: 1px solid var(--color-secondary); border-radius: var(--card-radius);
+            padding: 18px 22px; margin-top: 8px; color: var(--color-text-primary);
+        }
+        .done b { color: var(--color-secondary); }
+        .faq { margin-top: 56px; }
+        .faq h2 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; padding-bottom: 12px; border-bottom: 1px solid var(--color-border); margin-bottom: 20px; }
+        .faq details { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--card-radius); padding: 14px 20px; margin-bottom: 12px; }
+        .faq summary { cursor: pointer; font-weight: 600; }
+        .faq details p { color: var(--color-text-secondary); margin-top: 10px; font-size: .95rem; }
+        footer { text-align: center; color: var(--color-text-secondary); font-size: .8rem; margin-top: 64px; opacity: .7; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <header>
+        <img src="assets/icons/icon-192.png" alt="富宇樂慕 圖示">
+        <h1>富宇樂慕 LAMOUR 安裝指南</h1>
+        <p>把電子表板安裝到電腦或平板，像 App 一樣從桌面直接開啟，全螢幕、無網址列。</p>
+        <div class="url-box">
+            <div class="label">第一步：先用瀏覽器打開這個網址</div>
+            <a href="https://lamour-digital-display-board.pages.dev/" target="_blank" rel="noopener" id="siteUrl">https://lamour-digital-display-board.pages.dev/</a>
+            <button type="button" id="copyBtn">複製網址</button>
+        </div>
+        <nav class="tabs">
+            <a href="#chrome">Windows / Mac — Chrome</a>
+            <a href="#edge">Windows — Edge</a>
+            <a href="#ios">iPad / iPhone — Safari</a>
+            <a href="#android">Android — Chrome</a>
+        </nav>
+    </header>
+
+    <!-- ===== Chrome ===== -->
+    <section id="chrome">
+        <h2>Windows / Mac — Google Chrome</h2>
+        <p class="hint">適用於接待中心電腦、大電視接的電腦。建議使用 Chrome。</p>
+
+        <div class="step">
+            <div class="text">
+                <h3><span class="num">1</span>點網址列右側的「安裝」圖示</h3>
+                <p>用 Chrome 打開網址後，網址列<b>右邊</b>會出現一個「螢幕加箭頭」的小圖示，點它。<br>
+                   若沒看到圖示：點右上角「<b>⋮</b>」→「<b>投放、儲存和分享</b>」→「<b>安裝網頁應用程式…</b>」。</p>
+            </div>
+            <img src="assets/images/install-guide/desktop-chrome-1-icon.webp" alt="Chrome 網址列右側的安裝圖示">
+        </div>
+        <div class="step">
+            <div class="text">
+                <h3><span class="num">2</span>按「安裝」</h3>
+                <p>會跳出「安裝應用程式」小視窗，確認名稱是<b>富宇樂慕 LAMOUR</b>，按「<b>安裝</b>」。</p>
+            </div>
+            <img src="assets/images/install-guide/desktop-chrome-2-dialog.webp" alt="Chrome 安裝應用程式對話框">
+        </div>
+        <div class="step">
+            <div class="text">
+                <h3><span class="num">3</span>完成</h3>
+                <p>應用程式會立刻以<b>獨立視窗</b>開啟；桌面與「開始」功能表（Mac 為「啟動台」）會出現「富宇樂慕」圖示，之後直接點圖示開啟即可。</p>
+            </div>
+            <img src="assets/images/install-guide/desktop-3-installed.webp" alt="安裝後的獨立視窗">
+        </div>
+    </section>
+
+    <!-- ===== Edge ===== -->
+    <section id="edge">
+        <h2>Windows — Microsoft Edge</h2>
+        <p class="hint">Windows 內建的 Edge 也可以安裝，步驟與 Chrome 幾乎相同。</p>
+
+        <div class="step">
+            <div class="text">
+                <h3><span class="num">1</span>點網址列右側的「應用程式」圖示</h3>
+                <p>用 Edge 打開網址後，網址列<b>右邊</b>會出現一個「方格加號」的圖示，點它。<br>
+                   若沒看到圖示：點右上角「<b>⋯</b>」→「<b>應用程式</b>」→「<b>將此網站安裝為應用程式</b>」。</p>
+            </div>
+            <img src="assets/images/install-guide/desktop-edge-1-icon.webp" alt="Edge 網址列右側的應用程式圖示">
+        </div>
+        <div class="step">
+            <div class="text">
+                <h3><span class="num">2</span>按「安裝」</h3>
+                <p>確認名稱是<b>富宇樂慕 LAMOUR</b>，按「<b>安裝</b>」。之後若詢問是否釘選到工作列 / 桌面，勾選後按「允許」。</p>
+            </div>
+            <img src="assets/images/install-guide/desktop-edge-2-dialog.webp" alt="Edge 安裝應用程式對話框">
+        </div>
+        <div class="step">
+            <div class="text">
+                <h3><span class="num">3</span>完成</h3>
+                <p>應用程式以<b>獨立視窗</b>開啟，桌面與「開始」功能表會出現「富宇樂慕」圖示。</p>
+            </div>
+            <img src="assets/images/install-guide/desktop-3-installed.webp" alt="安裝後的獨立視窗">
+        </div>
+    </section>
+
+    <!-- ===== iOS ===== -->
+    <section id="ios">
+        <h2>iPad / iPhone — Safari</h2>
+        <p class="hint">iPad、iPhone 必須用 <b>Safari</b>（不能用 Chrome）。iPad 的「分享」按鈕在<b>右上角</b>，iPhone 在<b>底部中間</b>。</p>
+
+        <div class="step phone">
+            <div class="text">
+                <h3><span class="num">1</span>點「分享」按鈕</h3>
+                <p>用 Safari 打開網址，點「<b>分享</b>」圖示（一個方框加向上箭頭）。iPhone 在螢幕底部中間，iPad 在右上角網址列旁。</p>
+            </div>
+            <img src="assets/images/install-guide/ios-1-share.webp" alt="Safari 分享按鈕位置">
+        </div>
+        <div class="step phone">
+            <div class="text">
+                <h3><span class="num">2</span>選「加入主畫面」</h3>
+                <p>選單往下滑，找到「<b>加入主畫面</b>」並點選。</p>
+            </div>
+            <img src="assets/images/install-guide/ios-2-sheet.webp" alt="Safari 分享選單中的加入主畫面">
+        </div>
+        <div class="step phone">
+            <div class="text">
+                <h3><span class="num">3</span>按右上角「新增」</h3>
+                <p>名稱保持「<b>富宇樂慕</b>」，按右上角「<b>新增</b>」。主畫面就會出現「富宇樂慕」圖示，點開即全螢幕。</p>
+            </div>
+            <img src="assets/images/install-guide/ios-3-add.webp" alt="加入主畫面確認畫面">
+        </div>
+    </section>
+
+    <!-- ===== Android ===== -->
+    <section id="android">
+        <h2>Android 平板 / 手機 — Chrome</h2>
+        <p class="hint">用 Chrome 打開網址。部分裝置打開後會直接在底部跳出「安裝」提示，直接按「安裝」即可。</p>
+
+        <div class="step phone">
+            <div class="text">
+                <h3><span class="num">1</span>點右上角「⋮」</h3>
+                <p>用 Chrome 打開網址，點右上角的「<b>⋮</b>」選單。</p>
+            </div>
+            <img src="assets/images/install-guide/android-1-menu.webp" alt="Android Chrome 右上角選單">
+        </div>
+        <div class="step phone">
+            <div class="text">
+                <h3><span class="num">2</span>選「安裝應用程式」</h3>
+                <p>在選單中找到「<b>安裝應用程式</b>」（部分版本顯示為「<b>加入主畫面</b>」）並點選。</p>
+            </div>
+            <img src="assets/images/install-guide/android-2-install.webp" alt="Chrome 選單中的安裝應用程式">
+        </div>
+        <div class="step phone">
+            <div class="text">
+                <h3><span class="num">3</span>按「安裝」</h3>
+                <p>確認名稱是<b>富宇樂慕 LAMOUR</b>，按「<b>安裝</b>」。主畫面與應用程式列表會出現「富宇樂慕」圖示。</p>
+            </div>
+            <img src="assets/images/install-guide/android-3-dialog.webp" alt="Android 安裝應用程式對話框">
+        </div>
+    </section>
+
+    <div class="done">
+        <b>安裝完成後怎麼用：</b>直接點桌面 / 主畫面上的「富宇樂慕」圖示即可，不用再打網址。內容更新會自動生效，不需重新安裝。
+    </div>
+
+    <section class="faq">
+        <h2>常見問題</h2>
+        <details>
+            <summary>找不到「安裝」圖示或選項？</summary>
+            <p>① 確認網址是 <b>lamour-digital-display-board.pages.dev</b>（不是舊的 github.io）。② 確認用的是 Chrome、Edge 或 Safari（iPad / iPhone 只能用 Safari）。③ 若之前已安裝過，圖示不會再出現，直接從桌面開啟即可。</p>
+        </details>
+        <details>
+            <summary>之前裝過舊版（github.io 網址）怎麼辦？</summary>
+            <p>舊版可以移除（Windows：開始功能表右鍵 → 解除安裝；iPad：長按圖示 → 移除 App），再依上面步驟用新網址重新安裝。兩者並存也不影響。</p>
+        </details>
+        <details>
+            <summary>安裝後畫面不是最新的？</summary>
+            <p>關閉應用程式再重新開啟即可。網站更新後 1–2 分鐘內會自動生效；圖片類更新最多需要 1 天。</p>
+        </details>
+        <details>
+            <summary>想要一開機就自動全螢幕開啟？</summary>
+            <p>Windows：把「富宇樂慕」捷徑放進「啟動」資料夾（Win + R 輸入 <b>shell:startup</b>）。開啟後按鍵盤 <b>F11</b> 或畫面上的全螢幕按鈕。</p>
+        </details>
+    </section>
+
+    <footer>本頁為管理人員用的安裝說明，未列在網站導覽中。示意圖依各瀏覽器實際介面繪製，實際畫面可能因版本略有差異。</footer>
+</div>
+<script>
+    document.getElementById('copyBtn').addEventListener('click', async function () {
+        const url = document.getElementById('siteUrl').textContent.trim();
+        try { await navigator.clipboard.writeText(url); this.textContent = '已複製 ✓'; }
+        catch (e) { window.prompt('請手動複製網址：', url); }
+        setTimeout(() => { this.textContent = '複製網址'; }, 2000);
+    });
+</script>
+</body>
+</html>
