@@ -77,7 +77,7 @@
     <div id="pwa-loading-overlay">
       <div class="pwa-loading-content">
         <div class="pwa-loading-spinner"></div>
-        <div class="pwa-loading-text">正在檢查更新...</div>
+        <div class="pwa-loading-text">載入中...</div>
       </div>
     </div>
 
@@ -99,8 +99,8 @@
 
         <!-- Content -->
         <div class="hero-content">
-            <!-- 建案專屬 LOGO，data-logo-url 替換為建案的 logo.png 或 SVG 檔案即可套用 -->
-            <div class="hero-logo" style="--logo-url: url('assets/images/lamour_logo.webp');">
+            <!-- 建案專屬 LOGO；掃光遮罩用的 --logo-url 定義在 css/hero.css 的 .hero-logo（與使用處同一目錄，各瀏覽器路徑解析一致） -->
+            <div class="hero-logo">
                 <img src="assets/images/lamour_logo.webp" alt="富宇樂慕 LOGO">
                 <div class="logo-shine-layer"></div>
             </div>
@@ -122,9 +122,7 @@
 
     <script src="js/cursor-petals.js?v=1.0.3"></script>
     <script src="js/spa-router.js?v=1.0.3"></script>
-    <!-- Asset Update Manager -->
-    <script src="js/asset-update-manager.js"></script>
-    <script src="js/pwa-register.js?v=1.0.2" defer></script>
+    <script src="js/pwa-register.js?v=2.0.0" defer></script>
 </body>
 
 </html>

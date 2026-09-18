@@ -149,6 +149,8 @@
     filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 40px rgba(212, 175, 110, 0.3));
     position: relative;
     display: inline-block;
+    /* 掃光層遮罩用的 LOGO；換建案時改這裡（路徑相對於本 CSS 檔） */
+    --logo-url: url('../assets/images/lamour_logo.webp');
 }
 
 .hero-logo img {
